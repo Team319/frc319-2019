@@ -73,7 +73,7 @@ public class Drivetrain extends Subsystem {
 
 		// configure angle sensor
 		// Remote 1 will be a pigeon
-		rightLead.configRemoteSensor1(leftFollower.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
+		rightLead.configRemoteSensor1(leftLead.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
 		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (0.0 / 0.0)); // Coefficient for
 																									// Pigeon to
 
@@ -180,6 +180,5 @@ public class Drivetrain extends Subsystem {
 		SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
 		SmartDashboard.putNumber("Drivetrain Distance", getDistance());
 		SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
-		SmartDashboard.putNumber("Left Follower Current", leftFollower.getOutputCurrent());
 	}
 }

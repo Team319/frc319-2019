@@ -9,7 +9,6 @@ import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import com.ctre.phoenix.motion.MotionProfileStatus;
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 import com.ctre.phoenix.motion.TrajectoryPoint;
-import com.ctre.phoenix.motion.TrajectoryPoint.TrajectoryDuration;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -71,7 +70,7 @@ public class FollowArc extends Command {
 				/* for each point, fill our structure and pass it to API */
 				point.position = prof.points[lastPointSent][0] + startPosition;
 				point.velocity = prof.points[lastPointSent][1];
-				point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
+				point.timeDur = TrajectoryPoint.Trajectory_Duration_10ms;
 				point.auxiliaryPos = (flipped ? -1 : 1) * 10 * (prof.points[lastPointSent][3] + startHeading);
 				point.profileSlotSelect0 = distancePidSlot;
 				point.profileSlotSelect1 = rotationPidSlot;
