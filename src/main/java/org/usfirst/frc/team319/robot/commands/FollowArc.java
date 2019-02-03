@@ -21,7 +21,7 @@ public class FollowArc extends Command {
 	private BobTalonSRX rightTalon = Robot.drivetrain.rightLead;
 	private BobTalonSRX leftTalon = Robot.drivetrain.leftLead;
 
-	private int distancePidSlot = Drivetrain.HIGH_GEAR_PROFILE;
+	private int distancePidSlot = Drivetrain.DRIVE_PROFILE;
 	private int rotationPidSlot = Drivetrain.ROTATION_PROFILE;
 
 	private int kMinPointsInTalon = 5;
@@ -70,7 +70,7 @@ public class FollowArc extends Command {
 				/* for each point, fill our structure and pass it to API */
 				point.position = prof.points[lastPointSent][0] + startPosition;
 				point.velocity = prof.points[lastPointSent][1];
-				point.timeDur = TrajectoryPoint.Trajectory_Duration_10ms;
+				//point.timeDur = TrajectoryPoint.Trajectory_Duration_10ms // this broke after converting to VS Code
 				point.auxiliaryPos = (flipped ? -1 : 1) * 10 * (prof.points[lastPointSent][3] + startHeading);
 				point.profileSlotSelect0 = distancePidSlot;
 				point.profileSlotSelect1 = rotationPidSlot;
@@ -98,13 +98,6 @@ public class FollowArc extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		
-		if (trajectoryToFollow.highGear) {
-			Robot.pneumatics.drivetrainShiftUp();
-		}else {
-			//Robot.pneumatics.drivetrainShiftDown();
-			Robot.pneumatics.drivetrainShiftUp();
-		}
-
 		setUpTalon(leftTalon);
 		setUpTalon(rightTalon);
 

@@ -15,8 +15,12 @@ public class Pneumatics extends Subsystem {
 	// public boolean isCollectorSolenoidExtended;
 
 	Compressor compressor = new Compressor(0);
-	
-	DoubleSolenoid drivetrainShifter = new DoubleSolenoid(2, 3);
+
+	// elevator, carriage, beak
+
+	DoubleSolenoid beakSolenoid = new DoubleSolenoid(0, 1);
+	DoubleSolenoid carriageSolenoid = new DoubleSolenoid(2, 3);
+	DoubleSolenoid elevatorSolenoid = new DoubleSolenoid(4, 5);
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -27,14 +31,30 @@ public class Pneumatics extends Subsystem {
 		compressor.setClosedLoopControl(true);
 	}
 
-	public void drivetrainShiftUp() {
-		this.drivetrainShifter.set(DoubleSolenoid.Value.kForward);
-		Robot.drivetrain.setIsHighGear(true);
+	public void beakOpen() {
+
+		this.beakSolenoid.set(DoubleSolenoid.Value.kForward);
+		Robot.carriage.setIsBeakOpen(true);
 	}
 
-	public void drivetrainShiftDown() {
-		this.drivetrainShifter.set(DoubleSolenoid.Value.kReverse);
-		Robot.drivetrain.setIsHighGear(false);
+	public void beakClose() {
+		this.beakSolenoid.set(DoubleSolenoid.Value.kReverse);
+		Robot.carriage.setIsBeakOpen(false);
 	}
 
+	public void carriageExtend() {
+		this.carriageSolenoid.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void carriageRetract() {
+		this.carriageSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+
+	public void elevatorExtend() {
+		this.elevatorSolenoid.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void elevatorRetract() {
+		this.elevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
 }

@@ -1,22 +1,24 @@
-package org.usfirst.frc.team319.robot.commands.pneumatics;
+package org.usfirst.frc.team319.robot.commands.drivetrain_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DrivetrainShiftDown extends Command {
+public class DrivetrainBrakeMode extends Command {
 
-	public DrivetrainShiftDown() {
+	public DrivetrainBrakeMode() {
 		// Use requires() here to declare subsystem dependencies
-		requires(Robot.pneumatics);
+		requires(Robot.drivetrain);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.pneumatics.drivetrainShiftDown();
+		Robot.drivetrain.setNeutralMode(NeutralMode.Brake);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

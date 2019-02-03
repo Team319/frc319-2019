@@ -5,8 +5,6 @@ import java.nio.ByteBuffer;
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.ILoopable;
 
-import edu.wpi.first.wpilibj.can.CANJNI;
-
 public class TaskMeasurePulseSensors implements ILoopable {
 	double[][] _dutyCycleAndPeriods = new double[][] { new double[] { 0, 0 }, new double[] { 0, 0 },
 			new double[] { 0, 0 }, new double[] { 0, 0 } };
@@ -39,7 +37,7 @@ public class TaskMeasurePulseSensors implements ILoopable {
 		data.asIntBuffer().put((int) (_dutyCycleAndPeriods[3][0] * 1000));
 		byte[] newdata = new byte[4];
 		data.get(newdata);
-		CANJNI.FRCNetCommCANSessionMuxSendMessage(0x1E040000, newdata, 4);
+		edu.wpi.first.hal.can.CANJNI.FRCNetCommCANSessionMuxSendMessage(0x1E040000, newdata, 4);
 	}
 
 	public String toString() {

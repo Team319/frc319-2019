@@ -19,43 +19,10 @@ public class OI {
 
 	public OI() {
 
-		driverController = new BobXboxController(0, 0.10, 0.08);
+		driverController = new BobXboxController(0, 0.20, 0.03);
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
-/*
-		driverController.rightBumper.whenPressed(new ());
-		driverController.leftBumper.whenPressed(new ());
-		driverController.rightTriggerButton.whenPressed(new ());
-		driverController.leftTriggerButton.whileHeld(new ());
-		driverController.bButton.whenPressed(new ());
-		driverController.startButton.whenPressed(new ());
-		driverController.leftStickButton.whenPressed(new ());
 
-	
-
-		operatorController = new BobXboxController(1, 0.1, 0.125);
-		
-		operatorController.leftTriggerButton.whenPressed(new ());
-		operatorController.rightTriggerButton.whenPressed(new ());
-		operatorController.leftBumper.whenPressed(new ());
-		operatorController.rightBumper.whenPressed(new ());
-		operatorController.aButton.whenPressed(new ());
-		operatorController.bButton.whenPressed(new ());
-		operatorController.xButton.whenPressed(new (0.0));
-		operatorController.yButton.whenPressed(new ());
-		operatorController.startButton.whenPressed(new ());
-		*/
-		
-		
-		//operatorController.Dpad.Up.whenPressed(new ());
-		
-
-		
-		
-		// ---------------test buttons-------------------//
-
-		
-		//this.driverController.xButton.whenPressed(new FollowArc(new ()));
 
 
 	}

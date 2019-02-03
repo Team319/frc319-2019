@@ -7,8 +7,14 @@
 
 package org.usfirst.frc.team319.robot;
 
+
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.ExampleAutoCommandGroup;
+import org.usfirst.frc.team319.robot.subsystems.BBArm;
+import org.usfirst.frc.team319.robot.subsystems.Carriage;
+import org.usfirst.frc.team319.robot.subsystems.Collector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team319.robot.subsystems.Elevator;
+import org.usfirst.frc.team319.robot.subsystems.Limelight;
 import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,13 +29,20 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the build.properties file in the
  * project.
  */
+
 public class Robot extends TimedRobot {
 
 	Command autonomousCommand;
 	SendableChooser<String> autoChooser;
 
-	public static final Drivetrain drivetrain = new Drivetrain();
+	public static final BBArm bbarm = new BBArm();
+	public static final Elevator elevator = new Elevator();
+	public static final Carriage carriage = new Carriage();
+	public static final Limelight limelight = new Limelight();
+	public static final Collector collector = new Collector();
 	public static final Pneumatics pneumatics = new Pneumatics();
+	public static final Drivetrain drivetrain = new Drivetrain();
+
 	public static OI oi;
 
 	// SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -41,10 +54,9 @@ public class Robot extends TimedRobot {
 		Robot.drivetrain.setDrivetrainPositionToZero();
 
 		autoChooser = new SendableChooser<String>();
-		autoChooser.addDefault("Example Auto", "Example Auto");
+		// autoChooser.addDefault("Example Auto", "Example Auto");
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
-	//	SmartDashboard.putData("CrossTheLine", new FollowArc(new ()));
-
+		// SmartDashboard.putData("CrossTheLine", new FollowArc(new ()));
 
 	}
 
@@ -101,7 +113,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
 
 	}
 

@@ -7,29 +7,18 @@
 
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Add your docs here.
  */
-public class Carriage extends Subsystem {
-
-  private boolean isBeakOpen = true;
-
-
-  public LeaderBobTalonSRX carriageLead = new LeaderBobTalonSRX(11);
+public class Limelight extends Subsystem {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
   @Override
   public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
   }
-
-  public boolean isBeakOpen() {
-		return isBeakOpen;
-  }
-
-  public void setIsBeakOpen(boolean isBeakOpen) {
-		this.isBeakOpen = isBeakOpen;
-	}
 }

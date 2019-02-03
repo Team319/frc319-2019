@@ -1,15 +1,14 @@
 package org.usfirst.frc.team319.models;
 
+import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.hal.HAL;
 
 public class BobController extends Joystick {
 
 	public BobController(int port) {
 		super(port);
-		// TODO Auto-generated constructor stub
 	}
 
 	public JoystickButton xButton = new JoystickButton(this, 3);
