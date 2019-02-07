@@ -19,11 +19,11 @@ public class OI {
 
 	public OI() {
 
-		driverController = new BobXboxController(0, 0.20, 0.03);
+		driverController = new BobXboxController(0, 0.30, 0.05);
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
-
+		operatorController = new BobXboxController(1, 0.30, 0.05);
 
 	}
 }

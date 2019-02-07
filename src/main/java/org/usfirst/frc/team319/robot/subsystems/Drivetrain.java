@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.DriveSignal;
@@ -29,10 +28,10 @@ public class Drivetrain extends Subsystem {
 	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.0, 0.0, 0.0, 0.0, 0);
 	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.0, 0.00, 0.0, 0.0, 0);
 
-	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2), new BobTalonSRX(3));
-	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(4, new BobTalonSRX(5), new BobTalonSRX(6));
+	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(5, new BobTalonSRX(13), new BobTalonSRX(15));
+	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(11, new BobTalonSRX(4), new BobTalonSRX(6));
 
-	private PigeonIMU pigeon = new PigeonIMU(leftLead);
+	//private PigeonIMU pigeon = new PigeonIMU(leftLead);
 
 	public Drivetrain() {
 
@@ -148,10 +147,10 @@ public class Drivetrain extends Subsystem {
 
 	public double getAngle() {
 		double[] ypr = new double[3];
-		pigeon.getYawPitchRoll(ypr);
+	//	pigeon.getYawPitchRoll(ypr);
 		return ypr[0];
 	}
-
+	
 	public double getDistance() {
 		return rightLead.getPrimarySensorPosition();
 	}
@@ -162,7 +161,7 @@ public class Drivetrain extends Subsystem {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Drivetrain Angle", getAngle());
+	//	SmartDashboard.putNumber("Drivetrain Angle", getAngle());
 		SmartDashboard.putNumber("Angle Error", rightLead.getClosedLoopError(1));
 		SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
 		SmartDashboard.putNumber("Drivetrain Distance", getDistance());

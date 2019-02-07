@@ -32,7 +32,7 @@ public class BobDrive extends Command {
 		double moveValue = Robot.oi.driverController.leftStick.getY();
 		double rotateValue = Robot.oi.driverController.rightStick.getX();
 		boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
-		DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, quickTurn, false);
+		DriveSignal driveSignal = helper.cheesyDrive(moveValue, -rotateValue, quickTurn, false);
 		Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
 	}
 
