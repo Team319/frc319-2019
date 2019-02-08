@@ -18,6 +18,8 @@ public class Carriage extends Subsystem {
 
   private boolean isBeakOpen = true;
 
+  private final double safePosition = 0.0;
+
 
   public LeaderBobTalonSRX carriageLead = new LeaderBobTalonSRX(11);
 
@@ -32,4 +34,8 @@ public class Carriage extends Subsystem {
   public void setIsBeakOpen(boolean isBeakOpen) {
 		this.isBeakOpen = isBeakOpen;
 	}
+
+public double isCarraigeSafe(int newTargetPosition) {
+	return this.safePosition;
+}
 }

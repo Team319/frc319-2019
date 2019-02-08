@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class JostickElevator extends Command {
 
-  //private int positionIncrement = 200;
+  private int positionIncrement = 200;
 
   public JostickElevator() {
     // Use requires() here to declare subsystem dependencies
-    //requires(Robot.bbarm);
+    requires(Robot.elevator);
   }
 
   // Called just before this Command runs the first time
@@ -27,12 +27,12 @@ public class JostickElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-   /*
+   
     double signal = -Robot.oi.operatorController.leftStick.getY();
     Robot.elevator.incrementTargetPosition((int) (signal * positionIncrement));
 
     Robot.elevator.motionMagicControl();
-    */
+  
   }
 
   @Override

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
+
 public class Drivetrain extends Subsystem {
 
 	public static int DRIVE_PROFILE = 0;
@@ -28,8 +29,8 @@ public class Drivetrain extends Subsystem {
 	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.0, 0.0, 0.0, 0.0, 0);
 	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.0, 0.00, 0.0, 0.0, 0);
 
-	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(5, new BobTalonSRX(13), new BobTalonSRX(15));
-	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(11, new BobTalonSRX(4), new BobTalonSRX(6));
+	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(13, new BobTalonSRX(14), new BobTalonSRX(15));
+	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2), new BobTalonSRX(3));
 
 	//private PigeonIMU pigeon = new PigeonIMU(leftLead);
 
@@ -162,9 +163,10 @@ public class Drivetrain extends Subsystem {
 	@Override
 	public void periodic() {
 	//	SmartDashboard.putNumber("Drivetrain Angle", getAngle());
-		SmartDashboard.putNumber("Angle Error", rightLead.getClosedLoopError(1));
-		SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
+	//	SmartDashboard.putNumber("Angle Error", rightLead.getClosedLoopError(1));
+	//	SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
 		SmartDashboard.putNumber("Drivetrain Distance", getDistance());
-		SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
+	//	SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
+
 	}
 }

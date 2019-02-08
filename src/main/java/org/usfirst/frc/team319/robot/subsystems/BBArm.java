@@ -27,13 +27,12 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12));
   public LeaderBobTalonSRX bbCollectTalon = new LeaderBobTalonSRX(13);
 
- // private int homePosition = 0;
+  // private int homePosition = 0;
   private int upPositionLimit = 0;
   private int downPositionLimit = 0;
   private int floor = 0;
   private int insideOfRobot = 0;
   private int safePosition = 0;
-
 
   private int targetPosition = 0;
 
@@ -44,31 +43,27 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   private final SRXGains downGains = new SRXGains(BBA_DOWN, 0.0, 0.0, 0.0, 0.0, 0);
 
   private MotionParameters UpMotionParameters = new MotionParameters(2600, 2000, upGains);
-	private MotionParameters DownMotionParameters = new MotionParameters(2600, 2000, downGains);
+  private MotionParameters DownMotionParameters = new MotionParameters(2600, 2000, downGains);
 
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new JostickBBA());
   }
 
-
-
   public boolean isBBArmSafe(double targetBBArmPosition) {
-		boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
-		System.out.println("is wrist at risk: " + atRisk);
-		if (atRisk && targetBBArmPosition < floor && getCurrentPosition() > insideOfRobot) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-
+    boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
+    System.out.println("is wrist at risk: " + atRisk);
+    if (atRisk && targetBBArmPosition < floor && getCurrentPosition() > insideOfRobot) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   public boolean isValidPosition(int position) {
-		boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
-		return withinBounds;
-	}
+    boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
+    return withinBounds;
+  }
 
   public void manageMotion(double targetPosition) {
     double currentPosition = getCurrentPosition();
@@ -86,12 +81,12 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   }
 
   public void incrementTargetPosition(int increment) {
-		int currentTargetPosition = this.targetPosition;
-		int newTargetPosition = currentTargetPosition + increment;
-		if (isValidPosition(newTargetPosition) && isBBArmSafe(newTargetPosition)) {
-			this.targetPosition = newTargetPosition;
-		}
-}
+    int currentTargetPosition = this.targetPosition;
+    int newTargetPosition = currentTargetPosition + increment;
+    if (isValidPosition(newTargetPosition) && isBBArmSafe(newTargetPosition)) {
+      this.targetPosition = newTargetPosition;
+    }
+  }
 
   @Override
   public boolean setTargetPosition(int targetPosition) {
@@ -107,6 +102,7 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   public int getCurrentPosition() {
     return 0;
   }
+
   public int getSafePosition() {
     return safePosition;
   }
@@ -116,8 +112,8 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
     return 0;
   }
 
-@Override
-public boolean isInPosition(int targetPosition) {
-	return false;
-}
+  @Override
+  public boolean isInPosition(int targetPosition) {
+    return false;
+  }
 }
