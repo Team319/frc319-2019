@@ -5,14 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Beak_Commands;
-
-import org.usfirst.frc.team319.robot.Robot;
+package org.usfirst.frc.team319.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BeakToggle extends Command {
-  public BeakToggle() {
+public class JoshCommand extends Command {
+  public JoshCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -25,17 +23,12 @@ public class BeakToggle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.carriage.isBeakOpen()){
-        Robot.pneumatics.beakClose();
-    }else{
-      Robot.pneumatics.beakOpen();
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
