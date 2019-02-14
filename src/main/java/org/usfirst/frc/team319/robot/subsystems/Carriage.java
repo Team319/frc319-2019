@@ -22,7 +22,7 @@ public class Carriage extends Subsystem {
   private final double safePosition = 0.0;
 
 
-  public LeaderBobTalonSRX passThoughLead = new LeaderBobTalonSRX(8, new BobTalonSRX(9));
+  public LeaderBobTalonSRX passThoughLead = new LeaderBobTalonSRX(3, new BobTalonSRX(4));
 
   @Override
   public void initDefaultCommand() {

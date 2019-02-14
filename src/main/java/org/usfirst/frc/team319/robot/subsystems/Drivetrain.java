@@ -29,8 +29,8 @@ public class Drivetrain extends Subsystem {
 	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.0, 0.0, 0.0, 0.0, 0);
 	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.0, 0.00, 0.0, 0.0, 0);
 
-	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(13, new BobTalonSRX(14), new BobTalonSRX(15));
-	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2), new BobTalonSRX(3));
+	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12), new BobTalonSRX(13));
+	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(5, new BobTalonSRX(6), new BobTalonSRX(7));
 
 	//private PigeonIMU pigeon = new PigeonIMU(leftLead);
 
