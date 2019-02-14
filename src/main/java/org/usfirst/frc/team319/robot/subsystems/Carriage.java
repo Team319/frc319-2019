@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team319.robot.subsystems;
 
+import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,7 +22,7 @@ public class Carriage extends Subsystem {
   private final double safePosition = 0.0;
 
 
-  public LeaderBobTalonSRX carriageLead = new LeaderBobTalonSRX(11);
+  public LeaderBobTalonSRX passThroughLead = new LeaderBobTalonSRX(8, new BobTalonSRX(9));
 
   @Override
   public void initDefaultCommand() {

@@ -9,6 +9,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
@@ -25,14 +26,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12));
-  public LeaderBobTalonSRX bbCollectTalon = new LeaderBobTalonSRX(13);
+  public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(10);
 
-  // private int homePosition = 0;
   private int upPositionLimit = 0;
   private int downPositionLimit = 0;
   private int floor = 0;
-  private int insideOfRobot = 0;
+  private int homePosition = 0;
   private int safePosition = 0;
+  private int levelThreeHab = 0;
+  private int levelTwoHab = 0;
+  private int hatchFloorPosition = 0;
 
   private int targetPosition = 0;
 
@@ -45,6 +48,32 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   private MotionParameters UpMotionParameters = new MotionParameters(2600, 2000, upGains);
   private MotionParameters DownMotionParameters = new MotionParameters(2600, 2000, downGains);
 
+  public BBArm(){
+
+    this.bbaLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+    this.bbaLead.configForwardSoftLimitEnable(true);
+    this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);
+
+    this.bbaLead.configReverseSoftLimitEnable(true);
+    this.bbaLead.configReverseSoftLimitThreshold(downPositionLimit);
+
+    this.bbaLead.setInverted(true);
+    this.bbaLead.setSensorPhase(false);
+
+    this.bbaLead.configMotionParameters(UpMotionParameters);
+    this.bbaLead.configMotionParameters(DownMotionParameters);
+
+   // this.bbaLead.setNeutralMode(NeutralMode.Brake);
+
+   this.bbaLead.configClosedloopRamp(0.25);
+
+   this.bbaLead.configVoltageCompSaturation(11.5);
+   this.bbaLead.enableVoltageCompensation(true);
+
+   this.bbaLead.configPeakOutputReverse(-1.0);
+  }
+
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new JostickBBA());
@@ -52,8 +81,8 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   public boolean isBBArmSafe(double targetBBArmPosition) {
     boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
-    System.out.println("is wrist at risk: " + atRisk);
-    if (atRisk && targetBBArmPosition < floor && getCurrentPosition() > insideOfRobot) {
+    System.out.println("is BBA at risk: " + atRisk);
+    if (atRisk && targetBBArmPosition < floor && getCurrentPosition() > homePosition) {
       return false;
     } else {
       return true;
@@ -86,6 +115,18 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
     if (isValidPosition(newTargetPosition) && isBBArmSafe(newTargetPosition)) {
       this.targetPosition = newTargetPosition;
     }
+  }
+
+  public double getLevelThreeHab() {
+    return levelThreeHab;
+  }
+
+  public double getLevelTwoHab() {
+    return levelTwoHab;
+  }
+
+  public double getHatchFloorPosition() {
+    return hatchFloorPosition;
   }
 
   @Override
