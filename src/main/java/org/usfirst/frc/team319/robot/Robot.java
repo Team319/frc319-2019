@@ -7,11 +7,9 @@
 
 package org.usfirst.frc.team319.robot;
 
-
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.ExampleAutoCommandGroup;
 import org.usfirst.frc.team319.robot.subsystems.BBArm;
 import org.usfirst.frc.team319.robot.subsystems.Carriage;
-import org.usfirst.frc.team319.robot.subsystems.Collector;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Elevator;
 import org.usfirst.frc.team319.robot.subsystems.Limelight;
@@ -39,7 +37,6 @@ public class Robot extends TimedRobot {
 	public static final Elevator elevator = new Elevator();
 	public static final Carriage carriage = new Carriage();
 	public static final Limelight limelight = new Limelight();
-	public static final Collector collector = new Collector();
 	public static final Pneumatics pneumatics = new Pneumatics();
 	public static final Drivetrain drivetrain = new Drivetrain();
 
@@ -68,7 +65,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		
+
 	}
 
 	@Override

@@ -61,8 +61,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
   private MotionParameters UpMotionParameter = new MotionParameters(2600, 2000, elevatorUpGains);
   private MotionParameters DownMotionParameters = new MotionParameters(2600, 2000, elevatorDownGains);
 
-  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(7, new BobTalonSRX(8), new BobTalonSRX(9),
-      new BobTalonSRX(10));
+  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(4, new BobTalonSRX(5), new BobTalonSRX(6), new BobTalonSRX(7));
 
   @Override
   public void initDefaultCommand() {

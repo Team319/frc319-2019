@@ -16,11 +16,12 @@ public class Pneumatics extends Subsystem {
 
 	Compressor compressor = new Compressor(0);
 
-	// elevator, carriage, beak
+	// elevator, carriage, beak, Hatch collector
 
-	DoubleSolenoid beakSolenoid = new DoubleSolenoid(0, 1);
+	DoubleSolenoid beakSolenoid = new DoubleSolenoid(0, 1); 
 	DoubleSolenoid carriageSolenoid = new DoubleSolenoid(2, 3);
 	DoubleSolenoid elevatorSolenoid = new DoubleSolenoid(4, 5);
+	DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(6, 7);
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -56,5 +57,11 @@ public class Pneumatics extends Subsystem {
 
 	public void elevatorRetract() {
 		this.elevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+	public void hatchCollectorExtend() {
+		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
+	}	
+	public void hatchCollectorRetract() {
+		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 }

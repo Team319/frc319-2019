@@ -25,14 +25,14 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12));
-  public LeaderBobTalonSRX bbCollectTalon = new LeaderBobTalonSRX(13);
+  public LeaderBobTalonSRX bbCollectTalon = new LeaderBobTalonSRX(10);
 
   // private int homePosition = 0;
   private int upPositionLimit = 0;
   private int downPositionLimit = 0;
   private int floor = 0;
   private int insideOfRobot = 0;
-  private int safePosition = 0;
+  private int safePosition = 0;                                                                                                                                                                                                                               
 
   private int targetPosition = 0;
 
