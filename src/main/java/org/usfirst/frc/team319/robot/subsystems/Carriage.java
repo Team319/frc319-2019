@@ -21,7 +21,6 @@ public class Carriage extends Subsystem {
 
   private final double safePosition = 0.0;
 
-
   public LeaderBobTalonSRX passThoughLead = new LeaderBobTalonSRX(3, new BobTalonSRX(4));
 
   @Override
