@@ -12,19 +12,19 @@ public class DistanceScalingArc extends SrxTrajectory {
 	
     public DistanceScalingArc() {
 		super();
-		this.highGear = true;
+		this.highGear = false;
 		centerProfile = new SrxMotionProfile(centerPoints.length, centerPoints);
 	}
 
 	
     public DistanceScalingArc(boolean flipped) {
 		super();
-		this.highGear = true;
+		this.highGear = false;
 		this.flipped = flipped;
 		centerProfile = new SrxMotionProfile(centerPoints.length, centerPoints);
 	}
 
-	public boolean highGear = true;
+	public boolean highGear = false;
 
 	double[][] centerPoints = {
 				{0.000,0.000,10.000,0.000},

@@ -24,7 +24,7 @@ public class DrivetrainGoToSpeed extends Command {
 	}
 
 	protected void execute() {
-		Robot.drivetrain.drive(ControlMode.Velocity, -3244, -3244);
+		Robot.drivetrain.drive(ControlMode.Velocity, 3244, 3244);
 		System.out.println("Left Error: " + Robot.drivetrain.getLeftClosedLoopError() + "Right Error: "
 				+ Robot.drivetrain.getRightClosedLoopError());
 	}

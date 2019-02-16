@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.team319.follower.FollowsArc;
 
@@ -17,7 +19,7 @@ import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+ 
 /**
  *
  */
@@ -27,45 +29,57 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public static int DRIVE_PROFILE = 0;
 	public static int ROTATION_PROFILE = 1;
 
-	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.015122, 0.00015122, 0.15122, 0.3154, 0);
-	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.0, 0.00, 0.0, 0.0, 0);
+	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.015122, 0.00015122, 0.15, 0.3154, 0);
+	//private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.015122, 0.00015122, 0.15, 0.3154, 0);
+	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.0, 0.0, 0.0, 0.0, 0);
 
-	public BobTalonSRX rightFollowerWithPigeon = new BobTalonSRX(4);
+
+	private BobTalonSRX rightFollowerWithPigeon = new BobTalonSRX(4);
+
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12), new BobTalonSRX(13));
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollowerWithPigeon, new BobTalonSRX(5));
 
-	// private PigeonIMU pigeon = new PigeonIMU(leftLead);
+	private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
 
 	public Drivetrain() {
 
+		setupSensors();
+		setNeutralMode(NeutralMode.Coast);
+		
+		configGains(driveGains);
+		configGains(rotationGains);
+
 		leftLead.setInverted(true);
+		leftLead.setSensorPhase(false);
+		rightLead.setInverted(false);
+		rightLead.setSensorPhase(false);
+
+		/*
 		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
 		leftLead.setSensorPhase(false);
 
-		rightLead.setInverted(false);
+		
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
-		rightLead.setSensorPhase(false);
 
 		leftLead.enableCurrentLimit(false);
-		leftLead.configContinuousCurrentLimit(0);
+		leftLead.configContinuousCurrentLimit(60);
 		rightLead.enableCurrentLimit(false);
-		rightLead.configContinuousCurrentLimit(0);
+		rightLead.configContinuousCurrentLimit(60);
 
-		leftLead.configOpenloopRamp(0.0);
-		rightLead.configOpenloopRamp(0.0);
+		leftLead.configOpenloopRamp(0.125);
+		rightLead.configOpenloopRamp(0.125);
 
-		setNeutralMode(NeutralMode.Coast);
+		
 
-		configGains(driveGains);
-		configGains(rotationGains);
 
 		// configure distance sensor
 		// Remote 0 will be the other side's Talon
 		rightLead.configRemoteSensor0(leftLead.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor);
 		rightLead.configSensorSum(FeedbackDevice.RemoteSensor0, FeedbackDevice.CTRE_MagEncoder_Relative);
-		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5); // distances from left and right are
-																				// summed, so average them
-		rightLead.configMaxIntegralAccumulator(ROTATION_PROFILE, 0);
+		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
+
+		//I is limited to a certain amount
+		rightLead.configMaxIntegralAccumulator(ROTATION_PROFILE, 3000);
 
 		// configure angle sensor
 		// Remote 1 will be a pigeon
@@ -78,10 +92,18 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		rightLead.setSensorPhase(false);
 
 	
+		// Add a coefficient for Pigeon to convert to 360
+		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
+		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0)); 
 
-		// convert to 360
 		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 		rightLead.configAuxPIDPolarity(false, 0);
+		*/
+	}
+
+	public void setupSensors(){
+		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
+		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 
 		rightLead.configRemoteSensor0(leftLead.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor);
 		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
@@ -110,7 +132,6 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public void drive(ControlMode controlMode, DriveSignal driveSignal) {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
 	}
-
 
 	public double getLeftDriveLeadDistance() {
 		return this.leftLead.getSelectedSensorPosition();
@@ -164,10 +185,16 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 
 	public double getAngle() {
 		double[] ypr = new double[3];
-		// pigeon.getYawPitchRoll(ypr);
+		pigeon.getYawPitchRoll(ypr);
 		return ypr[0];
 	}
   
+
+	public void resetPigeon() {
+		this.pigeon.setYaw(0.0, 0);
+		// Yaw is rotation of robot during autos
+	}
+
 	public double getRightDistance() {
 		return rightLead.getPrimarySensorPosition();
 	}
@@ -175,10 +202,11 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public double getLeftDistance() {
 		return leftLead.getPrimarySensorPosition();
 	}
+
 	public double getVelocity() {
-		double Velocity = rightLead.getPrimarySensorVelocity();
-		System.out.println("Velocity: " + Velocity);
-		return rightLead.getPrimarySensorVelocity();
+		// double Velocity = rightLead.getPrimarySensorVelocity();
+		// System.out.println("Velocity: " + Velocity);
+		return (rightLead.getPrimarySensorVelocity() + leftLead.getPrimarySensorVelocity()) / 2;
 	}
 
 	@Override
@@ -186,11 +214,12 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		SmartDashboard.putNumber("Right Distance", getRightDistance());
 		SmartDashboard.putNumber("Left Distance", getLeftDistance());
 		SmartDashboard.putNumber("Velocity:", getVelocity());
+		SmartDashboard.putNumber("Distance", getDistance());
 	}
-  
+
 	@Override
 	public double getDistance() {
-		return rightLead.getPrimarySensorPosition();
+		return (leftLead.getPrimarySensorPosition() + rightLead.getPrimarySensorPosition()) / 2;
 	}
 
 	@Override

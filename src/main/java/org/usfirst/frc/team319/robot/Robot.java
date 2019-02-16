@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team319.robot;
 
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.ExampleAutoCommandGroup;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.ExampleAuto;
 import org.usfirst.frc.team319.robot.subsystems.BBArm;
 import org.usfirst.frc.team319.robot.subsystems.Carriage;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 
 		autoChooser = new SendableChooser<String>();
 		// autoChooser.addDefault("Example Auto", "Example Auto");
-
+		SmartDashboard.putNumber("BBA Position", Robot.bbarm.getCurrentPosition());
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
 		// SmartDashboard.putData("CrossTheLine", new FollowArc(new ()));
 
@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
 		System.out.println(selectedAuto);
 		switch (selectedAuto) {
 		case "ExampleAuto":
-			autonomousCommand = new ExampleAutoCommandGroup();
+			autonomousCommand = new ExampleAuto();
 			break;
 		}
 
