@@ -12,8 +12,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Pneumatics extends Subsystem {
 
-	// public boolean isCollectorSolenoidExtended;
-
 	Compressor compressor = new Compressor(0);
 
 	// elevator, carriage, beak, Hatch collector
@@ -33,7 +31,6 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void beakOpen() {
-
 		this.beakSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setIsBeakOpen(true);
 	}

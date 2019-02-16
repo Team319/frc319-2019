@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class BeakToggle extends Command {
   public BeakToggle() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.pneumatics);
   }
 
   // Called just before this Command runs the first time
