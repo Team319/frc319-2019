@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   private boolean isHatchCollectorSolenoidExtended = true;
+  private boolean isHatchCollectorArmSolenoidExtended = true;
 
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, new BobTalonSRX(8));
   public LeaderBobTalonSRX bbaCollector = new LeaderBobTalonSRX(9);
@@ -86,6 +87,14 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   public void setIsHatchCollectorSolenoidExtended(boolean isHatchCollectorSolenoidExtended){
     this.isHatchCollectorSolenoidExtended = isHatchCollectorSolenoidExtended;
+  }
+
+  public boolean isHatchCollectorArmSolenoidExtended() {
+    return isHatchCollectorArmSolenoidExtended;
+  }
+
+  public void setIsHatchCollectorArmSolenoidExtended(boolean isHatchCollectorArmSolenoidExtended) {
+    this.isHatchCollectorArmSolenoidExtended = isHatchCollectorArmSolenoidExtended;
   }
 
   public boolean isBBArmSafe(double targetBBArmPosition) {

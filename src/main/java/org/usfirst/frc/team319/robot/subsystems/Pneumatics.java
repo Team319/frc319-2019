@@ -24,6 +24,7 @@ public boolean isHatchCollectorSolenoidExtended;
 	DoubleSolenoid carriageSolenoid = new DoubleSolenoid(2, 3);
 	DoubleSolenoid elevatorSolenoid = new DoubleSolenoid(4, 5);
 	DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(6, 7);
+	DoubleSolenoid hatchCollectorArmSolenoid = new DoubleSolenoid(8, 9);
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -67,5 +68,13 @@ public boolean isHatchCollectorSolenoidExtended;
 	public void hatchCollectorRetract() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.bbarm.setIsHatchCollectorSolenoidExtended(false);
+	}
+	public void hatchCollectorArmExtend() {
+		this.hatchCollectorArmSolenoid.set(DoubleSolenoid.Value.kForward);
+		Robot.bbarm.setIsHatchCollectorArmSolenoidExtended(true);
+	}
+	public void hatchCollectorArmRetract() {
+		this.hatchCollectorArmSolenoid.set(DoubleSolenoid.Value.kForward);
+		Robot.bbarm.setIsHatchCollectorArmSolenoidExtended(false);
 	}
 }
