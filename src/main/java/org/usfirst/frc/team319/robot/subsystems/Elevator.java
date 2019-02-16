@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Elevator extends Subsystem implements IPositionControlledSubsystem {
 
-  private boolean isElevatorSolenoidExtended = true;
+  private boolean isElevatorFloorSolenoidExtended = true;
 
   private int homePosition = 0;
 
@@ -79,11 +79,11 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
       return true;
     }
   }
-  public boolean isElevatorSolenoidExtended() {
-    return isElevatorSolenoidExtended;
+  public boolean isElevatorFloorSolenoidExtended() {
+    return isElevatorFloorSolenoidExtended;
   }
-  public void setIsElevatorSolenoidExtended(boolean isElevatorSolenoidExtended) {
-    this.isElevatorSolenoidExtended = isElevatorSolenoidExtended;
+  public void setIsElevatorFloorSolenoidExtended(boolean isElevatorFloorSolenoidExtended) {
+    this.isElevatorFloorSolenoidExtended = isElevatorFloorSolenoidExtended;
   }
   public boolean isValidPosition(int position) {
     boolean withinBounds = position <= maxUpTravelPosition && position >= maxDownTravelPosition;

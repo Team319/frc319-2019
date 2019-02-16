@@ -11,9 +11,8 @@ import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorExtendSolenoid extends Command {
-
-  public ElevatorExtendSolenoid() {
+public class toggleElevatorFloorSolenoid extends Command {
+  public toggleElevatorFloorSolenoid() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.pneumatics);
   }
@@ -26,7 +25,12 @@ public class ElevatorExtendSolenoid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.elevatorExtend();
+    if(Robot.elevator.isElevatorFloorSolenoidExtended()) {
+      Robot.pneumatics.elevatorFloorRetract();
+    }else{
+      Robot.pneumatics.elevatorFloorExtend();
+    }
+    
   }
 
   // Make this return true when this Command no longer needs to run execute()
