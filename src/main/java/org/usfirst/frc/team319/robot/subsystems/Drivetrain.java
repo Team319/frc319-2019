@@ -4,8 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
+import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRXConfiguration;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.team319.follower.FollowsArc;
 
@@ -66,7 +68,17 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
 
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0));
+		//I is limited to a certain amount
+		rightLead.configMaxIntegralAccumulator(ROTATION_PROFILE, 3000);
 
+		// configure angle sensor
+		// Remote 1 will be a pigeon
+		// Add a coefficient for Pigeon to convert to 360
+		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
+		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0)); 
+
+		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
+		rightLead.configAuxPIDPolarity(false, 0);
 	}
 
 	public void initDefaultCommand() {

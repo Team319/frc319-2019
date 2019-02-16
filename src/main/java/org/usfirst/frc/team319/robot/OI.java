@@ -17,6 +17,7 @@ import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
+import org.usfirst.frc.team319.robot.commands.autonomous_paths.DriveTrainDriveThreeFeet;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -36,16 +37,9 @@ public class OI {
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
-		//driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
-		
-		driverController.xButton.whileHeld(new BBAGoToSpeed());
-		driverController.leftTriggerButton.whileHeld(new ManualCollect());
-
+		driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
 
 		//----Operator Setup----//
-
-	
-		operatorController = new BobXboxController(1, 0.10, 0.05);
 
 		//----Operator Buttons----//
 		
@@ -54,6 +48,8 @@ public class OI {
 		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
 		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
 		//operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
+
+		//----Operator Buttons----//
 
 	}
 }

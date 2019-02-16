@@ -7,8 +7,8 @@ public class DriveForwardThreeFeetArc extends SrxTrajectory {
 	
 	// WAYPOINTS:
 	// (X,Y,degrees)
-	// (1.25,3.79,0.00)
-	// (4.25,3.79,0.00)
+	// (0.00,0.00,0.00)
+	// (3.00,0.00,0.00)
 	
     public DriveForwardThreeFeetArc() {
 		super();
