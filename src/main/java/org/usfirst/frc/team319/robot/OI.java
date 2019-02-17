@@ -9,6 +9,8 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.DrivetrainGoToSpeed;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
+import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneVelocity;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,9 +26,17 @@ public class OI {
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
-		driverController.aButton.whenPressed(new DrivetrainGoToSpeed());
+		driverController.xButton.whenPressed(new AutoTuneVelocity(Robot.bbarm, Robot.bbarm.bbaLead, 10, 1.0, 5));
+
+		driverController.leftTriggerButton.whileHeld(new ManualCollect());
+
+
+		//----Operator Setup----//
 
 		operatorController = new BobXboxController(1, 0.30, 0.05);
+
+
+		//----Operator Buttons----//
 
 	}
 }

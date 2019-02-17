@@ -10,12 +10,16 @@ package org.usfirst.frc.team319.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.SRXGains;
+import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.DoNothing;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JostickBBA;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -28,12 +32,16 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   private boolean isHatchCollectorArmSolenoidExtended = true;
   private boolean isHatchCollectorSolenoidExtended = false;
 
-  public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, new BobTalonSRX(6));
+
+  public BobTalonSRX bbaFollow = new BobTalonSRX(6);
+  public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
   private int upPositionLimit = 0;
   private int downPositionLimit = 0;
-  private int floor = 0;
+
+  //towards floor = positive
+  private int floor = 279607;
   private int homePosition = 0;
   private int safePosition = 0;
   private int levelThreeHab = 0;
@@ -55,26 +63,25 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
     this.bbaLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-    this.bbaLead.configForwardSoftLimitEnable(true);
-    this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);
+		this.bbaLead.setInverted(false);
+    this.bbaLead.setSensorPhase(true);
+    
+    this.bbaFollow.setInverted(true);
+    this.bbaFollow.setSensorPhase(true);
 
-    this.bbaLead.configReverseSoftLimitEnable(true);
-    this.bbaLead.configReverseSoftLimitThreshold(downPositionLimit);
+  	this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
+	  this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
 
-    this.bbaLead.setInverted(true);
-    this.bbaLead.setSensorPhase(false);
+	//	this.bbaLead.configForwardSoftLimitThreshold(downPositionLimit);
+	//	this.bbaLead.configReverseSoftLimitThreshold(upPositionLimit);
 
-    this.bbaLead.configMotionParameters(UpMotionParameters);
-    this.bbaLead.configMotionParameters(DownMotionParameters);
+	//	this.bbaLead.configForwardSoftLimitEnable(false);
+   // this.bbaLead.configReverseSoftLimitEnable(false);
+    
+    this.bbaLead.setNeutralMode(NeutralMode.Brake);
 
-   // this.bbaLead.setNeutralMode(NeutralMode.Brake);
-
-   this.bbaLead.configClosedloopRamp(0.25);
-
-   this.bbaLead.configVoltageCompSaturation(11.5);
-   this.bbaLead.enableVoltageCompensation(true);
-
-   this.bbaLead.configPeakOutputReverse(-1.0);
+		this.bbaLead.configMotionParameters(UpMotionParameters);
+		this.bbaLead.configMotionParameters(DownMotionParameters);
   }
 
   @Override
@@ -112,6 +119,7 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
     boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
     return withinBounds;
   }
+ 
 
   public void manageMotion(double targetPosition) {
     double currentPosition = getCurrentPosition();
@@ -126,6 +134,12 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   public void motionMagicControl() {
     this.manageMotion(targetPosition);
     this.bbaLead.set(ControlMode.MotionMagic, targetPosition, DemandType.ArbitraryFeedForward, 0.1);
+  }
+  public void percentVbus(double signal){
+    this.bbaLead.set(ControlMode.PercentOutput, signal);
+  }
+  public void percentVbusCollector(double signal){
+    this.collectorTalon.set(ControlMode.PercentOutput, signal);
   }
 
   public void incrementTargetPosition(int increment) {
@@ -160,7 +174,7 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   @Override
   public int getCurrentPosition() {
-		return bbaLead.getPrimarySensorPosition();
+		return this.bbaLead.getSelectedSensorPosition();
   }
 
   public int getSafePosition() {
@@ -180,6 +194,6 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   @Override
 	public void periodic() {
-  	SmartDashboard.putNumber("BBA Position", getCurrentPosition());
+  	SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
 	}
 }
