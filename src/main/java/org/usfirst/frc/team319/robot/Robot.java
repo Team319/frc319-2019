@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 
 		autoChooser = new SendableChooser<String>();
 		// autoChooser.addDefault("Example Auto", "Example Auto");
-		SmartDashboard.putNumber("BBA Position", Robot.bbarm.getCurrentPosition());
+		//SmartDashboard.putNumber("BBA Position", Robot.bbarm.getCurrentPosition());
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
 		// SmartDashboard.putData("CrossTheLine", new FollowArc(new ()));
 
