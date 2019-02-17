@@ -18,10 +18,13 @@ import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.SRXGains;
+import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.DoNothing;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JostickBBA;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -29,6 +32,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class BBArm extends PositionControlledSubsystem {
   private boolean isHatchCollectorArmSolenoidExtended = true;
   private boolean isHatchCollectorSolenoidExtended = false;
+
 
   public BobTalonSRX bbaFollow = new BobTalonSRX(6);
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
@@ -137,6 +141,7 @@ public class BBArm extends PositionControlledSubsystem {
     boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
     return withinBounds;
   }
+ 
 
   public void manageMotion(double targetPosition) {
     double currentPosition = getCurrentPosition();
@@ -152,6 +157,7 @@ public class BBArm extends PositionControlledSubsystem {
     this.manageMotion(targetPosition);
     this.bbaLead.set(ControlMode.MotionMagic, targetPosition, DemandType.ArbitraryFeedForward, 0.1);
   }
+  
 
   public void percentVbus(double signal) {
     this.bbaLead.set(ControlMode.PercentOutput, signal);
