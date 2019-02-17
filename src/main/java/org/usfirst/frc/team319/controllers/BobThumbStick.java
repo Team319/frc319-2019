@@ -49,8 +49,13 @@ public class BobThumbStick {
 	public double handleDeadband(double input, double deadband) {
 		if (input > -deadband && input < deadband) {
 			return 0;
-		} else {
-			return input;
+		} else if(input > 0) {
+			double scaledInput = (input - deadband)/(1 - deadband); 
+			return scaledInput;
+		}
+		else{
+			double scaledInput = (input + deadband)/(1 - deadband); 
+			return scaledInput;
 		}
 	}
 

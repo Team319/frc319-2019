@@ -8,14 +8,11 @@
 package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class JostickBBA extends Command {
-
-  //private int positionIncrement = 200;
-
-  public JostickBBA() {
+public class BBAGoToSpeed extends Command {
+  public BBAGoToSpeed() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.bbarm);
   }
@@ -23,32 +20,27 @@ public class JostickBBA extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.bbarm.setSpeed(800);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-  double signal = Robot.oi.operatorController.leftStick.getY();
-  SmartDashboard.putNumber("ArmSignal", signal);
-   Robot.bbarm.percentVbus(signal);
-    /*
-    double signal = -Robot.oi.operatorController.leftStick.getY();
-    Robot.bbarm.incrementTargetPosition((int) (signal * positionIncrement));
-
-    Robot.bbarm.motionMagicControl();
-    */
   }
 
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     return false;
   }
 
+  // Called once after isFinished returns true
   @Override
   protected void end() {
-
   }
 
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
   }
