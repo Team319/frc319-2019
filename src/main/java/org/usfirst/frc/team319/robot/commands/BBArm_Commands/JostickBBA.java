@@ -29,6 +29,7 @@ public class JostickBBA extends Command {
   @Override
   protected void execute() {
   double signal = Robot.oi.operatorController.leftStick.getY();
+  SmartDashboard.putNumber("ArmSignal", signal);
    Robot.bbarm.percentVbus(signal);
     /*
     double signal = -Robot.oi.operatorController.leftStick.getY();

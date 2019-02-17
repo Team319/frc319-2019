@@ -18,8 +18,6 @@ import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.SRXGains;
-import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.DoNothing;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JostickBBA;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,12 +36,12 @@ public class BBArm extends PositionControlledSubsystem {
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
-  private int upPositionLimit = -9010;
-  private int downPositionLimit = -650;
+  private int upPositionLimit = 0;
+  private int downPositionLimit = 9100;
 
-  // towards floor = negative
+  // towards floor = positive
 
-  private int homePosition = -650;
+  private int homePosition = 0;
   private int safePosition = 0;
   private int levelThreeHab = 0;
   private int levelTwoHab = 0;
@@ -141,7 +139,6 @@ public class BBArm extends PositionControlledSubsystem {
     boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
     return withinBounds;
   }
- 
 
   public void manageMotion(double targetPosition) {
     double currentPosition = getCurrentPosition();
