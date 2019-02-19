@@ -33,7 +33,7 @@ public class BBArm extends PositionControlledSubsystem {
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
-  private int upPositionLimit = -9001;
+  private int upPositionLimit = -9010;
   private int downPositionLimit = -650;
 
   // towards floor = negative
@@ -157,6 +157,9 @@ public class BBArm extends PositionControlledSubsystem {
   }
   public void setSpeed(double speed){
     this.bbaLead.set(ControlMode.Velocity, speed);
+  }
+  public void setCollectorSpeed(double speed){
+    this.collectorTalon.set(ControlMode.PercentOutput, speed);
   }
 
   public void percentVbusCollector(double signal) {

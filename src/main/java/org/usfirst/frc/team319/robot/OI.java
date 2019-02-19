@@ -15,6 +15,7 @@ import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoHome;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToSpeed;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
 
 /**
@@ -35,8 +36,8 @@ public class OI {
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
-	//	driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
-	//	driverController.xButton.whileHeld(new AutoTuneVelocity(Robot.bbarm, Robot.bbarm.bbaLead, 0, 750, 50));
+		//driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
+		
 		driverController.xButton.whileHeld(new BBAGoToSpeed());
 		driverController.leftTriggerButton.whileHeld(new ManualCollect());
 
@@ -50,6 +51,7 @@ public class OI {
 		operatorController.bButton.whenPressed(new BBAGoHome());
 		operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
 		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
+		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
 		//operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
 
 	}
