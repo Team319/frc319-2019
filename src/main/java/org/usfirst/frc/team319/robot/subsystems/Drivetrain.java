@@ -52,51 +52,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		rightLead.setInverted(false);
 		rightLead.setSensorPhase(false);
 
-		/*
-		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
-		leftLead.setSensorPhase(false);
-
-		
-		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
-
-		leftLead.enableCurrentLimit(false);
-		leftLead.configContinuousCurrentLimit(60);
-		rightLead.enableCurrentLimit(false);
-		rightLead.configContinuousCurrentLimit(60);
-
-		leftLead.configOpenloopRamp(0.125);
-		rightLead.configOpenloopRamp(0.125);
-
-		
-
-
-		// configure distance sensor
-		// Remote 0 will be the other side's Talon
-		rightLead.configRemoteSensor0(leftLead.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor);
-		rightLead.configSensorSum(FeedbackDevice.RemoteSensor0, FeedbackDevice.CTRE_MagEncoder_Relative);
-		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
-
-		//I is limited to a certain amount
-		rightLead.configMaxIntegralAccumulator(ROTATION_PROFILE, 3000);
-
-		// configure angle sensor
-		// Remote 1 will be a pigeon
-
-		rightLead.configRemoteSensor1(leftLead.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
-		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (0.0 / 0.0)); // Coefficient for
-																							// Pigeon to
-		leftLead.setSensorPhase(false);
-		rightLead.setInverted(false);
-		rightLead.setSensorPhase(false);
-
 	
-		// Add a coefficient for Pigeon to convert to 360
-		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
-		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0)); 
-
-		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
-		rightLead.configAuxPIDPolarity(false, 0);
-		*/
 	}
 
 	public void setupSensors(){

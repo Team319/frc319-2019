@@ -70,7 +70,7 @@ public class BobPathCreator extends AbstractBobPathCreator {
 	 */
 	private List<BobPath> getConfigArcs() {
 		
-		BobPath distanceScaling = new BobPath(config, "DistanceScaling", true);
+		BobPath distanceScaling = new BobPath(config, "DistanceScaling");
 		distanceScaling.addWaypoint(2, 13.5, 0, 0, 0);
 		distanceScaling.addWaypointRelative(3, 0, 0, 0, 3);
 

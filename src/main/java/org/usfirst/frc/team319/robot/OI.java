@@ -36,8 +36,8 @@ public class OI {
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
-	//	driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
-	//	driverController.xButton.whileHeld(new AutoTuneVelocity(Robot.bbarm, Robot.bbarm.bbaLead, 0, 750, 50));
+		//driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
+		
 		driverController.xButton.whileHeld(new BBAGoToSpeed());
 		driverController.leftTriggerButton.whileHeld(new ManualCollect());
 
@@ -52,6 +52,7 @@ public class OI {
 		operatorController.bButton.whenPressed(new BBAGoHome());
 		operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
 		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
+		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
 		//operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
 
 	}
