@@ -28,14 +28,14 @@ public class Carriage extends Subsystem {
   }
 
   public boolean isBeakOpen() {
-		return isBeakOpen;
+    return isBeakOpen;
   }
 
   public void setIsBeakOpen(boolean isBeakOpen) {
-		this.isBeakOpen = isBeakOpen;
-	}
+    this.isBeakOpen = isBeakOpen;
+  }
 
-public double isCarraigeSafe(int newTargetPosition) {
-	return this.safePosition;
-}
+  public double isCarraigeSafe(int newTargetPosition) {
+    return this.safePosition;
+  }
 }

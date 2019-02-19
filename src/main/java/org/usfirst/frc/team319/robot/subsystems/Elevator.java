@@ -84,7 +84,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
   }
 
   // ----Get Misc Positions----//
-  public double getHimePosition() {
+  public double getHomePosition() {
     return this.homePosition;
   }
 
