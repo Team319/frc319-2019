@@ -28,7 +28,7 @@ public class JostickElevator extends Command {
   @Override
   protected void execute() {
     double signal = Robot.oi.operatorController.rightStick.getY();
-    Robot.bbarm.percentVbus(signal);
+    Robot.elevator.percentVbus(signal);
 
    /*
     double signal = -Robot.oi.operatorController.leftStick.getY();

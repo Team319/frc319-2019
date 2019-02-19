@@ -33,12 +33,12 @@ public class BBArm extends PositionControlledSubsystem {
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
-  private int upPositionLimit = 0;
-  private int downPositionLimit = 9100;
+  private int upPositionLimit = -9001;
+  private int downPositionLimit = -650;
 
-  // towards floor = positive
+  // towards floor = negative
 
-  private int homePosition = 0;
+  private int homePosition = -650;
   private int safePosition = 0;
   private int levelThreeHab = 0;
   private int levelTwoHab = 0;
@@ -110,15 +110,15 @@ public class BBArm extends PositionControlledSubsystem {
     this.bbaLead.configForwardSoftLimitThreshold(downPositionLimit);
     this.bbaLead.configReverseSoftLimitThreshold(upPositionLimit);
 
-    this.bbaLead.configForwardSoftLimitEnable(false);
-    this.bbaLead.configReverseSoftLimitEnable(false);
+    this.bbaLead.configForwardSoftLimitEnable(true);
+    this.bbaLead.configReverseSoftLimitEnable(true);
     //------------Follow Limits------------//
 
     this.bbaFollow.configForwardSoftLimitThreshold(downPositionLimit);
     this.bbaFollow.configReverseSoftLimitThreshold(upPositionLimit);
 
-    this.bbaFollow.configForwardSoftLimitEnable(false);
-    this.bbaFollow.configReverseSoftLimitEnable(false);
+    this.bbaFollow.configForwardSoftLimitEnable(true);
+    this.bbaFollow.configReverseSoftLimitEnable(true);
   }
 
 
