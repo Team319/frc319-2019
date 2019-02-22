@@ -9,6 +9,7 @@ package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class JostickElevator extends Command {
 
@@ -28,6 +29,7 @@ public class JostickElevator extends Command {
   @Override
   protected void execute() {
     double signal = Robot.oi.operatorController.rightStick.getY();
+    SmartDashboard.putNumber("ElevatorSignal", signal);
     Robot.elevator.percentVbus(signal);
 
    /*

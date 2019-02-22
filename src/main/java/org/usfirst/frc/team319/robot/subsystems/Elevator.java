@@ -68,7 +68,10 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   private MotionParameters UpMotionParameters = new MotionParameters(2600, 2000, elevatorUpGains);
   private MotionParameters DownMotionParameters = new MotionParameters(2600, 2000, elevatorDownGains);
 
-  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2), new BobTalonSRX(14), new BobTalonSRX(15));
+  public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
+  public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
+  public BobTalonSRX elevatorFollow14 = new BobTalonSRX(14);
+  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(15, elevatorFollow1, elevatorFollow2, elevatorFollow14);
 
   public Elevator() {
 
@@ -90,13 +93,35 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   public void setupSensors(){
     this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-    this.elevatorLead.configForwardSoftLimitEnable(true);
+    this.elevatorFollow1.configForwardSoftLimitEnable(false);
+    this.elevatorFollow1.configForwardSoftLimitThreshold(maxUpTravelPosition);
+
+    this.elevatorFollow1.configReverseSoftLimitEnable(false);
+    this.elevatorFollow1.configReverseSoftLimitThreshold(homePosition);
+
+    this.elevatorFollow2.configForwardSoftLimitEnable(false);
+    this.elevatorFollow2.configForwardSoftLimitThreshold(maxUpTravelPosition);
+
+    this.elevatorFollow2.configReverseSoftLimitEnable(false);
+    this.elevatorFollow2.configReverseSoftLimitThreshold(homePosition);
+
+    this.elevatorFollow14.configForwardSoftLimitEnable(false);
+    this.elevatorFollow14.configForwardSoftLimitThreshold(maxUpTravelPosition);
+
+    this.elevatorFollow14.configReverseSoftLimitEnable(false);
+    this.elevatorFollow14.configReverseSoftLimitThreshold(homePosition);
+
+    this.elevatorLead.configForwardSoftLimitEnable(false);
     this.elevatorLead.configForwardSoftLimitThreshold(maxUpTravelPosition);
 
-    this.elevatorLead.configReverseSoftLimitEnable(true);
+    this.elevatorLead.configReverseSoftLimitEnable(false);
     this.elevatorLead.configReverseSoftLimitThreshold(homePosition);
 
-    this.elevatorLead.setInverted(true);
+    this.elevatorLead.setInverted(false);
+
+    this.elevatorFollow1.setInverted(true);
+    this.elevatorFollow2.setInverted(true);
+    this.elevatorFollow14.setInverted(false);
 
     this.elevatorLead.setSensorPhase(false);
 
