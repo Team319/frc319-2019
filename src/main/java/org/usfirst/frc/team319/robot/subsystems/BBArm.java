@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Add your docs here.
  */
 public class BBArm extends Subsystem implements IPositionControlledSubsystem {
+  private boolean isHatchCollectorSolenoidExtended = false;
 
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, new BobTalonSRX(6));
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
@@ -80,6 +81,14 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
     setDefaultCommand(new JostickBBA());
   }
 
+  public boolean isHatchCollectorSolenoidExtended(){
+    return isHatchCollectorSolenoidExtended;
+  }
+
+  public void setIsHatchCollectorSolenoidExtended(boolean isHatchCollectorSolenoidExtended){
+    this.isHatchCollectorSolenoidExtended = isHatchCollectorSolenoidExtended;
+  }
+
   public boolean isBBArmSafe(double targetBBArmPosition) {
     boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
     //System.out.println("is BBA at risk: " + atRisk);
@@ -89,7 +98,7 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
       return true;
     }
   }
-
+//
   public boolean isValidPosition(int position) {
     boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
     return withinBounds;

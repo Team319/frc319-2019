@@ -57,8 +57,10 @@ public class Pneumatics extends Subsystem {
 	}
 	public void hatchCollectorExtend() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
+		Robot.bbarm.setIsHatchCollectorSolenoidExtended(true);
 	}	
 	public void hatchCollectorRetract() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kReverse);
+		Robot.bbarm.setIsHatchCollectorSolenoidExtended(false);
 	}
 }
