@@ -26,7 +26,7 @@ public class AutoTuneVelocitySpinUp extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		_talon.configOpenloopRamp(1.0);
+		_talon.configOpenloopRamp(0.25);
 		_talon.set(controlMode, setpoint);
 		System.out.println("Starting motor.");
 	}

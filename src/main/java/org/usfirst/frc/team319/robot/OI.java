@@ -9,6 +9,14 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.DrivetrainGoToSpeed;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
+import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneVelocity;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoHome;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToSpeed;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,13 +28,31 @@ public class OI {
 
 	public OI() {
 
-		driverController = new BobXboxController(0, 0.30, 0.05);
+		//----Driver Setup----//
+
+		driverController = new BobXboxController(0, 0.10, 0.10);
+
+		//----Driver Buttons----//
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
-		driverController.aButton.whenPressed(new DrivetrainGoToSpeed());
+		//driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
+		
+		driverController.xButton.whileHeld(new BBAGoToSpeed());
+		driverController.leftTriggerButton.whileHeld(new ManualCollect());
 
-		operatorController = new BobXboxController(1, 0.30, 0.05);
+
+		//----Operator Setup----//
+
+		operatorController = new BobXboxController(1, 0.10, 0.10);
+
+		//----Operator Buttons----//
+		
+		operatorController.bButton.whenPressed(new BBAGoHome());
+		operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
+		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
+		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
+		//operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
 
 	}
 }

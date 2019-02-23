@@ -16,37 +16,37 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
+import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.SRXGains;
-//import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JostickElevator;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
  */
-public class Elevator extends Subsystem implements IPositionControlledSubsystem {
+public class Elevator extends PositionControlledSubsystem implements IPositionControlledSubsystem {
   private boolean isElevatorFloorSolenoidExtended = false;
+
   private boolean isHoldingPosition = false;
 
   private int homePosition = 0;
 
-  // ----Hatch Positions----//
+  // ---- Hatch Positions ---- //
 
   private int hatchCollectPosition = 0;
   private int highHatchPosition = 0;
   private int middleHatchPosition = 0;
   private int lowHatchPosition = 0;
 
-  // ----Cargo Positions----//
+  // ---- Cargo Positions ---- //
   private int cargoCollectPosition = 0;
   private int highCargoPosition = 0;
   private int middleCargoPosition = 0;
   private int lowCargoRocketPosition = 0;
   private int cargoShipCargoPosition = 0; // cargoShipCargoPosition should be around the same as middleHatchPosition
 
-  // ----Travel Limits Positions----//
+  // ---- Travel Limits Positions ---- //
 
   private int topOfFirstStagePosition = 0;
   private int maxUpTravelPosition = 0;
@@ -57,7 +57,7 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
 
   // private int climpPosition = 0;
 
-  // ----Gains, Pid Values, Talon Setup----//
+  // ---- Gains, Pid Values, Talon Setup ---- //
 
   public final static int ELEVATOR_UP = 0;
   public final static int ELEVATOR_DOWN = 1;
@@ -68,27 +68,15 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
   private MotionParameters UpMotionParameters = new MotionParameters(2600, 2000, elevatorUpGains);
   private MotionParameters DownMotionParameters = new MotionParameters(2600, 2000, elevatorDownGains);
 
-  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(1, new BobTalonSRX(2), new BobTalonSRX(14), new BobTalonSRX(15));
+  public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
+  public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
+  public BobTalonSRX elevatorFollow14 = new BobTalonSRX(14);
+  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(15, elevatorFollow1, elevatorFollow2, elevatorFollow14);
 
   public Elevator() {
 
-    this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-
-    this.elevatorLead.configForwardSoftLimitEnable(true);
-    this.elevatorLead.configForwardSoftLimitThreshold(maxUpTravelPosition);
-
-    this.elevatorLead.configReverseSoftLimitEnable(true);
-    this.elevatorLead.configReverseSoftLimitThreshold(homePosition);
-
-    this.elevatorLead.setInverted(true);
-
-    this.elevatorLead.setSensorPhase(false);
-
-    this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
-    this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-
-    this.elevatorLead.configMotionParameters(UpMotionParameters);
-    this.elevatorLead.configMotionParameters(DownMotionParameters);
+    setupSensors();
+    setupMotinParameters();
 
     this.elevatorLead.configClosedloopRamp(0.25);
 
@@ -96,6 +84,49 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
     this.elevatorLead.enableVoltageCompensation(true);
 
     this.elevatorLead.configPeakOutputReverse(-1.0);
+  }
+
+  public void setupMotinParameters() {
+    this.elevatorLead.configMotionParameters(UpMotionParameters);
+    this.elevatorLead.configMotionParameters(DownMotionParameters);
+  }
+  public void setupSensors(){
+    this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+
+    this.elevatorFollow1.configForwardSoftLimitEnable(false);
+    this.elevatorFollow1.configForwardSoftLimitThreshold(maxUpTravelPosition);
+
+    this.elevatorFollow1.configReverseSoftLimitEnable(false);
+    this.elevatorFollow1.configReverseSoftLimitThreshold(homePosition);
+
+    this.elevatorFollow2.configForwardSoftLimitEnable(false);
+    this.elevatorFollow2.configForwardSoftLimitThreshold(maxUpTravelPosition);
+
+    this.elevatorFollow2.configReverseSoftLimitEnable(false);
+    this.elevatorFollow2.configReverseSoftLimitThreshold(homePosition);
+
+    this.elevatorFollow14.configForwardSoftLimitEnable(false);
+    this.elevatorFollow14.configForwardSoftLimitThreshold(maxUpTravelPosition);
+
+    this.elevatorFollow14.configReverseSoftLimitEnable(false);
+    this.elevatorFollow14.configReverseSoftLimitThreshold(homePosition);
+
+    this.elevatorLead.configForwardSoftLimitEnable(false);
+    this.elevatorLead.configForwardSoftLimitThreshold(maxUpTravelPosition);
+
+    this.elevatorLead.configReverseSoftLimitEnable(false);
+    this.elevatorLead.configReverseSoftLimitThreshold(homePosition);
+
+    this.elevatorLead.setInverted(false);
+
+    this.elevatorFollow1.setInverted(true);
+    this.elevatorFollow2.setInverted(true);
+    this.elevatorFollow14.setInverted(false);
+
+    this.elevatorLead.setSensorPhase(false);
+
+    this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
+    this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
   }
 
   @Override
@@ -137,51 +168,54 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
   }
 
   // ----Get Hatch Positions----//
-  public double getHatchCollectPosition() {
+  public int getHatchCollectPosition() {
     return this.hatchCollectPosition;
   }
 
-  public double getHighHatchPosition() {
+  public int getHighHatchPosition() {
     return this.highHatchPosition;
   }
 
-  public double getMiddleHatchPosition() {
+  public int getMiddleHatchPosition() {
     return this.middleHatchPosition;
   }
 
-  public double getLowHatchPosition() {
+  public int getLowHatchPosition() {
     return this.lowHatchPosition;
   }
 
   // ----Get Cargo Positions----//
-  public double getCargoCollectPosition() {
+  public int getCargoCollectPosition() {
     return this.cargoCollectPosition;
   }
 
-  public double getHighCargoPosition() {
+  public int getHighCargoPosition() {
     return this.highCargoPosition;
   }
 
-  public double getMiddleCargoPosition() {
+  public int getMiddleCargoPosition() {
     return this.middleCargoPosition;
   }
 
-  public double getLowCargoPosition() {
+  public int getLowCargoPosition() {
     return this.lowCargoRocketPosition;
   }
 
-  public double getCargoShipPosition() {
+  public int getCargoShipPosition() {
     return this.cargoShipCargoPosition;
   }
 
   // ----Get Travel Limits----//
 
-  public double getTopOfFirstStagePosition() {
+  public int getTopOfFirstStagePosition() {
     return this.topOfFirstStagePosition;
   }
 
-  public double getMaxUpTravelPosition() {
+  public int getMaxUpTravelPosition() {
     return this.maxUpTravelPosition;
+  }
+  public void percentVbus(double signal) {
+    this.elevatorLead.set(ControlMode.PercentOutput, signal);
   }
 
   public void manageMotion(double targetPosition) {

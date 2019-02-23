@@ -9,10 +9,11 @@ package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class JostickElevator extends Command {
 
-  private int positionIncrement = 200;
+  //private int positionIncrement = 200;
 
   public JostickElevator() {
     // Use requires() here to declare subsystem dependencies
@@ -27,12 +28,16 @@ public class JostickElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-   
+    double signal = Robot.oi.operatorController.rightStick.getY();
+    SmartDashboard.putNumber("ElevatorSignal", signal);
+    Robot.elevator.percentVbus(signal);
+
+   /*
     double signal = -Robot.oi.operatorController.leftStick.getY();
     Robot.elevator.incrementTargetPosition((int) (signal * positionIncrement));
 
     Robot.elevator.motionMagicControl();
-  
+  */
   }
 
   @Override

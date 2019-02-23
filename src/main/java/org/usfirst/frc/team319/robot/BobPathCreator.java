@@ -13,9 +13,10 @@ import com.team319.trajectory.SrxTranslatorConfig;
 public class BobPathCreator extends AbstractBobPathCreator {
 
 	//private static double robotWidthInFeet = 24.5 / 12.0;
-	//private static double robotLengthInFeet = 30.0 / 12.0;
+	
+	private static double robotLengthInFeet = 30.0 / 12.0;
 
-	//private static Waypoint startingPoint = new Waypoint(robotLengthInFeet / 2.0, 45.5 / 12.0, 0, 0, 0);
+	private static Waypoint startingPoint = new Waypoint(robotLengthInFeet / 2.0, 45.5 / 12.0, 0, 0, 0);
 
 	private SrxTranslatorConfig config = new SrxTranslatorConfig();
 
@@ -50,23 +51,11 @@ public class BobPathCreator extends AbstractBobPathCreator {
 	 * @return the list of team paths to generate
 	 */
 	private List<BobPath> generateTeamArcs() {
-		// Create a path with the name of "Example", this will generate a file named
-		// ExampleArc
-		//BobPath exampleArc = new BobPath(config, "Example");
-		// Set the first point to the starating point, this be done with any of the
-		// addWaypoint methods
-		// positive X is forward, positive Y is left, units are in feet and degrees
-		//exampleArc.addWaypoint(startingPoint);
-		// Add the next point that 3 ft forward, and doesn't turn, it also has a max
-		// speed of 5 FPS,
-		// it will arrive at this location going 2 FPS
-		//exampleArc.addWaypointRelative(3, 0, 0, 2, 5);
-		// Add the next point to be an additional 5 feet forward and 5 feet to the left
-		// with max speed of 2 FPS,
-		// it will arrive at this locaton going 0 FPS
-		//exampleArc.addWaypointRelative(5, 5, 0, 0, 2);
+		BobPath DriveForwardThreeFeet = new BobPath(config, "DriveForwardThreeFeet", true);
+		DriveForwardThreeFeet.addWaypoint(startingPoint);
+		DriveForwardThreeFeet.addWaypointRelative(3, 0, 0);
 
-		return asList(); // return asList(path1, path2, path3, ...);
+		return asList(DriveForwardThreeFeet); // return asList(path1, path2, path3, ...);
 	}
 
 	/**
@@ -81,6 +70,14 @@ public class BobPathCreator extends AbstractBobPathCreator {
 	 * direction.
 	 */
 	private List<BobPath> getConfigArcs() {
+		
+		BobPath distanceScaling = new BobPath(config, "DistanceScaling");
+		distanceScaling.addWaypoint(2, 13.5, 0, 0, 0);
+		distanceScaling.addWaypointRelative(3, 0, 0, 0, 3);
+
+		BobPath turnScaling = new BobPath(config, "TurnScaling");
+		turnScaling.addWaypoint(new Waypoint(2, 13.5, 0, 0, 0));
+		turnScaling.addWaypointRelative(3, 3, 89.99, 0, 3);
 
 		BobPath DriveForwardThreeFeet = new BobPath(config, "DriveForwardThreeFeet");
 		DriveForwardThreeFeet.addWaypoint(new Waypoint(2, 3.8, 0, 0, 0));

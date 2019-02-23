@@ -16,6 +16,8 @@ public class AutoTuneVelocity extends CommandGroup {
 	public AutoTuneVelocity(Subsystem requiredSubsystem, BobTalonSRX talon, int srxParameterSlot,
 			double desiredVelocity, int numSamplesRequired) {
 
+		addSequential(new PrintCommand("waiting five seconds for safety"));
+
 		addSequential(new WaitCommand("safety_wait_command", 5.0));
 
 		addSequential(new AutoTuneVelocitySpinUp(requiredSubsystem, talon, ControlMode.PercentOutput, 1.0));
@@ -28,6 +30,8 @@ public class AutoTuneVelocity extends CommandGroup {
 
 		addSequential(new AutoTuneVelocitySpinUp(requiredSubsystem, talon, ControlMode.Velocity, desiredVelocity));
 
+		addSequential(new PrintCommand("waiting five seconds to spin up"));
+		
 		addSequential(new WaitCommand("spin_up_wait_command", 5.0));
 
 		addSequential(new AutoTuneVelocityCalculateP(requiredSubsystem, talon, srxParameterSlot, desiredVelocity,

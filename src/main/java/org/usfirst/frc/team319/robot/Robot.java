@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
 
 		autoChooser = new SendableChooser<String>();
 		// autoChooser.addDefault("Example Auto", "Example Auto");
+
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
 		// SmartDashboard.putData("CrossTheLine", new FollowArc(new ()));
 
