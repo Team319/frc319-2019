@@ -16,7 +16,7 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -65,14 +65,14 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
 
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0));
-		//I is limited to a certain amount
+		// I is limited to a certain amount
 		rightLead.configMaxIntegralAccumulator(ROTATION_PROFILE, 3000);
 
 		// configure angle sensor
 		// Remote 1 will be a pigeon
 		// Add a coefficient for Pigeon to convert to 360
 		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
-		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0)); 
+		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0));
 
 		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 		rightLead.configAuxPIDPolarity(false, 0);
@@ -151,7 +151,6 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		pigeon.getYawPitchRoll(ypr);
 		return ypr[0];
 	}
-  
 
 	public void resetPigeon() {
 		this.pigeon.setYaw(0.0, 0);

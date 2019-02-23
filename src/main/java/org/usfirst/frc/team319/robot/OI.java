@@ -8,16 +8,16 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.DrivetrainGoToSpeed;
+//import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.DrivetrainGoToSpeed;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
-import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneVelocity;
+//import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneVelocity;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoHome;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToSpeed;
+//import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToSpeed;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.ManualTunnelIntake;
+//import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
+//import org.usfirst.frc.team319.robot.commands.Carriage_Commands.ManualTunnelIntake;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.DriveTrainDriveThreeFeet;
@@ -44,16 +44,14 @@ public class OI {
 		driverController.leftTriggerButton.whileHeld(new ManualCollect());
 
 		// ----Operator Setup----//
+		operatorController = new BobXboxController(1, 0.10, 0.05);
+		// ----Operator Buttons----//
 
-		//----Operator Buttons----//
-		
 		operatorController.bButton.whenPressed(new BBAGoHome());
 		operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
 		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
 		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
-		//operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
-
-		operatorController = new BobXboxController(1, 0.10, 0.05);
+		// operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
 
 		// ----Operator Buttons----//
 		/*

@@ -8,12 +8,12 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
+//import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
+//import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  * Add your docs here.
  */
-public class Elevator extends PositionControlledSubsystem{
+public class Elevator extends PositionControlledSubsystem {
   private boolean isElevatorFloorSolenoidExtended = false;
 
   private boolean isHoldingPosition = false;
@@ -122,12 +122,15 @@ public class Elevator extends PositionControlledSubsystem{
       return true;
     }
   }
+
   public boolean isElevatorFloorSolenoidExtended() {
     return isElevatorFloorSolenoidExtended;
   }
+
   public void setIsElevatorFloorSolenoidExtended(boolean isElevatorFloorSolenoidExtended) {
     this.isElevatorFloorSolenoidExtended = isElevatorFloorSolenoidExtended;
   }
+
   public boolean isValidPosition(int position) {
     boolean withinBounds = position <= maxUpTravelPosition && position >= maxDownTravelPosition;
     return withinBounds;
