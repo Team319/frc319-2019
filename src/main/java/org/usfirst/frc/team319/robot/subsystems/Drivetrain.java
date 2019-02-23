@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.team319.follower.FollowsArc;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.DriveSignal;
@@ -20,23 +21,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  */
 
-public class Drivetrain extends Subsystem {
+public class Drivetrain extends Subsystem implements FollowsArc {
 
 	public static int DRIVE_PROFILE = 0;
 	public static int ROTATION_PROFILE = 1;
 
-
-	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.0, 0.0, 0.0, 0.0, 0);
+	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.015122, 0.00015122, 0.15122, 0.3154, 0);
 	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.0, 0.00, 0.0, 0.0, 0);
 
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12), new BobTalonSRX(13));
-	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(5, new BobTalonSRX(6), new BobTalonSRX(7));
+	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, new BobTalonSRX(4), new BobTalonSRX(5));
 
-	//private PigeonIMU pigeon = new PigeonIMU(leftLead);
+	// private PigeonIMU pigeon = new PigeonIMU(leftLead);
 
 	public Drivetrain() {
 
-		// These Values will be different for every Robot :)
 		leftLead.setInverted(true);
 		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
 		leftLead.setSensorPhase(false);
@@ -70,7 +69,7 @@ public class Drivetrain extends Subsystem {
 		// Remote 1 will be a pigeon
 		rightLead.configRemoteSensor1(leftLead.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
 		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (0.0 / 0.0)); // Coefficient for
-																									// Pigeon to
+																							// Pigeon to
 
 		// convert to 360
 		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
@@ -89,16 +88,16 @@ public class Drivetrain extends Subsystem {
 	public void drive(ControlMode controlMode, double left, double right) {
 		this.leftLead.set(controlMode, left);
 		this.rightLead.set(controlMode, right);
-	} 
+	}
 
 	public void drive(ControlMode controlMode, DriveSignal driveSignal) {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
 	}
 
+
 	public double getLeftDriveLeadDistance() {
 		return this.leftLead.getSelectedSensorPosition();
 	}
-	
 
 	public double getRightDriveLeadDistance() {
 		return this.rightLead.getSelectedSensorPosition();
@@ -148,25 +147,48 @@ public class Drivetrain extends Subsystem {
 
 	public double getAngle() {
 		double[] ypr = new double[3];
-	//	pigeon.getYawPitchRoll(ypr);
+		// pigeon.getYawPitchRoll(ypr);
 		return ypr[0];
 	}
-	
-	public double getDistance() {
+
+	public double getRightDistance() {
 		return rightLead.getPrimarySensorPosition();
 	}
 
+	public double getLeftDistance() {
+		return leftLead.getPrimarySensorPosition();
+	}
 	public double getVelocity() {
+		double Velocity = rightLead.getPrimarySensorVelocity();
+		System.out.println("Velocity: " + Velocity);
 		return rightLead.getPrimarySensorVelocity();
 	}
 
 	@Override
 	public void periodic() {
-	//	SmartDashboard.putNumber("Drivetrain Angle", getAngle());
-	//	SmartDashboard.putNumber("Angle Error", rightLead.getClosedLoopError(1));
-	//	SmartDashboard.putNumber("Drivetrain Velocity", getVelocity());
-		SmartDashboard.putNumber("Drivetrain Distance", getDistance());
-	//	SmartDashboard.putNumber("Left Lead Current", leftLead.getOutputCurrent());
+		SmartDashboard.putNumber("Right Distance", getRightDistance());
+		SmartDashboard.putNumber("Left Distance", getLeftDistance());
+		SmartDashboard.putNumber("Velocity:", getVelocity());
 
+
+	}
+	@Override
+	public double getDistance() {
+		return rightLead.getPrimarySensorPosition();
+	}
+
+	@Override
+	public TalonSRX getLeft() {
+		return leftLead;
+	}
+
+	@Override
+	public TalonSRX getRight() {
+		return rightLead;
+	}
+
+	@Override
+	public Subsystem getRequiredSubsystem() {
+		return this;
 	}
 }

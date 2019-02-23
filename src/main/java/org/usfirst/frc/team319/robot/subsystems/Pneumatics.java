@@ -31,7 +31,6 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void beakOpen() {
-
 		this.beakSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setIsBeakOpen(true);
 	}

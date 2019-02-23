@@ -19,6 +19,7 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JostickBBA;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -26,8 +27,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   private boolean isHatchCollectorSolenoidExtended = false;
 
-  public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, new BobTalonSRX(8));
-  public LeaderBobTalonSRX bbaCollector = new LeaderBobTalonSRX(9);
+  public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, new BobTalonSRX(6));
+  public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
   private int upPositionLimit = 0;
   private int downPositionLimit = 0;
@@ -90,7 +91,7 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   public boolean isBBArmSafe(double targetBBArmPosition) {
     boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
-    System.out.println("is BBA at risk: " + atRisk);
+    //System.out.println("is BBA at risk: " + atRisk);
     if (atRisk && targetBBArmPosition < floor && getCurrentPosition() > homePosition) {
       return false;
     } else {
@@ -150,7 +151,7 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   @Override
   public int getCurrentPosition() {
-    return 0;
+		return bbaLead.getPrimarySensorPosition();
   }
 
   public int getSafePosition() {
@@ -161,9 +162,15 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
   public double getCurrentVelocity() {
     return 0;
   }
+  
 
   @Override
   public boolean isInPosition(int targetPosition) {
     return false;
   }
+
+  @Override
+	public void periodic() {
+  	SmartDashboard.putNumber("BBA Position", getCurrentPosition());
+	}
 }
