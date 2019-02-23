@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Elevator extends Subsystem implements IPositionControlledSubsystem {
 
-  private boolean isElevatorFloorSolenoidExtended = true;
+  private boolean isElevatorFloorSolenoidExtended = false;
 
   private int homePosition = 0;
 
