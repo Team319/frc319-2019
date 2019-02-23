@@ -44,7 +44,8 @@ public class OI {
 
 		//----Operator Setup----//
 
-		operatorController = new BobXboxController(1, 0.10, 0.10);
+	
+		operatorController = new BobXboxController(1, 0.10, 0.05);
 
 		//----Operator Buttons----//
 		

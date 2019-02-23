@@ -27,12 +27,11 @@ public class BobPathCreator extends AbstractBobPathCreator {
 	private BobPathCreator() {
 		config.max_acc = 8.0; // Maximum acceleration in FPS
 		config.max_vel = 10.0; // Maximum velocity in FPS
-		config.wheel_dia_inches = 4.0;
+		config.wheel_dia_inches = 5.0;
 		config.scale_factor = 1.0; // Used to adjust for a gear ratio and or distance tuning
 		config.encoder_ticks_per_rev = 4096; // Count of ticks on your encoder
-		config.robotLength = 39; // Robot length in inches, used for drawing the robot
-		config.robotWidth = 33; // Robot width in inches, used for drawing the robot
-		config.highGear = true;
+		config.robotLength = 30.0; // Robot length in inches, used for drawing the robot
+		config.robotWidth = 24.5; // Robot width in inches, used for drawing the robot
 	}
 
 	@Override
@@ -79,27 +78,11 @@ public class BobPathCreator extends AbstractBobPathCreator {
 		turnScaling.addWaypoint(new Waypoint(2, 13.5, 0, 0, 0));
 		turnScaling.addWaypointRelative(3, 3, 89.99, 0, 3);
 
-		BobPath DriveForwardThreeFeet = new BobPath(config, "DriveForwardThreeFeet");
-		DriveForwardThreeFeet.addWaypoint(new Waypoint(2, 3.8, 0, 0, 0));
-		DriveForwardThreeFeet.addWaypointRelative(3, 0, 0, 0, 3);
+		BobPath speedTesting = new BobPath(config, "SpeedTesting");
+		speedTesting.addWaypoint(new Waypoint(2, 13.5, 0, 0, 0));
+		speedTesting.addWaypointRelative(3, 3, 89.99, 1, 3);
+		speedTesting.addWaypointRelative(-3, 3, 89.99, 0, 1);
 
-		/*
-		 * BobPath distanceScaling = new BobPath(config, "DistanceScaling");
-		 * distanceScaling.addWaypoint(new Waypoint(2, 13.5, 0, 0, 0));
-		 * distanceScaling.addWaypointRelative(3, 0, 0, 0, 3);
-		 * 
-		 * BobPath turnScaling = new BobPath(config, "TurnScaling");
-		 * turnScaling.addWaypoint(new Waypoint(2, 13.5, 0, 0, 0));
-		 * turnScaling.addWaypointRelative(3, 3, 89.99, 0, 3);
-		 * 
-		 * BobPath speedTesting = new BobPath(config, "SpeedTesting");
-		 * speedTesting.addWaypoint(new Waypoint(2, 13.5, 0, 0, 0));
-		 * speedTesting.addWaypointRelative(3, 3, 89.99, 1, 3);
-		 * speedTesting.addWaypointRelative(-3, 3, 89.99, 0, 1);
-		 */
-
-		
-		
-		return asList(DriveForwardThreeFeet);
+		return asList(distanceScaling, turnScaling, speedTesting);
 	}
 }

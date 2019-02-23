@@ -16,7 +16,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class FollowArc extends Command {
+public class FollowArc_Old extends Command {
 
 	private BobTalonSRX rightTalon = Robot.drivetrain.rightLead;
 	private BobTalonSRX leftTalon = Robot.drivetrain.leftLead;
@@ -90,7 +90,7 @@ public class FollowArc extends Command {
 	// Runs the runnable
 	private Notifier loadLeftBuffer;
 
-	public FollowArc(SrxTrajectory trajectoryToFollow) {
+	public FollowArc_Old(SrxTrajectory trajectoryToFollow) {
 		requires(Robot.drivetrain);
 		this.trajectoryToFollow = trajectoryToFollow;
 	}
