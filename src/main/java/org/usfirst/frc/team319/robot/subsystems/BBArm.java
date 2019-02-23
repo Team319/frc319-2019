@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * Add your docs here.
  */
 public class BBArm extends Subsystem implements IPositionControlledSubsystem {
-  private boolean isHatchCollectorSolenoidExtended = true;
+  private boolean isHatchCollectorSolenoidExtended = false;
 
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, new BobTalonSRX(8));
   public LeaderBobTalonSRX bbaCollector = new LeaderBobTalonSRX(9);
