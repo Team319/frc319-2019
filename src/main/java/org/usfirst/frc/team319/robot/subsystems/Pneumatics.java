@@ -16,7 +16,7 @@ public class Pneumatics extends Subsystem {
 
 	// elevator, carriage, beak, Hatch collector
 
-	DoubleSolenoid beakSolenoid = new DoubleSolenoid(0, 1); 
+	DoubleSolenoid beakSolenoid = new DoubleSolenoid(0, 1);
 	DoubleSolenoid carriageSolenoid = new DoubleSolenoid(2, 3);
 	DoubleSolenoid elevatorFloorSolenoid = new DoubleSolenoid(4, 5);
 	DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(6, 7);
@@ -58,6 +58,7 @@ public class Pneumatics extends Subsystem {
 		this.elevatorFloorSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
+
 	public void hatchCollectorExtend() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.bbarm.setIsHatchCollectorSolenoidExtended(true);

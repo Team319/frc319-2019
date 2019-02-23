@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 
 		autoChooser = new SendableChooser<String>();
 		// autoChooser.addDefault("Example Auto", "Example Auto");
-		//SmartDashboard.putNumber("BBA Position", Robot.bbarm.getCurrentPosition());
+		// SmartDashboard.putNumber("BBA Position", Robot.bbarm.getCurrentPosition());
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
 		// SmartDashboard.putData("CrossTheLine", new FollowArc(new ()));
 
@@ -66,7 +66,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-
+		Robot.elevator.setTargetPosition(Robot.elevator.getCurrentPosition());
+		Robot.bbarm.setTargetPosition(Robot.bbarm.getCurrentPosition());
 	}
 
 	@Override
@@ -114,5 +115,12 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
+
+		SmartDashboard.putNumber("Right Distance", Robot.drivetrain.getRightDistance());
+		SmartDashboard.putNumber("Left Distance", Robot.drivetrain.getLeftDistance());
+		SmartDashboard.putNumber("Velocity:", Robot.drivetrain.getVelocity());
+		SmartDashboard.putNumber("Distance", Robot.drivetrain.getDistance());
+
+		SmartDashboard.putNumber("Elevator Position", Robot.elevator.getCurrentPosition());
 	}
 }

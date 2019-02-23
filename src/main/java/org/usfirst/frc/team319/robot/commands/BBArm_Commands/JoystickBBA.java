@@ -11,11 +11,11 @@ import org.usfirst.frc.team319.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class JostickBBA extends Command {
+public class JoystickBBA extends Command {
 
-  //private int positionIncrement = 200;
+  private int positionIncrement = 100;
 
-  public JostickBBA() {
+  public JoystickBBA() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.bbarm);
   }
@@ -28,15 +28,11 @@ public class JostickBBA extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-  double signal = Robot.oi.operatorController.leftStick.getY();
-  SmartDashboard.putNumber("ArmSignal", signal);
-   Robot.bbarm.percentVbus(signal);
-    /*
     double signal = -Robot.oi.operatorController.leftStick.getY();
     Robot.bbarm.incrementTargetPosition((int) (signal * positionIncrement));
 
     Robot.bbarm.motionMagicControl();
-    */
+
   }
 
   @Override

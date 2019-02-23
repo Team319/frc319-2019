@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team319.robot.subsystems;
 
+import com.ctre.phoenix.CANifier;
+
 //import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
@@ -15,11 +17,21 @@ import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
+
 
 /**
  * Add your docs here.
  */
+
+
+
 public class Carriage extends Subsystem {
+  
+  AnalogInput analogCargoSensor = new AnalogInput(0);
+  DigitalInput digitalCargoSensor = new DigitalInput(0);
+  CANifier canifier = new CANifier(0);
 
   private boolean isBeakOpen = true;
 
@@ -33,8 +45,6 @@ public class Carriage extends Subsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
-    this.passThroughLead.getMotorOutputVoltage();
   }
 
   private double getCurrentPosition() {
@@ -55,5 +65,13 @@ public class Carriage extends Subsystem {
 
   public double isCarraigeSafe(int newTargetPosition) {
     return this.safePosition;
+  }
+
+  public double getAnalogCargoSensorValue(){
+    return analogCargoSensor.getVoltage();
+  }
+
+  public boolean getDigitalCargoSensorValue() {
+    return digitalCargoSensor.get();
   }
 }
