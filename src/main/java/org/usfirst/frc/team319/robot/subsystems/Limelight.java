@@ -10,21 +10,22 @@ package org.usfirst.frc.team319.robot.subsystems;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
 /**
  * Add your docs here.
  */
 public class Limelight {
-  
+
   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
   NetworkTableEntry tx = table.getEntry("tx");
   NetworkTableEntry ty = table.getEntry("ty");
   NetworkTableEntry ta = table.getEntry("ta");
 
-  public double getX()  {
+  public double getX() {
     return tx.getDouble(0.0);
   }
 
-  public double getY()  {
+  public double getY() {
     return ty.getDouble(0.0);
   }
 
@@ -41,6 +42,7 @@ public class Limelight {
     }
     return moveValue;
   }
+
   public double goToArea() {
     double moveValue;
     if (getArea() < 2.5 && getArea() > 0.4) {
@@ -54,9 +56,8 @@ public class Limelight {
   // here. Call these from Commands.
 
   // @Override
-  // public void initDefaultCommand() { 
+  // public void initDefaultCommand() {
 
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-  } 
-
+  // Set the default command for a subsystem here.
+  // setDefaultCommand(new MySpecialCommand());
+}

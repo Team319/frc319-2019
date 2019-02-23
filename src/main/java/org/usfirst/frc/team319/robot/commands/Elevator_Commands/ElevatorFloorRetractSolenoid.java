@@ -5,14 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
+package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BBARetractHatchCollector extends Command {
-  public BBARetractHatchCollector() {
+public class ElevatorFloorRetractSolenoid extends Command {
+
+  public ElevatorFloorRetractSolenoid() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.pneumatics);
   }
@@ -25,7 +26,7 @@ public class BBARetractHatchCollector extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.hatchCollectorRetract();
+    Robot.pneumatics.elevatorFloorRetract();
   }
 
   // Make this return true when this Command no longer needs to run execute()

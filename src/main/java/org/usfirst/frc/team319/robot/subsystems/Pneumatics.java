@@ -12,17 +12,13 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Pneumatics extends Subsystem {
 
-public boolean isHatchCollectorSolenoidExtended;
-
-	// public boolean isCollectorSolenoidExtended;
-
 	Compressor compressor = new Compressor(0);
 
 	// elevator, carriage, beak, Hatch collector
 
 	DoubleSolenoid beakSolenoid = new DoubleSolenoid(0, 1); 
 	DoubleSolenoid carriageSolenoid = new DoubleSolenoid(2, 3);
-	DoubleSolenoid elevatorSolenoid = new DoubleSolenoid(4, 5);
+	DoubleSolenoid elevatorFloorSolenoid = new DoubleSolenoid(4, 5);
 	DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(6, 7);
 	DoubleSolenoid hatchCollectorArmSolenoid = new DoubleSolenoid(8, 9);
 
@@ -36,7 +32,6 @@ public boolean isHatchCollectorSolenoidExtended;
 	}
 
 	public void beakOpen() {
-
 		this.beakSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setIsBeakOpen(true);
 	}
@@ -54,12 +49,14 @@ public boolean isHatchCollectorSolenoidExtended;
 		this.carriageSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 
-	public void elevatorExtend() {
-		this.elevatorSolenoid.set(DoubleSolenoid.Value.kForward);
+	public void elevatorFloorExtend() {
+		this.elevatorFloorSolenoid.set(DoubleSolenoid.Value.kForward);
+		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
 	}
 
-	public void elevatorRetract() {
-		this.elevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
+	public void elevatorFloorRetract() {
+		this.elevatorFloorSolenoid.set(DoubleSolenoid.Value.kReverse);
+		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
 	public void hatchCollectorExtend() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
