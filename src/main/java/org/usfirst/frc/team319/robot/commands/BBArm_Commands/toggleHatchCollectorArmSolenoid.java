@@ -11,8 +11,8 @@ import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BBAExtendHatchCollector extends Command {
-  public BBAExtendHatchCollector() {
+public class toggleHatchCollectorArmSolenoid extends Command {
+  public toggleHatchCollectorArmSolenoid() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.pneumatics);
   }
@@ -25,13 +25,17 @@ public class BBAExtendHatchCollector extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.hatchCollectorExtend();
+    if(Robot.bbarm.isHatchCollectorArmSolenoidExtended()){
+      Robot.pneumatics.hatchCollectorArmRetract();
+    }else{
+      Robot.pneumatics.hatchCollectorArmExtend();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

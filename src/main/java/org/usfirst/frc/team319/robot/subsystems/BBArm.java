@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Add your docs here.
  */
 public class BBArm extends Subsystem implements IPositionControlledSubsystem {
+  private boolean isHatchCollectorArmSolenoidExtended = true;
   private boolean isHatchCollectorSolenoidExtended = false;
 
   public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, new BobTalonSRX(6));
@@ -87,6 +88,14 @@ public class BBArm extends Subsystem implements IPositionControlledSubsystem {
 
   public void setIsHatchCollectorSolenoidExtended(boolean isHatchCollectorSolenoidExtended){
     this.isHatchCollectorSolenoidExtended = isHatchCollectorSolenoidExtended;
+  }
+
+  public boolean isHatchCollectorArmSolenoidExtended() {
+    return isHatchCollectorArmSolenoidExtended;
+  }
+
+  public void setIsHatchCollectorArmSolenoidExtended(boolean isHatchCollectorArmSolenoidExtended) {
+    this.isHatchCollectorArmSolenoidExtended = isHatchCollectorArmSolenoidExtended;
   }
 
   public boolean isBBArmSafe(double targetBBArmPosition) {

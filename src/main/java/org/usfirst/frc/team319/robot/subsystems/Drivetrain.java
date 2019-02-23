@@ -67,6 +67,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 
 		// configure angle sensor
 		// Remote 1 will be a pigeon
+
 		rightLead.configRemoteSensor1(leftLead.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
 		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (0.0 / 0.0)); // Coefficient for
 																							// Pigeon to
@@ -150,7 +151,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		// pigeon.getYawPitchRoll(ypr);
 		return ypr[0];
 	}
-
+  
 	public double getRightDistance() {
 		return rightLead.getPrimarySensorPosition();
 	}
@@ -169,9 +170,8 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		SmartDashboard.putNumber("Right Distance", getRightDistance());
 		SmartDashboard.putNumber("Left Distance", getLeftDistance());
 		SmartDashboard.putNumber("Velocity:", getVelocity());
-
-
 	}
+  
 	@Override
 	public double getDistance() {
 		return rightLead.getPrimarySensorPosition();
