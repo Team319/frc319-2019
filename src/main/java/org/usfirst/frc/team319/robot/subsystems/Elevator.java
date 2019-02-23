@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Add your docs here.
  */
 public class Elevator extends Subsystem implements IPositionControlledSubsystem {
-
+  private boolean isElevatorFloorSolenoidExtended = false;
   private boolean isHoldingPosition = false;
 
   private int homePosition = 0;
@@ -112,7 +112,12 @@ public class Elevator extends Subsystem implements IPositionControlledSubsystem 
       return true;
     }
   }
-
+  public boolean isElevatorFloorSolenoidExtended() {
+    return isElevatorFloorSolenoidExtended;
+  }
+  public void setIsElevatorFloorSolenoidExtended(boolean isElevatorFloorSolenoidExtended) {
+    this.isElevatorFloorSolenoidExtended = isElevatorFloorSolenoidExtended;
+  }
   public boolean isValidPosition(int position) {
     boolean withinBounds = position <= maxUpTravelPosition && position >= maxDownTravelPosition;
     return withinBounds;
