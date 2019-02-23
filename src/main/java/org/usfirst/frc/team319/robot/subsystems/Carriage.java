@@ -7,10 +7,14 @@
 
 package org.usfirst.frc.team319.robot.subsystems;
 
+//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
+//import org.usfirst.frc.team319.models.SRXGains;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -21,21 +25,35 @@ public class Carriage extends Subsystem {
 
   private final double safePosition = 0.0;
 
-  public LeaderBobTalonSRX passThoughLead = new LeaderBobTalonSRX(3, new BobTalonSRX(4));
+  public LeaderBobTalonSRX passThroughLead = new LeaderBobTalonSRX(7, new BobTalonSRX(8));
+
+  public Carriage() {
+
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+    this.passThroughLead.getMotorOutputVoltage();
+  }
+
+  private double getCurrentPosition() {
+    return this.passThroughLead.getSelectedSensorPosition();
+  }
 
   @Override
   public void initDefaultCommand() {
   }
 
   public boolean isBeakOpen() {
-		return isBeakOpen;
+    return isBeakOpen;
   }
 
   public void setIsBeakOpen(boolean isBeakOpen) {
-		this.isBeakOpen = isBeakOpen;
-	}
+    this.isBeakOpen = isBeakOpen;
+  }
 
-public double isCarraigeSafe(int newTargetPosition) {
-	return this.safePosition;
-}
+  public double isCarraigeSafe(int newTargetPosition) {
+    return this.safePosition;
+  }
 }
