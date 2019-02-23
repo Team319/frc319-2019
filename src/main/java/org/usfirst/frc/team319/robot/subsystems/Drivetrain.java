@@ -17,7 +17,7 @@ import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
- 
+
 /**
  *
  */
@@ -28,9 +28,9 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public static int ROTATION_PROFILE = 1;
 
 	private SRXGains driveGains = new SRXGains(DRIVE_PROFILE, 0.015122, 0.00015122, 0.15, 0.3154, 0);
-	//private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.015122, 0.00015122, 0.15, 0.3154, 0);
+	// private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.015122,
+	// 0.00015122, 0.15, 0.3154, 0);
 	private SRXGains rotationGains = new SRXGains(ROTATION_PROFILE, 0.0, 0.0, 0.0, 0.0, 0);
-
 
 	private BobTalonSRX rightFollowerWithPigeon = new BobTalonSRX(4);
 
@@ -43,7 +43,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 
 		setupSensors();
 		setNeutralMode(NeutralMode.Coast);
-		
+
 		configGains(driveGains);
 		configGains(rotationGains);
 
@@ -52,10 +52,9 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		rightLead.setInverted(false);
 		rightLead.setSensorPhase(false);
 
-	
 	}
 
-	public void setupSensors(){
+	public void setupSensors() {
 		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
 		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
 
@@ -66,7 +65,17 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
 
 		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0));
+		//I is limited to a certain amount
+		rightLead.configMaxIntegralAccumulator(ROTATION_PROFILE, 3000);
 
+		// configure angle sensor
+		// Remote 1 will be a pigeon
+		// Add a coefficient for Pigeon to convert to 360
+		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
+		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor0, (3600.0 / 8192.0)); 
+
+		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
+		rightLead.configAuxPIDPolarity(false, 0);
 	}
 
 	public void initDefaultCommand() {
@@ -158,22 +167,16 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	}
 
 	public double getVelocity() {
-		// double Velocity = rightLead.getPrimarySensorVelocity();
-		// System.out.println("Velocity: " + Velocity);
-		return (rightLead.getPrimarySensorVelocity() + leftLead.getPrimarySensorVelocity()) / 2;
+		return rightLead.getPrimarySensorVelocity();
 	}
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Right Distance", getRightDistance());
-		SmartDashboard.putNumber("Left Distance", getLeftDistance());
-		SmartDashboard.putNumber("Velocity:", getVelocity());
-		SmartDashboard.putNumber("Distance", getDistance());
 	}
 
 	@Override
 	public double getDistance() {
-		return (leftLead.getPrimarySensorPosition() + rightLead.getPrimarySensorPosition()) / 2;
+		return rightLead.getPrimarySensorPosition();
 	}
 
 	@Override

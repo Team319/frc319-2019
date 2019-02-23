@@ -18,17 +18,18 @@ import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.SRXGains;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JostickElevator;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JoystickElevator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
  */
-public class Elevator extends PositionControlledSubsystem implements IPositionControlledSubsystem {
+public class Elevator extends PositionControlledSubsystem{
   private boolean isElevatorFloorSolenoidExtended = false;
 
   private boolean isHoldingPosition = false;
+  private int onTargetThreshold = 100;
 
   private int homePosition = 0;
 
@@ -42,31 +43,28 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   // ---- Cargo Positions ---- //
   private int cargoCollectPosition = 0;
   private int highCargoPosition = 0;
-  private int middleCargoPosition = 0;
+  private int middleCargoPosition = 20000;
   private int lowCargoRocketPosition = 0;
-  private int cargoShipCargoPosition = 0; // cargoShipCargoPosition should be around the same as middleHatchPosition
+  private int cargoShipCargoPosition = 0;
+  // cargoShipCargoPosition should be around the same as middleHatchPosition
 
   // ---- Travel Limits Positions ---- //
-
   private int topOfFirstStagePosition = 0;
-  private int maxUpTravelPosition = 0;
-
-  private double maxDownTravelPosition = homePosition;
+  private int maxUpTravelPosition = 40000;
+  private int maxDownTravelPosition = homePosition;
 
   private int targetPosition = 0;
-
-  // private int climpPosition = 0;
 
   // ---- Gains, Pid Values, Talon Setup ---- //
 
   public final static int ELEVATOR_UP = 0;
   public final static int ELEVATOR_DOWN = 1;
 
-  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.0, 0.0, 0.0, 0.0, 0);
-  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.0, 0.0, 0.0, 0.0, 0);
+  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.3, 0.0, 0.0, .2046, 0);
+  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.3, 0.0, 0.0, .2046, 0);
 
-  private MotionParameters UpMotionParameters = new MotionParameters(2600, 2000, elevatorUpGains);
-  private MotionParameters DownMotionParameters = new MotionParameters(2600, 2000, elevatorDownGains);
+  private MotionParameters UpMotionParameters = new MotionParameters(8000, 4000, elevatorUpGains);
+  private MotionParameters DownMotionParameters = new MotionParameters(4000, 3000, elevatorDownGains);
 
   public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
   public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
@@ -74,9 +72,8 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(15, elevatorFollow1, elevatorFollow2, elevatorFollow14);
 
   public Elevator() {
-
     setupSensors();
-    setupMotinParameters();
+    setupMotionParameters();
 
     this.elevatorLead.configClosedloopRamp(0.25);
 
@@ -86,44 +83,26 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
     this.elevatorLead.configPeakOutputReverse(-1.0);
   }
 
-  public void setupMotinParameters() {
+  public void setupMotionParameters() {
     this.elevatorLead.configMotionParameters(UpMotionParameters);
     this.elevatorLead.configMotionParameters(DownMotionParameters);
   }
-  public void setupSensors(){
+
+  public void setupSensors() {
     this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
-    this.elevatorFollow1.configForwardSoftLimitEnable(false);
-    this.elevatorFollow1.configForwardSoftLimitThreshold(maxUpTravelPosition);
-
-    this.elevatorFollow1.configReverseSoftLimitEnable(false);
-    this.elevatorFollow1.configReverseSoftLimitThreshold(homePosition);
-
-    this.elevatorFollow2.configForwardSoftLimitEnable(false);
-    this.elevatorFollow2.configForwardSoftLimitThreshold(maxUpTravelPosition);
-
-    this.elevatorFollow2.configReverseSoftLimitEnable(false);
-    this.elevatorFollow2.configReverseSoftLimitThreshold(homePosition);
-
-    this.elevatorFollow14.configForwardSoftLimitEnable(false);
-    this.elevatorFollow14.configForwardSoftLimitThreshold(maxUpTravelPosition);
-
-    this.elevatorFollow14.configReverseSoftLimitEnable(false);
-    this.elevatorFollow14.configReverseSoftLimitThreshold(homePosition);
-
-    this.elevatorLead.configForwardSoftLimitEnable(false);
+    this.elevatorLead.configForwardSoftLimitEnable(true);
     this.elevatorLead.configForwardSoftLimitThreshold(maxUpTravelPosition);
 
-    this.elevatorLead.configReverseSoftLimitEnable(false);
+    this.elevatorLead.configReverseSoftLimitEnable(true);
     this.elevatorLead.configReverseSoftLimitThreshold(homePosition);
 
     this.elevatorLead.setInverted(false);
-
+    this.elevatorFollow14.setInverted(false);
     this.elevatorFollow1.setInverted(true);
     this.elevatorFollow2.setInverted(true);
-    this.elevatorFollow14.setInverted(false);
 
-    this.elevatorLead.setSensorPhase(false);
+    this.elevatorLead.setSensorPhase(true);
 
     this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
     this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
@@ -132,7 +111,7 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new JostickElevator());
+    setDefaultCommand(new JoystickElevator());
   }
 
   public boolean isCarriageSafe(double targetElevatorPosition) {
@@ -154,16 +133,16 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
     return withinBounds;
   }
 
-  // ----Get Misc Positions----//
-  public double getHomePosition() {
-    return this.homePosition;
-  }
-
   public boolean isHoldingPosition() {
     return this.isHoldingPosition;
   }
 
-  public double getMaxDownTravelPosition() {
+  // ----Get Misc Positions----//
+  public int getHomePosition() {
+    return this.homePosition;
+  }
+
+  public int getMaxDownTravelPosition() {
     return this.maxDownTravelPosition;
   }
 
@@ -206,7 +185,6 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   }
 
   // ----Get Travel Limits----//
-
   public int getTopOfFirstStagePosition() {
     return this.topOfFirstStagePosition;
   }
@@ -214,6 +192,7 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   public int getMaxUpTravelPosition() {
     return this.maxUpTravelPosition;
   }
+
   public void percentVbus(double signal) {
     this.elevatorLead.set(ControlMode.PercentOutput, signal);
   }
@@ -230,7 +209,7 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
 
   public void motionMagicControl() {
     this.manageMotion(targetPosition);
-    this.elevatorLead.set(ControlMode.MotionMagic, targetPosition, DemandType.ArbitraryFeedForward, 0.1);
+    this.elevatorLead.set(ControlMode.MotionMagic, targetPosition);
   }
 
   public void incrementTargetPosition(int increment) {
@@ -246,26 +225,30 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
   }
 
   @Override
-	public void periodic() {
-		SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
-		this.elevatorLead.getMotorOutputVoltage();
-    }
+  public void periodic() {
+    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+    SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
+    SmartDashboard.putNumber("Elevator Target Position", this.getTargetPosition());
+  }
 
   @Override
   public boolean setTargetPosition(int targetPosition) {
+    if (isValidPosition(targetPosition)) {
+      this.targetPosition = targetPosition;
+      return true;
+    }
     return false;
   }
 
   @Override
   public int getTargetPosition() {
-    return 0;
+    return this.targetPosition;
   }
 
   @Override
   public int getCurrentPosition() {
-		return this.elevatorLead.getSelectedSensorPosition();
-	}
-
+    return this.elevatorLead.getSelectedSensorPosition();
+  }
 
   @Override
   public double getCurrentVelocity() {
@@ -282,6 +265,6 @@ public class Elevator extends PositionControlledSubsystem implements IPositionCo
     } else {
       return false;
     }
-  
+
   }
 }

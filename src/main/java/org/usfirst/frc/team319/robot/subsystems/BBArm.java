@@ -18,7 +18,7 @@ import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.SRXGains;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JostickBBA;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JoystickBBA;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -31,16 +31,14 @@ public class BBArm extends PositionControlledSubsystem {
   private boolean isHatchCollectorArmSolenoidExtended = true;
   private boolean isHatchCollectorSolenoidExtended = false;
 
-  public BobTalonSRX bbaFollow = new BobTalonSRX(6);
-  public LeaderBobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
-  public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
-  private int upPositionLimit = -9010;
-  private int downPositionLimit = -650;
+  public BobTalonSRX bbaFollow = new BobTalonSRX(6);
+  public BobTalonSRX bbaLead = new BobTalonSRX(10);
+  public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
   // towards floor = negative
 
-  private int homePosition = -650;
+  private int homePosition = 0;
   private int safePosition = 0;
   private int levelThreeHab = 0;
   private int levelTwoHab = 0;
@@ -49,6 +47,9 @@ public class BBArm extends PositionControlledSubsystem {
   private int floorPosition = -8750;
   private int liftRobotPosition = -9001;
   private int bbaCarriageSafePosition = -4000;
+
+  private int upPositionLimit = 0;
+  private int downPositionLimit = liftRobotPosition;
 
   private int targetPosition = 0;
 
@@ -78,16 +79,21 @@ public class BBArm extends PositionControlledSubsystem {
 
     this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
     this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+    this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
+    this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
 
     this.bbaLead.setNeutralMode(NeutralMode.Brake);
+    this.bbaFollow.setNeutralMode(NeutralMode.Brake);
 
     this.bbaLead.configMotionParameters(UpMotionParameters);
     this.bbaLead.configMotionParameters(DownMotionParameters);
+    this.bbaFollow.configMotionParameters(UpMotionParameters);
+    this.bbaFollow.configMotionParameters(DownMotionParameters);
   }
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new JostickBBA());
+    setDefaultCommand(new JoystickBBA());
   }
 
   public boolean isHatchCollectorSolenoidExtended(){
@@ -106,23 +112,22 @@ public class BBArm extends PositionControlledSubsystem {
     this.isHatchCollectorArmSolenoidExtended = isHatchCollectorArmSolenoidExtended;
   }
 
-  public void configSoftLimits(){
-    //------------Lead Limits------------//
-
-    this.bbaLead.configForwardSoftLimitThreshold(downPositionLimit);
-    this.bbaLead.configReverseSoftLimitThreshold(upPositionLimit);
+ 
+  public void configSoftLimits() {
+    // ------------Lead Limits------------//
+    this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);
+    this.bbaLead.configReverseSoftLimitThreshold(downPositionLimit);
 
     this.bbaLead.configForwardSoftLimitEnable(true);
     this.bbaLead.configReverseSoftLimitEnable(true);
-    //------------Follow Limits------------//
 
-    this.bbaFollow.configForwardSoftLimitThreshold(downPositionLimit);
-    this.bbaFollow.configReverseSoftLimitThreshold(upPositionLimit);
+    // ------------Follow Limits------------//
+    this.bbaFollow.configForwardSoftLimitThreshold(upPositionLimit);
+    this.bbaFollow.configReverseSoftLimitThreshold(downPositionLimit);
 
     this.bbaFollow.configForwardSoftLimitEnable(true);
     this.bbaFollow.configReverseSoftLimitEnable(true);
   }
-
 
   public boolean isBBArmSafe(double targetBBArmPosition) {
     boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
@@ -143,24 +148,30 @@ public class BBArm extends PositionControlledSubsystem {
     double currentPosition = getCurrentPosition();
     if (currentPosition < targetPosition) {
       bbaLead.selectMotionParameters(UpMotionParameters);
+      bbaFollow.selectMotionParameters(UpMotionParameters);
     } else {
       bbaLead.selectMotionParameters(DownMotionParameters);
+      bbaFollow.selectMotionParameters(DownMotionParameters);
 
     }
   }
 
   public void motionMagicControl() {
     this.manageMotion(targetPosition);
-    this.bbaLead.set(ControlMode.MotionMagic, targetPosition, DemandType.ArbitraryFeedForward, 0.1);
+    this.bbaLead.set(ControlMode.MotionMagic, targetPosition);
+    this.bbaFollow.set(ControlMode.MotionMagic, targetPosition);
   }
+  
 
   public void percentVbus(double signal) {
     this.bbaLead.set(ControlMode.PercentOutput, signal);
   }
-  public void setSpeed(double speed){
+
+  public void setSpeed(double speed) {
     this.bbaLead.set(ControlMode.Velocity, speed);
   }
-  public void setCollectorSpeed(double speed){
+
+  public void setCollectorSpeed(double speed) {
     this.collectorTalon.set(ControlMode.PercentOutput, speed);
   }
 
@@ -195,20 +206,23 @@ public class BBArm extends PositionControlledSubsystem {
   public int getLiftRobotPosition() {
     return liftRobotPosition;
   }
+
   public int getHomePosition() {
     return homePosition;
   }
 
   @Override
   public boolean setTargetPosition(int targetPosition) {
-    //TODO: Check for safety.
-    this.targetPosition = targetPosition;
-    return true;
+    if (isValidPosition(targetPosition)) {
+      this.targetPosition = targetPosition;
+      return true;
+    }
+    return false;
   }
 
   @Override
   public int getTargetPosition() {
-    return 0;
+    return this.targetPosition;
   }
 
   @Override
@@ -223,13 +237,15 @@ public class BBArm extends PositionControlledSubsystem {
   public int getSafePosition() {
     return safePosition;
   }
+
   public int getFloorPosition() {
     return floorPosition;
   }
-  public int getBbaCarriageSafePosition(){
+
+  public int getBbaCarriageSafePosition() {
     return bbaCarriageSafePosition;
   }
-  
+
   @Override
   public double getCurrentVelocity() {
     return this.bbaLead.getSelectedSensorVelocity();
@@ -252,6 +268,6 @@ public class BBArm extends PositionControlledSubsystem {
     SmartDashboard.putNumber("BBA Secondary Position", this.getSecondaryPosition());
     SmartDashboard.putNumber("BBA Lead Velocity", this.getCurrentVelocity());
     SmartDashboard.putNumber("BBA Follow Velocity", this.getFollowCurrentVelocity());
-
+    SmartDashboard.putNumber("BBA Target Position", this.getTargetPosition());
   }
 }
