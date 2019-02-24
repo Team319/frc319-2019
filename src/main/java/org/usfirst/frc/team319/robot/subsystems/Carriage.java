@@ -30,8 +30,12 @@ public class Carriage extends Subsystem {
   DigitalInput digitalCargoSensor = new DigitalInput(0);
   CANifier canifier = new CANifier(0);
 
+<<<<<<< 0704e2dc398671fffba06cb6e6e78846b442f5c5
   private boolean isBeakOpen = true;
   private boolean manualCollectFinished = false;
+=======
+  private boolean isFingerOpen = true;
+>>>>>>> Control mapping and nessasary command creation and Pnuematic Renaming
 
   private final double safePosition = 0.0;
 
@@ -52,12 +56,12 @@ public class Carriage extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  public boolean isBeakOpen() {
-    return isBeakOpen;
+  public boolean isFingerOpen() {
+    return isFingerOpen;
   }
 
-  public void setIsBeakOpen(boolean isBeakOpen) {
-    this.isBeakOpen = isBeakOpen;
+  public void setIsFingerOpen(boolean isFingerOpen) {
+    this.isFingerOpen = isFingerOpen;
   }
 
   public double isCarraigeSafe(int newTargetPosition) {
