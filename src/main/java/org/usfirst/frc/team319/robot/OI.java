@@ -8,12 +8,12 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerCollect;
-import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerPlace;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitBack;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitFront;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
+import org.usfirst.frc.team319.robot.commands.Beak_Commands.FingerClose;
+import org.usfirst.frc.team319.robot.commands.Beak_Commands.FingerOpen;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
@@ -44,8 +44,8 @@ public class OI {
 =======
 		driverController.rightTriggerButton.whileHeld(new PassthroughSpitFront());
 		driverController.leftTriggerButton.whileHeld(new PassthroughSpitBack());
-		driverController.rightBumper.whenPressed(new FingerPlace());
-		driverController.leftBumper.whenPressed(new FingerCollect());
+		driverController.rightBumper.whenPressed(new FingerOpen());
+		driverController.leftBumper.whenPressed(new FingerClose());
 
 		// ----Operator Setup----//
 		operatorController = new BobXboxController(1, 0.10, 0.10);

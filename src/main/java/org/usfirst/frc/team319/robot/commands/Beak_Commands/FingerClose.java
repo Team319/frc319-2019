@@ -12,8 +12,8 @@ import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BeakClose extends Command {
-  public BeakClose() {
+public class FingerClose extends Command {
+  public FingerClose() {
     // Use requires() here to declare subsystem dependencies
     requires(new Pneumatics());
   }
@@ -26,7 +26,7 @@ public class BeakClose extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.beakClose();
+    Robot.pneumatics.FingerClose();
   }
 
   // Make this return true when this Command no longer needs to run execute()

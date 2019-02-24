@@ -11,8 +11,8 @@ import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BeakToggle extends Command {
-  public BeakToggle() {
+public class FingerToggle extends Command {
+  public FingerToggle() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.pneumatics);
   }
@@ -25,10 +25,10 @@ public class BeakToggle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.carriage.isBeakOpen()){
-        Robot.pneumatics.beakClose();
-    }else{
-      Robot.pneumatics.beakOpen();
+    if (Robot.carriage.isFingerOpen()) {
+      Robot.pneumatics.FingerClose();
+    } else {
+      Robot.pneumatics.FingerOpen();
     }
   }
 

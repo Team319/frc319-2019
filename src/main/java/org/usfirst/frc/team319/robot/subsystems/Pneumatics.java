@@ -26,7 +26,7 @@ public class Pneumatics extends Subsystem {
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
-		setDefaultCommand(new CompressorRun();
+		setDefaultCommand(new CompressorRun());
 	}
 
 	public void compressorRun() {

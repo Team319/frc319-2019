@@ -9,8 +9,8 @@ package org.usfirst.frc.team319.robot.commands.Beak_Commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BeakCollect extends Command {
-  public BeakCollect() {
+public class FingerCollect extends Command {
+  public FingerCollect() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
