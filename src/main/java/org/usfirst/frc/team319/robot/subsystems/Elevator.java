@@ -18,6 +18,7 @@ import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.SRXGains;
+import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JoystickElevator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,8 +51,10 @@ public class Elevator extends PositionControlledSubsystem {
 
   // ---- Travel Limits Positions ---- //
   private int topOfFirstStagePosition = 0;
-  private int maxUpTravelPosition = 40000;
-  private int maxDownTravelPosition = homePosition;
+  private int maxVerticalLimit = 40000;
+  private int minVerticalLimit = homePosition;
+
+  private int bbaSafePosition = -1000; // TODO
 
   private int targetPosition = 0;
 
@@ -92,7 +95,7 @@ public class Elevator extends PositionControlledSubsystem {
     this.elevatorLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
     this.elevatorLead.configForwardSoftLimitEnable(true);
-    this.elevatorLead.configForwardSoftLimitThreshold(maxUpTravelPosition);
+    this.elevatorLead.configForwardSoftLimitThreshold(maxVerticalLimit);
 
     this.elevatorLead.configReverseSoftLimitEnable(true);
     this.elevatorLead.configReverseSoftLimitThreshold(homePosition);
@@ -114,12 +117,25 @@ public class Elevator extends PositionControlledSubsystem {
     setDefaultCommand(new JoystickElevator());
   }
 
+  // Tests if elevator can move to desired position without interfering BBA
   public boolean isCarriageSafe(double targetElevatorPosition) {
-    boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
-    if (atRisk && targetElevatorPosition < maxDownTravelPosition && getCurrentPosition() > topOfFirstStagePosition) {
-      return false;
-    } else {
+    double bbaPosition = Robot.bbarm.getCurrentPosition();
+    // Check if the BBA can interfere with the elevator
+    boolean bbaInterfering = bbaPosition > bbaSafePosition;
+
+    // Check if the elevator is above a point where it will interfere with the BBA.
+    boolean aboveBBASafePosition = this.getCurrentPosition() > this.getSafePosition();
+
+    // Check if the elevator is below the max amount we can travel.
+    boolean maxLimitCheck = targetElevatorPosition < maxVerticalLimit;
+
+    // if we are moving down
+    if (!bbaInterfering) {
       return true;
+    } else if (aboveBBASafePosition && maxLimitCheck) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -132,7 +148,7 @@ public class Elevator extends PositionControlledSubsystem {
   }
 
   public boolean isValidPosition(int position) {
-    boolean withinBounds = position <= maxUpTravelPosition && position >= maxDownTravelPosition;
+    boolean withinBounds = position <= maxVerticalLimit && position >= minVerticalLimit;
     return withinBounds;
   }
 
@@ -145,8 +161,8 @@ public class Elevator extends PositionControlledSubsystem {
     return this.homePosition;
   }
 
-  public int getMaxDownTravelPosition() {
-    return this.maxDownTravelPosition;
+  public int getMinVerticalLimit() {
+    return this.minVerticalLimit;
   }
 
   // ----Get Hatch Positions----//
@@ -192,8 +208,8 @@ public class Elevator extends PositionControlledSubsystem {
     return this.topOfFirstStagePosition;
   }
 
-  public int getMaxUpTravelPosition() {
-    return this.maxUpTravelPosition;
+  public int getMaxVerticalLimit() {
+    return this.maxVerticalLimit;
   }
 
   public void percentVbus(double signal) {
