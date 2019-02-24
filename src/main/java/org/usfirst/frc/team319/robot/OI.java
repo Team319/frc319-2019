@@ -41,7 +41,7 @@ public class OI {
 		driverController.leftTriggerButton.configureThreshold(0.075);
 
 		driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
-		driverController.leftTriggerButton.whileHeld(new ManualCollect());
+		// driverController.leftTriggerButton.whileHeld(new ManualCollect());
 
 		// ----Operator Setup----//
 		operatorController = new BobXboxController(1, 0.10, 0.05);
@@ -51,6 +51,8 @@ public class OI {
 		operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
 		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
 		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
+
+		operatorController.leftTriggerButton.whileHeld(new ManualCollect());
 		// operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
 
 		// ----Operator Buttons----//
