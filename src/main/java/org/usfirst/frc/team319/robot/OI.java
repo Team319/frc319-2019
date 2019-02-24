@@ -7,31 +7,17 @@
 
 package org.usfirst.frc.team319.robot;
 
-import org.usfirst.frc.team319.controllers.BobDpad;
 import org.usfirst.frc.team319.controllers.BobXboxController;
-//import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.DrivetrainGoToSpeed;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
 import org.usfirst.frc.team319.robot.commands.Beak_Commands.BeakCollect;
 import org.usfirst.frc.team319.robot.commands.Beak_Commands.BeakPlace;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitBack;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitFront;
-//import org.usfirst.frc.team319.robot.commands.autotune.AutoTuneVelocity;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoHome;
-//import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToSpeed;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectPose;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
-//import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
-//import org.usfirst.frc.team319.robot.commands.Carriage_Commands.ManualTunnelIntake;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.DriveTrainDriveThreeFeet;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.Climb;
-
-import edu.wpi.first.wpilibj.Controller;
 
 /**
  * This class is the glue that binds the controls on the physical operator

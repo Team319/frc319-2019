@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Carriage_Commands;
+package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -13,17 +13,17 @@ import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ManualTunnelIntake extends Command {
+public class CollectPose extends Command {
 
   private boolean joystickControl = true;
   private double targetSpeed = 0.0;
 
-  public ManualTunnelIntake() {
+  public CollectPose() {
     requires(Robot.carriage);
     joystickControl = true;
   }
 
-  public ManualTunnelIntake(double speed) {
+  public CollectPose(double speed) {
     requires(Robot.carriage);
     joystickControl = false;
     targetSpeed = speed;
