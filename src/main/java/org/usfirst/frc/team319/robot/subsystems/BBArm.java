@@ -262,10 +262,14 @@ public class BBArm extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
-    SmartDashboard.putNumber("BBA Secondary Position", this.getSecondaryPosition());
-    SmartDashboard.putNumber("BBA Lead Velocity", this.getCurrentVelocity());
-    SmartDashboard.putNumber("BBA Follow Velocity", this.getFollowCurrentVelocity());
-    SmartDashboard.putNumber("BBA Target Position", this.getTargetPosition());
+    /*
+     * SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
+     * SmartDashboard.putNumber("BBA Target Position", this.getTargetPosition());
+     */
+  }
+
+  @Override
+  public void forceSetTargetPosition(int targetPosition) {
+    this.targetPosition = targetPosition;
   }
 }

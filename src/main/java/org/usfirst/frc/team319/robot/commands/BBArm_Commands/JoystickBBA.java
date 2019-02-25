@@ -30,9 +30,7 @@ public class JoystickBBA extends Command {
   protected void execute() {
     double signal = -Robot.oi.operatorController.leftStick.getY();
     Robot.bbarm.incrementTargetPosition((int) (signal * positionIncrement));
-
     Robot.bbarm.motionMagicControl();
-
   }
 
   @Override

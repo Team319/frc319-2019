@@ -41,7 +41,7 @@ public class Elevator extends PositionControlledSubsystem {
   private int lowHatchPosition = 0;
 
   // ---- Cargo Positions ---- //
-  private int cargoCollectPosition = 0;
+  private int cargoCollectPosition = -5000;
   private int highCargoPosition = 0;
   private int middleCargoPosition = 20000;
   private int lowCargoRocketPosition = 0;
@@ -51,7 +51,7 @@ public class Elevator extends PositionControlledSubsystem {
   // ---- Travel Limits Positions ---- //
   private int topOfFirstStagePosition = 0;
   private int maxUpTravelPosition = 40000;
-  private int maxDownTravelPosition = homePosition;
+  private int maxDownTravelPosition = cargoCollectPosition;
 
   private int targetPosition = 0;
 
@@ -229,9 +229,12 @@ public class Elevator extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
-    SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
-    SmartDashboard.putNumber("Elevator Target Position", this.getTargetPosition());
+    /*
+     * SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+     * SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
+     * SmartDashboard.putNumber("Elevator Target Position",
+     * this.getTargetPosition());
+     */
   }
 
   @Override
@@ -269,5 +272,10 @@ public class Elevator extends PositionControlledSubsystem {
       return false;
     }
 
+  }
+
+  @Override
+  public void forceSetTargetPosition(int targetPosition) {
+    this.targetPosition = targetPosition;
   }
 }
