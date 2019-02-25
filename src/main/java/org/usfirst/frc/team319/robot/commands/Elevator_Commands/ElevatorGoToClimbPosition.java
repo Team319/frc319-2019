@@ -5,16 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.drivetrain_Commands;
+package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
 
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaLiftRobotPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToClimbPosition;
+import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
+import org.usfirst.frc.team319.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
-public class Climb extends CommandGroup {
-  public Climb() {
-    addParallel(new BbaLiftRobotPosition());
-    addSequential(new ElevatorGoToClimbPosition());
+public class ElevatorGoToClimbPosition extends MotionMagicPositionCommand {
+  public ElevatorGoToClimbPosition() {
+    super(Robot.elevator, Robot.elevator.getClimpPosition());
   }
 }
