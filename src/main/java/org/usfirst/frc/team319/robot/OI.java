@@ -12,8 +12,8 @@ import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitB
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitFront;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
-import org.usfirst.frc.team319.robot.commands.Beak_Commands.FingerClose;
-import org.usfirst.frc.team319.robot.commands.Beak_Commands.FingerOpen;
+import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerCollect;
+import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerPlace;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
@@ -44,8 +44,8 @@ public class OI {
 =======
 		driverController.rightTriggerButton.whileHeld(new PassthroughSpitFront());
 		driverController.leftTriggerButton.whileHeld(new PassthroughSpitBack());
-		driverController.rightBumper.whenPressed(new FingerOpen());
-		driverController.leftBumper.whenPressed(new FingerClose());
+		driverController.rightBumper.whenPressed(new FingerPlace());
+		driverController.leftBumper.whenPressed(new FingerCollect());
 
 		// ----Operator Setup----//
 		operatorController = new BobXboxController(1, 0.10, 0.10);
@@ -57,6 +57,7 @@ public class OI {
 		operatorController.yButton.whenPressed(new ElevatorGoToHighCargoPosition());
 		operatorController.leftTriggerButton.whenPressed(new BbaGoToCarriageSafePosition());
 		operatorController.rightTriggerButton.whenPressed(new CollectCargoCommandGroup());
+<<<<<<< 8ecd4edac79e5e74e5231e60dbf790be9075ad91
 
 		// operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
 
@@ -70,5 +71,7 @@ public class OI {
 		 */
 
 >>>>>>> Contol mapping and Nessasary command addition
+=======
+>>>>>>> Addition of nessisary commands, incuding collect pose and tunnel eject commands
 	}
 }

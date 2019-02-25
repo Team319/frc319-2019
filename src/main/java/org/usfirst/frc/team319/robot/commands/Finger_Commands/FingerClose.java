@@ -5,16 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Beak_Commands;
+package org.usfirst.frc.team319.robot.commands.Finger_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class FingerToggle extends Command {
-  public FingerToggle() {
+public class FingerClose extends Command {
+  public FingerClose() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
+    requires(new Pneumatics());
   }
 
   // Called just before this Command runs the first time
@@ -25,17 +26,13 @@ public class FingerToggle extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.carriage.isFingerOpen()) {
-      Robot.pneumatics.FingerClose();
-    } else {
-      Robot.pneumatics.FingerOpen();
-    }
+    Robot.pneumatics.FingerClose();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

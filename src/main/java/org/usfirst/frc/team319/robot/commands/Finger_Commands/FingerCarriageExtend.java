@@ -5,12 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Beak_Commands;
+package org.usfirst.frc.team319.robot.commands.Finger_Commands;
+
+import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class FingerCollect extends Command {
-  public FingerCollect() {
+public class FingerCarriageExtend extends Command {
+  public FingerCarriageExtend() {
+    requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -23,6 +26,7 @@ public class FingerCollect extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.pneumatics.carriageExtend();
   }
 
   // Make this return true when this Command no longer needs to run execute()

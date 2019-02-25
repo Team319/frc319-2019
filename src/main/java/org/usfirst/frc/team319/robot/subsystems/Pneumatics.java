@@ -34,12 +34,12 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void FingerOpen() {
-		this.PlatypusFaceSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.FingerSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setIsFingerOpen(true);
 	}
 
 	public void FingerClose() {
-		this.PlatypusFaceSolenoid.set(DoubleSolenoid.Value.kReverse);
+		this.FingerSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.carriage.setIsFingerOpen(false);
 	}
 

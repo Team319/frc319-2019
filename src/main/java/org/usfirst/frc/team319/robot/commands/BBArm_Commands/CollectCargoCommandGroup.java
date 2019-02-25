@@ -8,6 +8,8 @@
 package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorCollect;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCargoCollectPosition;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToSafePossition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -16,7 +18,9 @@ public class CollectCargoCommandGroup extends CommandGroup {
    * Add your docs here.
    */
   public CollectCargoCommandGroup() {
+    addSequential(new ElevatorGoToSafePossition());
     addSequential(new BbaGoToCargoCollect());
-    addSequential(new CollectorCollect(0.5), 0.5);
+    addSequential(new ElevatorGoToCargoCollectPosition());
+    addSequential(new CollectorCollect(0.5));
   }
 }
