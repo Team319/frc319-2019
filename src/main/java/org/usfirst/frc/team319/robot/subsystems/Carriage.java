@@ -11,11 +11,8 @@ import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
 
-//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
-//import org.usfirst.frc.team319.models.SRXGains;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -72,6 +69,10 @@ public class Carriage extends Subsystem {
 
   public boolean isCarriageLockSolenoidExtended() {
     return isCarriageLockSolenoidExtended;
+  }
+
+  public boolean isPlatypusFaceSolenoidExtended() {
+    return isPlatypusFaceSolenoidExtended;
   }
 
   public void setIsCarriageLockSolenoidExtended(boolean isCarriageLockSolenoidExtended) {

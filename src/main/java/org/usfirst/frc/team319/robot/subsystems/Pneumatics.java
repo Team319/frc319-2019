@@ -17,12 +17,10 @@ public class Pneumatics extends Subsystem {
 
 	// elevator, carriage, Finger, Hatch collector
 
-	Solenoid elevatorFloorSolenoid = new Solenoid(0, 0);
-
-	DoubleSolenoid PlatypusFaceSolenoid = new DoubleSolenoid(1, 0, 1);
-	DoubleSolenoid FrontHatchSolenoid = new DoubleSolenoid(1, 2, 3);
-	DoubleSolenoid FingerSolenoid = new DoubleSolenoid(1, 4, 5);
-	DoubleSolenoid CarriageLockSolenoid = new DoubleSolenoid(1, 6, 7);
+	Solenoid elevatorFloorSolenoid = new Solenoid(0, 6);
+	DoubleSolenoid PlatypusFaceSolenoid = new DoubleSolenoid(0, 0, 1);
+	DoubleSolenoid FrontHatchSolenoid = new DoubleSolenoid(0, 2, 3);
+	DoubleSolenoid FingerSolenoid = new DoubleSolenoid(0, 4, 5);
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
