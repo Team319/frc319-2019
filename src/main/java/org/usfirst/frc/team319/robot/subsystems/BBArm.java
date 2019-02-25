@@ -29,8 +29,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Add your docs here.
  */
 public class BBArm extends PositionControlledSubsystem {
-  private boolean isHatchCollectorArmSolenoidExtended = true;
-  private boolean isHatchCollectorSolenoidExtended = false;
+  /*
+   * private boolean isHatchCollectorArmSolenoidExtended = true; private boolean
+   * isHatchCollectorSolenoidExtended = false;
+   */
 
   public BobTalonSRX bbaFollow = new BobTalonSRX(6);
   public BobTalonSRX bbaLead = new BobTalonSRX(10);
@@ -99,22 +101,22 @@ public class BBArm extends PositionControlledSubsystem {
     setDefaultCommand(new JoystickBBA());
   }
 
-  public boolean isHatchCollectorSolenoidExtended() {
-    return isHatchCollectorSolenoidExtended;
-  }
-
-  public void setIsHatchCollectorSolenoidExtended(boolean isHatchCollectorSolenoidExtended) {
-    this.isHatchCollectorSolenoidExtended = isHatchCollectorSolenoidExtended;
-  }
-
-  public boolean isHatchCollectorArmSolenoidExtended() {
-    return isHatchCollectorArmSolenoidExtended;
-  }
-
-  public void setIsHatchCollectorArmSolenoidExtended(boolean isHatchCollectorArmSolenoidExtended) {
-    this.isHatchCollectorArmSolenoidExtended = isHatchCollectorArmSolenoidExtended;
-  }
-
+  /*
+   * public boolean isHatchCollectorSolenoidExtended() { return
+   * isHatchCollectorSolenoidExtended; }
+   * 
+   * public void setIsHatchCollectorSolenoidExtended(boolean
+   * isHatchCollectorSolenoidExtended) { this.isHatchCollectorSolenoidExtended =
+   * isHatchCollectorSolenoidExtended; }
+   * 
+   * public boolean isHatchCollectorArmSolenoidExtended() { return
+   * isHatchCollectorArmSolenoidExtended; }
+   * 
+   * public void setIsHatchCollectorArmSolenoidExtended(boolean
+   * isHatchCollectorArmSolenoidExtended) {
+   * this.isHatchCollectorArmSolenoidExtended =
+   * isHatchCollectorArmSolenoidExtended; }
+   */
   public void configSoftLimits() {
     // ------------Lead Limits------------//
     this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);

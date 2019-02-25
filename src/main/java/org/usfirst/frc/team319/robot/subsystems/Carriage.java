@@ -30,6 +30,7 @@ public class Carriage extends Subsystem {
   DigitalInput digitalCargoSensor = new DigitalInput(0);
   CANifier canifier = new CANifier(0);
 
+<<<<<<< 3046d686a3a368f09f0a09809e82a80dda47360a
 <<<<<<< 0704e2dc398671fffba06cb6e6e78846b442f5c5
   private boolean isBeakOpen = true;
   private boolean manualCollectFinished = false;
@@ -37,6 +38,11 @@ public class Carriage extends Subsystem {
   private boolean isFingerOpen = true;
 >>>>>>> Control mapping and nessasary command creation and Pnuematic Renaming
 
+=======
+  private boolean isFingerOpen = false;
+  private boolean isCarriageLockSolenoidExtended = true;
+  private boolean isPlatypusFaceSolenoidExtended = false;
+>>>>>>> Addition of pnumatic toggles and commands.
   private final double safePosition = 0.0;
 
   private BobTalonSRX passthroughFollow = new BobTalonSRX(8);
@@ -54,6 +60,22 @@ public class Carriage extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+  }
+
+  public boolean IsPlatypusFaceSolenoidExtended() {
+    return IsPlatypusFaceSolenoidExtended();
+  }
+
+  public void setIsPlatypusFaceExtended(boolean IsPlatypusFaceSolenoidExtended) {
+    this.isPlatypusFaceSolenoidExtended = IsPlatypusFaceSolenoidExtended;
+  }
+
+  public boolean isCarriageLockSolenoidExtended() {
+    return isCarriageLockSolenoidExtended;
+  }
+
+  public void setIsCarriageLockSolenoidExtended(boolean isCarriageLockSolenoidExtended) {
+    this.isCarriageLockSolenoidExtended = isCarriageLockSolenoidExtended;
   }
 
   public boolean isFingerOpen() {

@@ -33,6 +33,16 @@ public class Pneumatics extends Subsystem {
 		compressor.setClosedLoopControl(true);
 	}
 
+	public void PlatypusFaceExtend() {
+		this.PlatypusFaceSolenoid.set(DoubleSolenoid.Value.kForward);
+		Robot.carriage.setIsPlatypusFaceExtended(true);
+	}
+
+	public void PlatypusFaceRetract() {
+		this.PlatypusFaceSolenoid.set(DoubleSolenoid.Value.kReverse);
+		Robot.carriage.setIsPlatypusFaceExtended(false);
+	}
+
 	public void FingerOpen() {
 		this.FingerSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setIsFingerOpen(true);
@@ -56,19 +66,23 @@ public class Pneumatics extends Subsystem {
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
 	}
 
+<<<<<<< 3046d686a3a368f09f0a09809e82a80dda47360a
 	public void elevatorFloorRetract() {
 		this.elevatorFloorSolenoid.set(false);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
 
 	public void hatchCollectorExtend() {
+=======
+	public void CarriageLockExtend() {
+>>>>>>> Addition of pnumatic toggles and commands.
 		this.FingerSolenoid.set(DoubleSolenoid.Value.kForward);
-		Robot.bbarm.setIsHatchCollectorSolenoidExtended(true);
+		Robot.carriage.setIsCarriageLockSolenoidExtended(true);
 	}
 
-	public void hatchCollectorRetract() {
+	public void CarriageLockRetract() {
 		this.FingerSolenoid.set(DoubleSolenoid.Value.kReverse);
-		Robot.bbarm.setIsHatchCollectorSolenoidExtended(false);
+		Robot.carriage.setIsCarriageLockSolenoidExtended(false);
 	}
 	/*
 	 * public void hatchCollectorArmExtend() {
