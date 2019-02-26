@@ -38,7 +38,7 @@ public class BBArm extends PositionControlledSubsystem {
 
   // towards floor = negative
 
-  private int homePosition = -500;
+  private int homePosition = 0;
   private int safePosition = 0;
   private int levelThreeHab = 0;
   private int levelTwoHab = 0;
