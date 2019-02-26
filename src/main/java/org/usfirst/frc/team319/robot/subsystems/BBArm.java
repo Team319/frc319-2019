@@ -18,6 +18,7 @@ import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.SRXGains;
+import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JoystickBBA;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -62,6 +63,9 @@ public class BBArm extends PositionControlledSubsystem {
 
   private MotionParameters UpMotionParameters = new MotionParameters(1600, 800, upGains);
   private MotionParameters DownMotionParameters = new MotionParameters(1600, 800, downGains);
+
+  int elevatorPosition = Robot.elevator.getCurrentPosition();
+  double elevatorSafePosition = Robot.elevator.getSafePosition();
 
   public BBArm() {
 
@@ -128,12 +132,22 @@ public class BBArm extends PositionControlledSubsystem {
   }
 
   public boolean isBBArmSafe(double targetBBArmPosition) {
-    boolean atRisk = this.getCurrentPosition() < this.getSafePosition();
-    // System.out.println("is BBA at risk: " + atRisk);
-    if (atRisk && targetBBArmPosition < floorPosition && getCurrentPosition() > homePosition) {
-      return false;
-    } else {
+
+    double elevatorSafePosition = Robot.elevator.getSafePosition();
+    int elevatorPosition = Robot.elevator.getCurrentPosition();
+
+    boolean elevatorInterfering = elevatorPosition < elevatorSafePosition;
+
+    boolean bbaSafePosition = this.getCurrentPosition() < this.getSafePosition();
+
+    boolean maxLimitCheck = targetBBArmPosition < downPositionLimit;
+
+    if (!elevatorInterfering) {
       return true;
+    } else if (bbaSafePosition && maxLimitCheck) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -272,4 +286,5 @@ public class BBArm extends PositionControlledSubsystem {
   public void forceSetTargetPosition(int targetPosition) {
     this.targetPosition = targetPosition;
   }
+
 }
