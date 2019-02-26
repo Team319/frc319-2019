@@ -16,7 +16,6 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem implements FollowsArc {
 

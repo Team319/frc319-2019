@@ -25,10 +25,10 @@ public class toggleElevatorFloorSolenoid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.elevator.isElevatorFloorSolenoidExtended()) {
-      Robot.pneumatics.elevatorFloorRetract();
+    if (Robot.elevator.isElevatorFloorSolenoidExtended = true) {
+      Robot.pneumatics.carriageAndElevatorRetract();
     } else {
-      Robot.pneumatics.elevatorFloorExtend();
+      Robot.pneumatics.carriageAndElevatorExtend();
     }
   }
 

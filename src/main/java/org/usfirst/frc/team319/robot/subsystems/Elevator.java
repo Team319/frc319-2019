@@ -22,7 +22,7 @@ import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JoystickElevator
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PositionControlledSubsystem {
-  private boolean isElevatorFloorSolenoidExtended = false;
+  public boolean isElevatorFloorSolenoidExtended = false;
 
   private boolean isHoldingPosition = false;
   private int onTargetThreshold = 100;

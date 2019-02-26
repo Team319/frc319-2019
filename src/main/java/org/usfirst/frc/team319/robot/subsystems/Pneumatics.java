@@ -5,7 +5,6 @@ import org.usfirst.frc.team319.robot.commands.pneumatics.CompressorRun;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -17,10 +16,13 @@ public class Pneumatics extends Subsystem {
 
 	// elevator, carriage, Finger, Hatch collector
 
-	Solenoid elevatorFloorSolenoid = new Solenoid(0, 6);
 	DoubleSolenoid PlatypusFaceSolenoid = new DoubleSolenoid(0, 0, 1);
 	DoubleSolenoid FrontHatchSolenoid = new DoubleSolenoid(0, 2, 3);
 	DoubleSolenoid FingerSolenoid = new DoubleSolenoid(0, 4, 5);
+	DoubleSolenoid beakSolenoid = new DoubleSolenoid(1, 0, 1);
+	DoubleSolenoid carriageAndElevatorSolenoid = new DoubleSolenoid(1, 2, 3);
+	DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(1, 4, 5);
+	DoubleSolenoid hatchCollectorArmSolenoid = new DoubleSolenoid(1, 6, 7);
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -51,21 +53,13 @@ public class Pneumatics extends Subsystem {
 		Robot.carriage.setIsFingerOpen(false);
 	}
 
-	public void carriageExtend() {
-		this.FrontHatchSolenoid.set(DoubleSolenoid.Value.kForward);
-	}
-
-	public void carriageRetract() {
-		this.FrontHatchSolenoid.set(DoubleSolenoid.Value.kReverse);
-	}
-
-	public void elevatorFloorExtend() {
-		this.elevatorFloorSolenoid.set(true);
+	public void carriageAndElevatorExtend() {
+		this.carriageAndElevatorSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
 	}
 
-	public void elevatorFloorRetract() {
-		this.elevatorFloorSolenoid.set(false);
+	public void carriageAndElevatorRetract() {
+		this.carriageAndElevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
 
