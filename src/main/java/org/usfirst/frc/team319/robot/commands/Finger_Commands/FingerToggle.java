@@ -26,9 +26,9 @@ public class FingerToggle extends Command {
   @Override
   protected void execute() {
     if (Robot.carriage.isFingerOpen()) {
-      Robot.pneumatics.FingerClose();
+      Robot.pneumatics.fingerClose();
     } else {
-      Robot.pneumatics.FingerOpen();
+      Robot.pneumatics.fingerOpen();
     }
   }
 
