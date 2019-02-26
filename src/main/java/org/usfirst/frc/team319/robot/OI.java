@@ -18,9 +18,6 @@ import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHigh
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.Climb;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.ManualCollect;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.ManualTunnelIntake;
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.DriveTrainDriveThreeFeet;
 
 /**
  * This class is the glue that binds the controls on the physical operator

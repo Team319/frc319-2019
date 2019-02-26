@@ -19,8 +19,6 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JoystickElevator;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class Elevator extends PositionControlledSubsystem {
   public boolean isElevatorFloorSolenoidExtended = false;
 
