@@ -9,6 +9,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
+import com.ctre.phoenix.motorcontrol.InvertType;
 
 //import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
@@ -30,24 +31,23 @@ public class Carriage extends Subsystem {
   CANifier canifier = new CANifier(0);
 
   private boolean isBeakOpen = true;
+  private boolean manualCollectFinished = false;
 
   private final double safePosition = 0.0;
 
-  public LeaderBobTalonSRX passThroughLead = new LeaderBobTalonSRX(7, new BobTalonSRX(8));
+  private BobTalonSRX passthroughFollow = new BobTalonSRX(8);
+  public LeaderBobTalonSRX passThroughLead = new LeaderBobTalonSRX(7, passthroughFollow);
 
   public Carriage() {
-
+    passthroughFollow.setInverted(InvertType.OpposeMaster);
   }
 
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Ball Detected", this.ballDetected());
+    SmartDashboard.putBoolean("Collect Finished", this.getManualCollectFinished());
   }
 
-  /*
-   * private double getCurrentPosition() { return
-   * this.passThroughLead.getSelectedSensorPosition(); }
-   */
   @Override
   public void initDefaultCommand() {
   }
@@ -70,6 +70,14 @@ public class Carriage extends Subsystem {
 
   public boolean ballDetected() {
     return canifier.getGeneralInput(GeneralPin.LIMF);
+  }
+
+  public boolean getManualCollectFinished() {
+    return manualCollectFinished;
+  }
+
+  public void setManualCollectFinished(boolean manualCollectFinished) {
+    this.manualCollectFinished = manualCollectFinished;
   }
 
 }

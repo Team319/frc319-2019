@@ -150,19 +150,19 @@ public class BobTalonSRX extends TalonSRX {
 	public void configRemoteSensor1(int remoteDeviceId, RemoteSensorSource remoteSensorSource) {
 		this.configRemoteFeedbackFilter(remoteDeviceId, remoteSensorSource, 1);
 	}
-	
+
 	public int getPrimarySensorPosition() {
 		return this.getSelectedSensorPosition(primaryPidIndex);
 	}
-	
+
 	public int getSecondarySensorPosition() {
 		return this.getSelectedSensorPosition(secondaryPidIndex);
 	}
-	
+
 	public int getPrimarySensorVelocity() {
 		return this.getSelectedSensorVelocity(primaryPidIndex);
 	}
-	
+
 	public int getSecondarySensorVelocity() {
 		return this.getSelectedSensorVelocity(secondaryPidIndex);
 	}
@@ -296,11 +296,11 @@ public class BobTalonSRX extends TalonSRX {
 	public ErrorCode configClosedloopRamp(double secondsFromNeutralToFull) {
 		return super.configClosedloopRamp(secondsFromNeutralToFull, defaultTimeoutMs);
 	}
-	
+
 	public ErrorCode configVoltageCompSaturation(double voltage) {
 		return super.configVoltageCompSaturation(voltage, defaultTimeoutMs);
 	}
-	
+
 	public ErrorCode configMaxIntegralAccumulator(int slotIdx, double iaccum) {
 		return super.configMaxIntegralAccumulator(slotIdx, iaccum, defaultTimeoutMs);
 	}

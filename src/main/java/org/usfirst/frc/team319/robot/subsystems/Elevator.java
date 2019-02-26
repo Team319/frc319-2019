@@ -37,22 +37,22 @@ public class Elevator extends PositionControlledSubsystem {
   // ---- Hatch Positions ---- //
 
   private int hatchCollectPosition = 0;
-  private int highHatchPosition = 0;
-  private int middleHatchPosition = 0;
-  private int lowHatchPosition = 0;
+  private int highHatchPosition = 33300;
+  private int middleHatchPosition = 16000;
+  private int lowHatchPosition = 0; // this value is correct
 
   // ---- Cargo Positions ---- //
-  private int cargoCollectPosition = 0;
-  private int highCargoPosition = 0;
-  private int middleCargoPosition = 20000;
-  private int lowCargoRocketPosition = 0;
+  private int cargoCollectPosition = -5000;
+  private int highCargoPosition = 33300;
+  private int middleCargoPosition = 16000;
+  private int lowCargoRocketPosition = 0; // this value is correct
   private int cargoShipCargoPosition = 0;
   // cargoShipCargoPosition should be around the same as middleHatchPosition
 
   // ---- Travel Limits Positions ---- //
   private int topOfFirstStagePosition = 0;
-  private int maxVerticalLimit = 40000;
-  private int minVerticalLimit = homePosition;
+  private int maxVerticalLimit = 37400;
+  private int minVerticalLimit = cargoCollectPosition;
 
   private int bbaSafePosition = -1000; // TODO
 
@@ -245,9 +245,12 @@ public class Elevator extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
-    SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
-    SmartDashboard.putNumber("Elevator Target Position", this.getTargetPosition());
+    /*
+     * SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+     * SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
+     * SmartDashboard.putNumber("Elevator Target Position",
+     * this.getTargetPosition());
+     */
   }
 
   @Override
@@ -285,5 +288,10 @@ public class Elevator extends PositionControlledSubsystem {
       return false;
     }
 
+  }
+
+  @Override
+  public void forceSetTargetPosition(int targetPosition) {
+    this.targetPosition = targetPosition;
   }
 }
