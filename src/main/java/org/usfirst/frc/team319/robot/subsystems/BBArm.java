@@ -64,9 +64,10 @@ public class BBArm extends PositionControlledSubsystem {
   private MotionParameters UpMotionParameters = new MotionParameters(1600, 800, upGains);
   private MotionParameters DownMotionParameters = new MotionParameters(1600, 800, downGains);
 
-  int elevatorPosition = Robot.elevator.getCurrentPosition();
-  double elevatorSafePosition = Robot.elevator.getSafePosition();
-
+  /*
+   * int elevatorPosition = Robot.elevator.getCurrentPosition(); double
+   * elevatorSafePosition = Robot.elevator.getSafePosition();
+   */
   public BBArm() {
 
     configSoftLimits();
@@ -132,6 +133,9 @@ public class BBArm extends PositionControlledSubsystem {
   }
 
   public boolean isBBArmSafe(double targetBBArmPosition) {
+
+    double elevatorSafePosition = Robot.elevator.getSafePosition();
+    int elevatorPosition = Robot.elevator.getCurrentPosition();
 
     boolean elevatorInterfering = elevatorPosition < elevatorSafePosition;
 
