@@ -28,7 +28,7 @@ public class JoystickElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double signal = -Robot.oi.operatorController.rightStick.getY();
+    double signal = -Robot.oi.operatorController.leftStick.getY();
     Robot.elevator.incrementTargetPosition((int) (signal * positionIncrement));
 
     Robot.elevator.motionMagicControl();

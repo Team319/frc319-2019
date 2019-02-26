@@ -26,10 +26,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Add your docs here.
  */
 public class BBArm extends PositionControlledSubsystem {
-  /*
-   * private boolean isHatchCollectorArmSolenoidExtended = true; private boolean
-   * isHatchCollectorSolenoidExtended = false;
-   */
+
+  private boolean isFrontHatchSolenoidExtended = false;
 
   public BobTalonSRX bbaFollow = new BobTalonSRX(6);
   public BobTalonSRX bbaLead = new BobTalonSRX(10);
@@ -38,14 +36,14 @@ public class BBArm extends PositionControlledSubsystem {
   // towards floor = negative
 
   private int homePosition = 0;
-  private int safePosition = 0;
-  private int levelThreeHab = 0;
-  private int levelTwoHab = 0;
-  private int hatchFloorPosition = 0;
+  private int safePosition = -4408;
+  private int levelThreeHab = -4408;
+  private int levelTwoHab = -7059;
+  private int hatchFloorPosition = -8500;
   private int cargoCollectPosition = -6500;
   private int floorPosition = -8750;
   private int liftRobotPosition = -9001;
-  private int bbaCarriageSafePosition = -4000;
+  private int bbaCarriageSafePosition = -4408;
 
   private int upPositionLimit = 0;
   private int downPositionLimit = liftRobotPosition;
@@ -63,8 +61,8 @@ public class BBArm extends PositionControlledSubsystem {
   private MotionParameters UpMotionParameters = new MotionParameters(1600, 800, upGains);
   private MotionParameters DownMotionParameters = new MotionParameters(1600, 800, downGains);
 
-  int elevatorPosition = Robot.elevator.getCurrentPosition();
-  double elevatorSafePosition = Robot.elevator.getSafePosition();
+  // int elevatorPosition = Robot.elevator.getCurrentPosition();
+  // double elevatorSafePosition = Robot.elevator.getSafePosition();
 
   public BBArm() {
 
@@ -98,22 +96,14 @@ public class BBArm extends PositionControlledSubsystem {
     setDefaultCommand(new JoystickBBA());
   }
 
-  /*
-   * public boolean isHatchCollectorSolenoidExtended() { return
-   * isHatchCollectorSolenoidExtended; }
-   * 
-   * public void setIsHatchCollectorSolenoidExtended(boolean
-   * isHatchCollectorSolenoidExtended) { this.isHatchCollectorSolenoidExtended =
-   * isHatchCollectorSolenoidExtended; }
-   * 
-   * public boolean isHatchCollectorArmSolenoidExtended() { return
-   * isHatchCollectorArmSolenoidExtended; }
-   * 
-   * public void setIsHatchCollectorArmSolenoidExtended(boolean
-   * isHatchCollectorArmSolenoidExtended) {
-   * this.isHatchCollectorArmSolenoidExtended =
-   * isHatchCollectorArmSolenoidExtended; }
-   */
+  public boolean isFrontHatchSolenoidExtended() {
+    return isFrontHatchSolenoidExtended;
+  }
+
+  public void setIsFrontHatchSolenoidExtended(boolean isFrontHatchSolenoidExtended) {
+    this.isFrontHatchSolenoidExtended = isFrontHatchSolenoidExtended;
+  }
+
   public void configSoftLimits() {
     // ------------Lead Limits------------//
     this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);
@@ -275,8 +265,9 @@ public class BBArm extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
     /*
-     * SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
+     *
      * SmartDashboard.putNumber("BBA Target Position", this.getTargetPosition());
      */
   }

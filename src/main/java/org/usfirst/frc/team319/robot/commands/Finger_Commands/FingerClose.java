@@ -8,14 +8,13 @@
 package org.usfirst.frc.team319.robot.commands.Finger_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class FingerClose extends Command {
   public FingerClose() {
     // Use requires() here to declare subsystem dependencies
-    requires(new Pneumatics());
+    requires(Robot.pneumatics);
   }
 
   // Called just before this Command runs the first time

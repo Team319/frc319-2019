@@ -52,7 +52,7 @@ public class Elevator extends PositionControlledSubsystem {
   private int bbaSafePosition = -1000; // TODO
   private int climbLimit = 0;
   private int targetPosition = 0;
-
+  private int floorLimit = -7076;
   private int climbPosition = 0;
 
   // ---- Gains, Pid Values, Talon Setup ---- //
@@ -60,8 +60,8 @@ public class Elevator extends PositionControlledSubsystem {
   public final static int ELEVATOR_UP = 0;
   public final static int ELEVATOR_DOWN = 1;
 
-  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.3, 0.0, 0.0, .2046, 0);
-  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.3, 0.0, 0.0, .2046, 0);
+  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.2, 0.0, 20.0, .2046, 0);
+  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.2, 0.0, 20.0, .2046, 0);
 
   private MotionParameters UpMotionParameters = new MotionParameters(8000, 4000, elevatorUpGains);
   private MotionParameters DownMotionParameters = new MotionParameters(4000, 3000, elevatorDownGains);
@@ -110,7 +110,7 @@ public class Elevator extends PositionControlledSubsystem {
 
   public void canElevatorClimb() {
     if (this.isElevatorFloorSolenoidExtended = false) {
-      this.elevatorLead.configReverseSoftLimitThreshold(homePosition);// elevator floor limit
+      this.elevatorLead.configReverseSoftLimitThreshold(floorLimit);// elevator floor limit
     } else {
       this.elevatorLead.configReverseSoftLimitThreshold(climbLimit);// climb limit
     }
@@ -221,6 +221,10 @@ public class Elevator extends PositionControlledSubsystem {
     return this.maxVerticalLimit;
   }
 
+  public int getFloorLimit() {
+    return this.floorLimit;
+  }
+
   public void percentVbus(double signal) {
     this.elevatorLead.set(ControlMode.PercentOutput, signal);
   }
@@ -254,8 +258,10 @@ public class Elevator extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
+    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+    SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
     /*
-     * SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+     * 
      * SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
      * SmartDashboard.putNumber("Elevator Target Position",
      * this.getTargetPosition());

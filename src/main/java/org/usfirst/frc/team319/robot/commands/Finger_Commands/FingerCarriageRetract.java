@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class FingerCarriageRetract extends Command {
   public FingerCarriageRetract() {
     requires(Robot.pneumatics);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +24,7 @@ public class FingerCarriageRetract extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.carriageRetract();
+    Robot.pneumatics.hatchCollectorArmExtend();
   }
 
   // Make this return true when this Command no longer needs to run execute()

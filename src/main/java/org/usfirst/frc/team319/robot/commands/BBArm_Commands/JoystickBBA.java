@@ -28,7 +28,7 @@ public class JoystickBBA extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double signal = -Robot.oi.operatorController.leftStick.getY();
+    double signal = Robot.oi.operatorController.rightStick.getY();
     Robot.bbarm.incrementTargetPosition((int) (signal * positionIncrement));
     Robot.bbarm.motionMagicControl();
   }
