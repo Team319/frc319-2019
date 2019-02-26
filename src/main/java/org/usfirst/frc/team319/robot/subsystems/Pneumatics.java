@@ -5,6 +5,7 @@ import org.usfirst.frc.team319.robot.commands.pneumatics.CompressorRun;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -16,11 +17,12 @@ public class Pneumatics extends Subsystem {
 
 	// elevator, carriage, beak, Hatch collector
 
-	DoubleSolenoid beakSolenoid = new DoubleSolenoid(0, 1);
-	DoubleSolenoid carriageSolenoid = new DoubleSolenoid(2, 3);
-	DoubleSolenoid elevatorFloorSolenoid = new DoubleSolenoid(4, 5);
-	DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(6, 7);
-	DoubleSolenoid hatchCollectorArmSolenoid = new DoubleSolenoid(8, 9);
+	Solenoid elevatorFloorSolenoid = new Solenoid(0, 0);
+
+	DoubleSolenoid beakSolenoid = new DoubleSolenoid(1, 0, 1);
+	DoubleSolenoid carriageSolenoid = new DoubleSolenoid(1, 2, 3);
+	DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(1, 4, 5);
+	DoubleSolenoid hatchCollectorArmSolenoid = new DoubleSolenoid(1, 6, 7);
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
@@ -50,27 +52,25 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void elevatorFloorExtend() {
-		this.elevatorFloorSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.elevatorFloorSolenoid.set(true);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
-	}
-
-	public void elevatorFloorRetract() {
-		this.elevatorFloorSolenoid.set(DoubleSolenoid.Value.kReverse);
-		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
 
 	public void hatchCollectorExtend() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.bbarm.setIsHatchCollectorSolenoidExtended(true);
-	}	
+	}
+
 	public void hatchCollectorRetract() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.bbarm.setIsHatchCollectorSolenoidExtended(false);
 	}
+
 	public void hatchCollectorArmExtend() {
 		this.hatchCollectorArmSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.bbarm.setIsHatchCollectorArmSolenoidExtended(true);
 	}
+
 	public void hatchCollectorArmRetract() {
 		this.hatchCollectorArmSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.bbarm.setIsHatchCollectorArmSolenoidExtended(false);

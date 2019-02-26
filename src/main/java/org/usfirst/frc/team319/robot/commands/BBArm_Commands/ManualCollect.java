@@ -31,15 +31,16 @@ public class ManualCollect extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		//System.out.println("Cube collector is spitting");
+		// System.out.println("Cube collector is spitting");
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		if (joystickControl) {
-			double spitPower = Robot.oi.driverController.triggers.getLeft();
+			double spitPower = Robot.oi.operatorController.triggers.getLeft();
 			targetSpeed = (spitPower * spitPower);
 			Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
+			Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
 		} else {
 			Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
 		}
@@ -54,6 +55,7 @@ public class ManualCollect extends Command {
 	// Called once after isFinished returns true
 	protected void end() {
 		Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, 0);
+		Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0);
 
 	}
 
@@ -61,5 +63,6 @@ public class ManualCollect extends Command {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, 0);
+		Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0);
 	}
 }

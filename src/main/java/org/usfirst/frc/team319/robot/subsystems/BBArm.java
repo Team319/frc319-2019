@@ -8,7 +8,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
+//import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -21,8 +21,8 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JoystickBBA;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class BBArm extends PositionControlledSubsystem {
   private boolean isHatchCollectorArmSolenoidExtended = true;
   private boolean isHatchCollectorSolenoidExtended = false;
-
 
   public BobTalonSRX bbaFollow = new BobTalonSRX(6);
   public BobTalonSRX bbaLead = new BobTalonSRX(10);
@@ -96,11 +95,11 @@ public class BBArm extends PositionControlledSubsystem {
     setDefaultCommand(new JoystickBBA());
   }
 
-  public boolean isHatchCollectorSolenoidExtended(){
+  public boolean isHatchCollectorSolenoidExtended() {
     return isHatchCollectorSolenoidExtended;
   }
 
-  public void setIsHatchCollectorSolenoidExtended(boolean isHatchCollectorSolenoidExtended){
+  public void setIsHatchCollectorSolenoidExtended(boolean isHatchCollectorSolenoidExtended) {
     this.isHatchCollectorSolenoidExtended = isHatchCollectorSolenoidExtended;
   }
 
@@ -112,7 +111,6 @@ public class BBArm extends PositionControlledSubsystem {
     this.isHatchCollectorArmSolenoidExtended = isHatchCollectorArmSolenoidExtended;
   }
 
- 
   public void configSoftLimits() {
     // ------------Lead Limits------------//
     this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);
@@ -138,7 +136,8 @@ public class BBArm extends PositionControlledSubsystem {
       return true;
     }
   }
-//
+
+  //
   public boolean isValidPosition(int position) {
     boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
     return withinBounds;
@@ -161,7 +160,6 @@ public class BBArm extends PositionControlledSubsystem {
     this.bbaLead.set(ControlMode.MotionMagic, targetPosition);
     this.bbaFollow.set(ControlMode.MotionMagic, targetPosition);
   }
-  
 
   public void percentVbus(double signal) {
     this.bbaLead.set(ControlMode.PercentOutput, signal);
@@ -264,10 +262,14 @@ public class BBArm extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
-    SmartDashboard.putNumber("BBA Secondary Position", this.getSecondaryPosition());
-    SmartDashboard.putNumber("BBA Lead Velocity", this.getCurrentVelocity());
-    SmartDashboard.putNumber("BBA Follow Velocity", this.getFollowCurrentVelocity());
-    SmartDashboard.putNumber("BBA Target Position", this.getTargetPosition());
+    /*
+     * SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
+     * SmartDashboard.putNumber("BBA Target Position", this.getTargetPosition());
+     */
+  }
+
+  @Override
+  public void forceSetTargetPosition(int targetPosition) {
+    this.targetPosition = targetPosition;
   }
 }

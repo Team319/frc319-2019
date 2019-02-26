@@ -13,6 +13,8 @@ public abstract class PositionControlledSubsystem extends Subsystem {
 
   public abstract boolean setTargetPosition(int targetPosition);
 
+  public abstract void forceSetTargetPosition(int targetPosition);
+
   public abstract int getTargetPosition();
 
   public abstract int getCurrentPosition();

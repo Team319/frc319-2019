@@ -9,7 +9,7 @@ package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class JoystickBBA extends Command {
 
@@ -30,9 +30,7 @@ public class JoystickBBA extends Command {
   protected void execute() {
     double signal = -Robot.oi.operatorController.leftStick.getY();
     Robot.bbarm.incrementTargetPosition((int) (signal * positionIncrement));
-
     Robot.bbarm.motionMagicControl();
-
   }
 
   @Override
