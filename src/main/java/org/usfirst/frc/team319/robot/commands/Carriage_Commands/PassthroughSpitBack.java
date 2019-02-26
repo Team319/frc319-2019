@@ -5,37 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Beak_Commands;
+package org.usfirst.frc.team319.robot.commands.Carriage_Commands;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BeakToggle extends Command {
-  public BeakToggle() {
+public class PassthroughSpitBack extends Command {
+  private double targetSpeed;
+
+  public PassthroughSpitBack() {
+    requires(Robot.carriage);
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.carriage.isBeakOpen()){
-        Robot.pneumatics.beakClose();
-    }else{
-      Robot.pneumatics.beakOpen();
-    }
+    double spitPower = Robot.oi.operatorController.triggers.getLeft();
+    targetSpeed = -(spitPower * spitPower);
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

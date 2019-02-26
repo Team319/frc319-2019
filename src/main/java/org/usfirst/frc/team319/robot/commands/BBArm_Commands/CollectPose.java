@@ -7,45 +7,59 @@
 
 package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class toggleHatchCollectorSolenoid extends Command {
-  public toggleHatchCollectorSolenoid() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
+public class CollectPose extends Command {
+
+  private boolean joystickControl = true;
+  private double targetSpeed = 0.0;
+
+  public CollectPose() {
+    requires(Robot.carriage);
+    joystickControl = true;
+  }
+
+  public CollectPose(double speed) {
+    requires(Robot.carriage);
+    joystickControl = false;
+    targetSpeed = speed;
   }
 
   // Called just before this Command runs the first time
-  @Override
   protected void initialize() {
+    // System.out.println("Cube collector is spitting");
   }
 
   // Called repeatedly when this Command is scheduled to run
-  @Override
   protected void execute() {
-    /*
-     * if(Robot.bbarm.isHatchCollectorSolenoidExtended()){
-     * Robot.pneumatics.hatchCollectorRetract(); }else{
-     * Robot.pneumatics.hatchCollectorExtend(); }
-     */
+    if (joystickControl) {
+      double spitPower = Robot.oi.operatorController.triggers.getRight();
+      targetSpeed = (spitPower * spitPower);
+      Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
+    } else {
+      Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
-  @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
-  @Override
   protected void end() {
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0);
+
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
-  @Override
   protected void interrupted() {
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0);
   }
 }

@@ -5,17 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Beak_Commands;
+package org.usfirst.frc.team319.robot.commands.Carriage_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class BeakOpen extends Command {
-  public BeakOpen() {
+public class PlatypusFaceRetract extends Command {
+  public PlatypusFaceRetract() {
+    requires(Robot.pneumatics);
     // Use requires() here to declare subsystem dependencies
-    requires(new Pneumatics());
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -26,7 +26,7 @@ public class BeakOpen extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.beakOpen();
+    Robot.pneumatics.PlatypusFaceRetract();
   }
 
   // Make this return true when this Command no longer needs to run execute()

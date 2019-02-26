@@ -8,12 +8,10 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-//import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
-//import org.usfirst.frc.team319.models.IPositionControlledSubsystem;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
@@ -23,9 +21,6 @@ import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JoystickElevator
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * Add your docs here.
- */
 public class Elevator extends PositionControlledSubsystem {
   private boolean isElevatorFloorSolenoidExtended = false;
 
@@ -55,8 +50,10 @@ public class Elevator extends PositionControlledSubsystem {
   private int minVerticalLimit = cargoCollectPosition;
 
   private int bbaSafePosition = -1000; // TODO
-
+  private int climbLimit = 0;
   private int targetPosition = 0;
+
+  private int climbPosition = 0;
 
   // ---- Gains, Pid Values, Talon Setup ---- //
 
@@ -98,7 +95,7 @@ public class Elevator extends PositionControlledSubsystem {
     this.elevatorLead.configForwardSoftLimitThreshold(maxVerticalLimit);
 
     this.elevatorLead.configReverseSoftLimitEnable(true);
-    this.elevatorLead.configReverseSoftLimitThreshold(homePosition);
+    canElevatorClimb();
 
     this.elevatorLead.setInverted(false);
     this.elevatorFollow14.setInverted(false);
@@ -109,6 +106,14 @@ public class Elevator extends PositionControlledSubsystem {
 
     this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
     this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
+  }
+
+  public void canElevatorClimb() {
+    if (this.isElevatorFloorSolenoidExtended = false) {
+      this.elevatorLead.configReverseSoftLimitThreshold(homePosition);// elevator floor limit
+    } else {
+      this.elevatorLead.configReverseSoftLimitThreshold(climbLimit);// climb limit
+    }
   }
 
   @Override
@@ -163,6 +168,10 @@ public class Elevator extends PositionControlledSubsystem {
 
   public int getMinVerticalLimit() {
     return this.minVerticalLimit;
+  }
+
+  public int getClimpPosition() {
+    return this.climbPosition;
   }
 
   // ----Get Hatch Positions----//

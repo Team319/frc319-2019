@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
+package org.usfirst.frc.team319.robot.commands.Finger_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class toggleHatchCollectorSolenoid extends Command {
-  public toggleHatchCollectorSolenoid() {
+public class FingerToggle extends Command {
+  public FingerToggle() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.pneumatics);
   }
@@ -25,11 +25,11 @@ public class toggleHatchCollectorSolenoid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    /*
-     * if(Robot.bbarm.isHatchCollectorSolenoidExtended()){
-     * Robot.pneumatics.hatchCollectorRetract(); }else{
-     * Robot.pneumatics.hatchCollectorExtend(); }
-     */
+    if (Robot.carriage.isFingerOpen()) {
+      Robot.pneumatics.FingerClose();
+    } else {
+      Robot.pneumatics.FingerOpen();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -11,11 +11,8 @@ import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
 
-//import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
-//import org.usfirst.frc.team319.models.SRXGains;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,9 +27,11 @@ public class Carriage extends Subsystem {
   DigitalInput digitalCargoSensor = new DigitalInput(0);
   CANifier canifier = new CANifier(0);
 
-  private boolean isBeakOpen = true;
   private boolean manualCollectFinished = false;
+  private boolean isFingerOpen = true;
 
+  private boolean isCarriageLockSolenoidExtended = true;
+  private boolean isPlatypusFaceSolenoidExtended = false;
   private final double safePosition = 0.0;
 
   private BobTalonSRX passthroughFollow = new BobTalonSRX(8);
@@ -52,12 +51,32 @@ public class Carriage extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  public boolean isBeakOpen() {
-    return isBeakOpen;
+  public boolean IsPlatypusFaceSolenoidExtended() {
+    return IsPlatypusFaceSolenoidExtended();
   }
 
-  public void setIsBeakOpen(boolean isBeakOpen) {
-    this.isBeakOpen = isBeakOpen;
+  public void setIsPlatypusFaceExtended(boolean IsPlatypusFaceSolenoidExtended) {
+    this.isPlatypusFaceSolenoidExtended = IsPlatypusFaceSolenoidExtended;
+  }
+
+  public boolean isCarriageLockSolenoidExtended() {
+    return isCarriageLockSolenoidExtended;
+  }
+
+  public boolean isPlatypusFaceSolenoidExtended() {
+    return isPlatypusFaceSolenoidExtended;
+  }
+
+  public void setIsCarriageLockSolenoidExtended(boolean isCarriageLockSolenoidExtended) {
+    this.isCarriageLockSolenoidExtended = isCarriageLockSolenoidExtended;
+  }
+
+  public boolean isFingerOpen() {
+    return isFingerOpen;
+  }
+
+  public void setIsFingerOpen(boolean isFingerOpen) {
+    this.isFingerOpen = isFingerOpen;
   }
 
   public double isCarraigeSafe(int newTargetPosition) {
