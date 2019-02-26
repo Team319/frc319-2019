@@ -64,16 +64,12 @@ public class Pneumatics extends Subsystem {
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
 	}
 
-<<<<<<< 3046d686a3a368f09f0a09809e82a80dda47360a
 	public void elevatorFloorRetract() {
 		this.elevatorFloorSolenoid.set(false);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
 
-	public void hatchCollectorExtend() {
-=======
 	public void CarriageLockExtend() {
->>>>>>> Addition of pnumatic toggles and commands.
 		this.FingerSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setIsCarriageLockSolenoidExtended(true);
 	}

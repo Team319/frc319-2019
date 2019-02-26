@@ -31,25 +31,10 @@ public class OI {
 		driverController = new BobXboxController(0, 0.10, 0.10);
 		operatorController = new BobXboxController(1, 0.10, 0.1);
 
-<<<<<<< dc39c70e838f880dc9f9e4073de3ad9572532c33
-		driverController.leftTriggerButton.configureThreshold(0.075);
-		driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
-
-		operatorController.leftTriggerButton.whileHeld(new ManualCollect());
-		operatorController.bButton.whenPressed(new BBAGoHome());
-		operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
-		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
-		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
-		operatorController.leftTriggerButton.whileHeld(new ManualCollect());
-=======
 		driverController.rightTriggerButton.whileHeld(new PassthroughSpitFront());
 		driverController.leftTriggerButton.whileHeld(new PassthroughSpitBack());
 		driverController.rightBumper.whenPressed(new FingerPlace());
 		driverController.leftBumper.whenPressed(new FingerCollect());
-
-		// ----Operator Setup----//
-		operatorController = new BobXboxController(1, 0.10, 0.10);
-		// ----Operator Buttons----//
 
 		operatorController.Dpad.Down.whenPressed(new Climb());
 		operatorController.aButton.whenPressed(new ElevatorGoToLowCargoPosition());
@@ -57,21 +42,5 @@ public class OI {
 		operatorController.yButton.whenPressed(new ElevatorGoToHighCargoPosition());
 		operatorController.leftTriggerButton.whenPressed(new BbaGoToCarriageSafePosition());
 		operatorController.rightTriggerButton.whenPressed(new CollectCargoCommandGroup());
-<<<<<<< 8ecd4edac79e5e74e5231e60dbf790be9075ad91
-
-		// operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
-
-		// ----Operator Buttons----//
-		/*
-		 * operatorController.bButton.whenPressed(new BBAGoHome());
-		 * operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
-		 * operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
-		 * operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
-		 * operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
-		 */
-
->>>>>>> Contol mapping and Nessasary command addition
-=======
->>>>>>> Addition of nessisary commands, incuding collect pose and tunnel eject commands
 	}
 }

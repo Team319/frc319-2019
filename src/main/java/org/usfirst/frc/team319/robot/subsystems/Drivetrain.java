@@ -16,10 +16,7 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-<<<<<<< 4a51219a959f5a3391992beea734e39766c46efe
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-=======
->>>>>>> Pnumatics adjustments
 
 public class Drivetrain extends Subsystem implements FollowsArc {
 
