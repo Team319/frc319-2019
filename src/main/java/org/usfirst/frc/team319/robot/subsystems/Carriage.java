@@ -46,10 +46,6 @@ public class Carriage extends Subsystem {
     SmartDashboard.putBoolean("Ball Detected", this.ballDetected());
   }
 
-  /*
-   * private double getCurrentPosition() { return
-   * this.passThroughLead.getSelectedSensorPosition(); }
-   */
   @Override
   public void initDefaultCommand() {
   }

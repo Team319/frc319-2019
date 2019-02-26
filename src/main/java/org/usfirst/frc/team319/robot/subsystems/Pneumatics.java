@@ -56,6 +56,11 @@ public class Pneumatics extends Subsystem {
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
 	}
 
+	public void elevatorFloorRetract() {
+		this.elevatorFloorSolenoid.set(false);
+		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
+	}
+
 	public void hatchCollectorExtend() {
 		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.bbarm.setIsHatchCollectorSolenoidExtended(true);
