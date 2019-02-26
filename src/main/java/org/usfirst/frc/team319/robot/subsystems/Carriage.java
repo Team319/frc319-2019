@@ -31,6 +31,7 @@ public class Carriage extends Subsystem {
   CANifier canifier = new CANifier(0);
 
   private boolean isBeakOpen = true;
+  private boolean manualCollectFinished = false;
 
   private final double safePosition = 0.0;
 
@@ -44,6 +45,7 @@ public class Carriage extends Subsystem {
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("Ball Detected", this.ballDetected());
+    SmartDashboard.putBoolean("Collect Finished", this.getManualCollectFinished());
   }
 
   @Override
@@ -68,6 +70,14 @@ public class Carriage extends Subsystem {
 
   public boolean ballDetected() {
     return canifier.getGeneralInput(GeneralPin.LIMF);
+  }
+
+  public boolean getManualCollectFinished() {
+    return manualCollectFinished;
+  }
+
+  public void setManualCollectFinished(boolean manualCollectFinished) {
+    this.manualCollectFinished = manualCollectFinished;
   }
 
 }

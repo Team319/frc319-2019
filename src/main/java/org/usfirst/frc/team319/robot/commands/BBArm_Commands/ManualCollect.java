@@ -36,15 +36,22 @@ public class ManualCollect extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (joystickControl) {
-			double spitPower = Robot.oi.operatorController.triggers.getLeft();
-			targetSpeed = (spitPower * spitPower);
-			Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
-			Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
-		} else {
-			Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
-		}
+		boolean isCollected = Robot.carriage.ballDetected();
 
+		if (isCollected) {
+			Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, 0);
+			Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0);
+			Robot.carriage.setManualCollectFinished(true);
+		} else {
+			if (joystickControl) {
+				double spitPower = Robot.oi.operatorController.triggers.getLeft();
+				targetSpeed = (spitPower * spitPower);
+				Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
+				Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
+			} else {
+				Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
+			}
+		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
