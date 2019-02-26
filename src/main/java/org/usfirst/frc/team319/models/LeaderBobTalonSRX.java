@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
 
 /**
@@ -31,6 +32,8 @@ public class LeaderBobTalonSRX extends BobTalonSRX {
 		// of followers
 		for (BaseMotorController follower : followers) {
 			follower.follow(this);
+			follower.setStatusFramePeriod(StatusFrame.Status_1_General, 100);
+			follower.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 100);
 			followerList.add(follower);
 		}
 	}

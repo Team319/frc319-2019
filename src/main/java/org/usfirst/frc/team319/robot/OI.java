@@ -31,40 +31,17 @@ public class OI {
 	public BobXboxController operatorController;
 
 	public OI() {
-
-		// ----Driver Setup----//
-
 		driverController = new BobXboxController(0, 0.10, 0.10);
-
-		// ----Driver Buttons----//
+		operatorController = new BobXboxController(1, 0.10, 0.1);
 
 		driverController.leftTriggerButton.configureThreshold(0.075);
-
 		driverController.aButton.whenPressed(new DriveTrainDriveThreeFeet());
-		// driverController.leftTriggerButton.whileHeld(new ManualCollect());
 
-		// ----Operator Setup----//
-		operatorController = new BobXboxController(1, 0.10, 0.05);
-		// ----Operator Buttons----//
-
+		operatorController.leftTriggerButton.whileHeld(new ManualCollect());
 		operatorController.bButton.whenPressed(new BBAGoHome());
 		operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
 		operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
 		operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
-
 		operatorController.leftTriggerButton.whileHeld(new ManualCollect());
-		// operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
-
-		// ----Operator Buttons----//
-		/*
-		 * operatorController.bButton.whenPressed(new BBAGoHome());
-		 * operatorController.yButton.whenPressed(new BbaGoToCargoCollect());
-		 * operatorController.xButton.whenPressed(new BbaGoToCarriageSafePosition());
-		 * operatorController.aButton.whenPressed(new CollectCargoCommandGroup());
-		 * operatorController.rightTriggerButton.whileHeld(new ManualTunnelIntake());
-		 */
-		operatorController.bButton.whenPressed(new ElevatorGoToMiddleCargoPosition());
-		operatorController.aButton.whenPressed(new ElevatorGoToHomePosition());
-
 	}
 }

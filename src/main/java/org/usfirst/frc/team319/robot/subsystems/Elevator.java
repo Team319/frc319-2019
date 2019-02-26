@@ -229,9 +229,12 @@ public class Elevator extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
-    SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
-    SmartDashboard.putNumber("Elevator Target Position", this.getTargetPosition());
+    /*
+     * SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+     * SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
+     * SmartDashboard.putNumber("Elevator Target Position",
+     * this.getTargetPosition());
+     */
   }
 
   @Override
@@ -269,5 +272,10 @@ public class Elevator extends PositionControlledSubsystem {
       return false;
     }
 
+  }
+
+  @Override
+  public void forceSetTargetPosition(int targetPosition) {
+    this.targetPosition = targetPosition;
   }
 }
