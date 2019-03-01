@@ -5,14 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Finger_Commands;
+package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class FingerCarriageRetract extends Command {
-  public FingerCarriageRetract() {
+public class ElevatorUnlockCarriage extends Command {
+
+  public ElevatorUnlockCarriage() {
+    // Use requires() here to declare subsystem dependencies
     requires(Robot.pneumatics);
   }
 
@@ -24,13 +26,13 @@ public class FingerCarriageRetract extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.hatchCollectorArmExtend();
+    Robot.pneumatics.carriageAndElevatorFloorRetract();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true

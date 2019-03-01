@@ -8,21 +8,22 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitBack;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitFront;
+import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpit;
+import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceExtend;
+import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceRetract;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCargoShipPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
-import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerCollect;
-import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerPlace;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorLockCarriage;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorUnlockCarriage;
+import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorCollect;
+import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorPlace;
+import org.usfirst.frc.team319.robot.commands.robotCommands.CollectCargo;
+import org.usfirst.frc.team319.robot.commands.robotCommands.GoToSafePose;
+// import org.usfirst.frc.team319.robot.commands.autonomous_paths.DriveTrainDriveThreeFeet;
+import org.usfirst.frc.team319.robot.commands.robotCommands.StartClimbMode;
 
-/**
- * This class is the glue that binds the controls on the physical operator
- * interface to the commands and command groups that allow control of the robot.
- */
 public class OI {
 	public BobXboxController driverController;
 	public BobXboxController operatorController;
@@ -31,19 +32,30 @@ public class OI {
 		driverController = new BobXboxController(0, 0.10, 0.10);
 		operatorController = new BobXboxController(1, 0.10, 0.1);
 
-		driverController.rightTriggerButton.whileHeld(new PassthroughSpitFront());
-		driverController.leftTriggerButton.whileHeld(new PassthroughSpitBack());
+		// ----Driver Controller---- \
 
-		driverController.rightBumper.whenPressed(new FingerPlace());
-		driverController.leftBumper.whenPressed(new FingerCollect());
+		driverController.rightTriggerButton.whileHeld(new PassthroughSpit());
+		driverController.leftTriggerButton.whileHeld(new PassthroughSpit());
 
-		// operatorController.Dpad.Down.whenPressed(new Climb());
+		driverController.leftBumper.whenPressed(new HatchCollectorCollect());
+		driverController.rightBumper.whenPressed(new HatchCollectorPlace());
+
+		driverController.aButton.whenPressed(new PlatypusFaceExtend());
+		driverController.bButton.whenPressed(new PlatypusFaceRetract());
+
+		// ----Operator Controller---- \\
+
 		operatorController.aButton.whenPressed(new ElevatorGoToLowCargoPosition());
 		operatorController.bButton.whenPressed(new ElevatorGoToMiddleCargoPosition());
 		operatorController.yButton.whenPressed(new ElevatorGoToHighCargoPosition());
-		operatorController.xButton.whenPressed(new ElevatorGoToHomePosition());
+		operatorController.xButton.whenPressed(new ElevatorGoToCargoShipPosition());
 
-		operatorController.leftTriggerButton.whenPressed(new BbaGoToCarriageSafePosition());
-		operatorController.rightTriggerButton.whenPressed(new CollectCargoCommandGroup());
+		operatorController.startButton.whenPressed(new StartClimbMode());
+
+		operatorController.leftBumper.whenPressed(new ElevatorLockCarriage());
+		operatorController.rightBumper.whenPressed(new ElevatorUnlockCarriage());
+
+		operatorController.leftTriggerButton.whenPressed(new GoToSafePose());
+		operatorController.rightTriggerButton.whenPressed(new CollectCargo());
 	}
 }

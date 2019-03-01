@@ -5,15 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
+package org.usfirst.frc.team319.robot.commands.hatchCollectorCommands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class ElevatorFloorRetractSolenoid extends Command {
-
-  public ElevatorFloorRetractSolenoid() {
+public class HatchCollectorToggleOpenClose extends Command {
+  public HatchCollectorToggleOpenClose() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.pneumatics);
   }
@@ -26,7 +25,11 @@ public class ElevatorFloorRetractSolenoid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.carriageAndElevatorRetract();
+    if (Robot.carriage.isFingerOpen()) {
+      Robot.pneumatics.FingerClose();
+    } else {
+      Robot.pneumatics.FingerOpen();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()

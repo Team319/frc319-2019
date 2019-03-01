@@ -5,17 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Finger_Commands;
+package org.usfirst.frc.team319.models;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
-public class FingerCollect extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public FingerCollect() {
-    addSequential(new FingerCarriageExtend());
-    addSequential(new FingerOpen());
-    addSequential(new FingerCarriageRetract());
-  }
+/**
+ * Add your docs here.
+ */
+public enum RobotMode {
+    Normal,
+    Climb,
 }

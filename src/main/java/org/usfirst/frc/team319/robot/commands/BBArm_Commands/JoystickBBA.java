@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,6 +31,10 @@ public class JoystickBBA extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if (Robot.mode == RobotMode.Climb) {
+      double driveSignal = Robot.oi.driverController.leftStick.getY();
+      Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, driveSignal);
+    }
     double signal = Robot.oi.operatorController.rightStick.getY();
     Robot.bbarm.incrementTargetPosition((int) (signal * positionIncrement));
     Robot.bbarm.motionMagicControl();

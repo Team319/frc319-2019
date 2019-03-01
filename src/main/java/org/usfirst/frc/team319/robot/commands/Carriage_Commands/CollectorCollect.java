@@ -12,9 +12,10 @@ import org.usfirst.frc.team319.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class CollectorCollect extends Command {
-private double speed = 0;
 
-  public CollectorCollect(double speed) {
+  private double targetSpeed;
+
+  public CollectorCollect() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.bbarm);
   }
@@ -27,13 +28,15 @@ private double speed = 0;
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.bbarm.setCollectorSpeed(speed);
+    double spitPower = Robot.oi.operatorController.triggers.getRight();
+    targetSpeed = (spitPower * spitPower);
+    Robot.bbarm.percentVbusCollector(targetSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

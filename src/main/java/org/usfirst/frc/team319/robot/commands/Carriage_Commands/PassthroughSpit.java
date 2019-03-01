@@ -5,15 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Finger_Commands;
+package org.usfirst.frc.team319.robot.commands.Carriage_Commands;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class FingerCarriageExtend extends Command {
-  public FingerCarriageExtend() {
-    requires(Robot.pneumatics);
+public class PassthroughSpit extends Command {
+  private double targetSpeed;
+
+  public PassthroughSpit() {
+    requires(Robot.carriage);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -21,28 +25,38 @@ public class FingerCarriageExtend extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.hatchCollectorArmExtend();
+    double spitPower = Robot.oi.driverController.triggers.getTwist();
+    if (spitPower < 0) {
+      targetSpeed = -(spitPower * spitPower);
+    } else {
+      targetSpeed = spitPower * spitPower;
+    }
+
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0.0);
   }
 }

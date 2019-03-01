@@ -44,6 +44,7 @@ public class BBArm extends PositionControlledSubsystem {
   private int floorPosition = -8750;
   private int liftRobotPosition = -9001;
   private int bbaCarriageSafePosition = -4408;
+  private int bbaClimbStartPosition = -4408;
 
   private int upPositionLimit = 0;
   private int downPositionLimit = liftRobotPosition;
@@ -60,9 +61,6 @@ public class BBArm extends PositionControlledSubsystem {
 
   private MotionParameters UpMotionParameters = new MotionParameters(1600, 800, upGains);
   private MotionParameters DownMotionParameters = new MotionParameters(1600, 800, downGains);
-
-  // int elevatorPosition = Robot.elevator.getCurrentPosition();
-  // double elevatorSafePosition = Robot.elevator.getSafePosition();
 
   public BBArm() {
 
@@ -212,6 +210,10 @@ public class BBArm extends PositionControlledSubsystem {
     return homePosition;
   }
 
+  public int getBbaClimbStartPosition() {
+    return bbaClimbStartPosition;
+  }
+
   @Override
   public boolean setTargetPosition(int targetPosition) {
     if (isValidPosition(targetPosition)) {
@@ -266,10 +268,6 @@ public class BBArm extends PositionControlledSubsystem {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
-    /*
-     *
-     * SmartDashboard.putNumber("BBA Target Position", this.getTargetPosition());
-     */
   }
 
   @Override

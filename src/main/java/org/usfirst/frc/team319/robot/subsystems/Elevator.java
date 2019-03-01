@@ -25,7 +25,7 @@ public class Elevator extends PositionControlledSubsystem {
   public boolean isElevatorFloorSolenoidExtended = false;
 
   private boolean isHoldingPosition = false;
-  private int onTargetThreshold = 100;
+  private int onTargetThreshold = 300;
 
   private int homePosition = 0;
 
@@ -33,15 +33,15 @@ public class Elevator extends PositionControlledSubsystem {
 
   private int hatchCollectPosition = 0;
   private int highHatchPosition = 33300;
-  private int middleHatchPosition = 16000;
+  private int middleHatchPosition = 17000;
   private int lowHatchPosition = 0; // this value is correct
 
   // ---- Cargo Positions ---- //
   private int cargoCollectPosition = -5000;
   private int highCargoPosition = 33300;
-  private int middleCargoPosition = 16000;
+  private int middleCargoPosition = 17000;
   private int lowCargoRocketPosition = 0; // this value is correct
-  private int cargoShipCargoPosition = 0;
+  private int cargoShipCargoPosition = 10000;
   // cargoShipCargoPosition should be around the same as middleHatchPosition
 
   // ---- Travel Limits Positions ---- //
@@ -54,14 +54,15 @@ public class Elevator extends PositionControlledSubsystem {
   private int targetPosition = 0;
   private int floorLimit = -7076;
   private int climbPosition = 0;
+  private int lockPosition = 16000;
 
   // ---- Gains, Pid Values, Talon Setup ---- //
 
   public final static int ELEVATOR_UP = 0;
   public final static int ELEVATOR_DOWN = 1;
 
-  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.2, 0.0, 20.0, .2046, 0);
-  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.2, 0.0, 20.0, .2046, 0);
+  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.5, 0.001, 24.0, .2046, 500);
+  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.5, 0.001, 24.0, .2046, 500);
 
   private MotionParameters UpMotionParameters = new MotionParameters(8000, 4000, elevatorUpGains);
   private MotionParameters DownMotionParameters = new MotionParameters(4000, 3000, elevatorDownGains);
@@ -86,6 +87,8 @@ public class Elevator extends PositionControlledSubsystem {
   public void setupMotionParameters() {
     this.elevatorLead.configMotionParameters(UpMotionParameters);
     this.elevatorLead.configMotionParameters(DownMotionParameters);
+    this.elevatorLead.configMaxIntegralAccumulator(ELEVATOR_UP, 3000);
+    this.elevatorLead.configMaxIntegralAccumulator(ELEVATOR_DOWN, 3000);
   }
 
   public void setupSensors() {
@@ -118,7 +121,6 @@ public class Elevator extends PositionControlledSubsystem {
 
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
     setDefaultCommand(new JoystickElevator());
   }
 
@@ -225,6 +227,10 @@ public class Elevator extends PositionControlledSubsystem {
     return this.floorLimit;
   }
 
+  public int getLockPosition() {
+    return lockPosition;
+  }
+
   public void percentVbus(double signal) {
     this.elevatorLead.set(ControlMode.PercentOutput, signal);
   }
@@ -260,12 +266,7 @@ public class Elevator extends PositionControlledSubsystem {
   public void periodic() {
     SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
     SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
-    /*
-     * 
-     * SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
-     * SmartDashboard.putNumber("Elevator Target Position",
-     * this.getTargetPosition());
-     */
+
   }
 
   @Override

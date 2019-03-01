@@ -31,7 +31,7 @@ public class PassthroughSpitBack extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double spitPower = Robot.oi.operatorController.triggers.getLeft();
+    double spitPower = Robot.oi.driverController.triggers.getLeft();
     targetSpeed = -(spitPower * spitPower);
     Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
   }
@@ -39,17 +39,19 @@ public class PassthroughSpitBack extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0.0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0.0);
   }
 }

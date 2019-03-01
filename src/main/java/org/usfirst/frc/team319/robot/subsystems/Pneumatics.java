@@ -14,13 +14,12 @@ public class Pneumatics extends Subsystem {
 
 	Compressor compressor = new Compressor(0);
 
-	DoubleSolenoid platypusFaceSolenoid = new DoubleSolenoid(1, 0, 1);
-	DoubleSolenoid frontHatchSolenoid = new DoubleSolenoid(1, 2, 3);
-	DoubleSolenoid fingerSolenoid = new DoubleSolenoid(0, 4, 5);
-	DoubleSolenoid carriageAndElevatorSolenoid = new DoubleSolenoid(1, 6, 7);
+	DoubleSolenoid platypusFaceSolenoid = new DoubleSolenoid(0, 1);
+	DoubleSolenoid frontHatchSolenoid = new DoubleSolenoid(2, 3);
+	DoubleSolenoid fingerSolenoid = new DoubleSolenoid(4, 5);
+	DoubleSolenoid carriageAndElevatorLockSolenoid = new DoubleSolenoid(6, 7);
 
 	public void initDefaultCommand() {
-		// Set the default command for a subsystem here.
 		setDefaultCommand(new CompressorRun());
 	}
 
@@ -29,12 +28,12 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void PlatypusFaceExtend() {
-		this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.carriage.setIsPlatypusFaceExtended(true);
 	}
 
 	public void PlatypusFaceRetract() {
-		this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kReverse);
+		this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setIsPlatypusFaceExtended(false);
 	}
 
@@ -48,24 +47,14 @@ public class Pneumatics extends Subsystem {
 		Robot.carriage.setIsFingerOpen(false);
 	}
 
-	public void carriageAndElevatorExtend() {
-		this.carriageAndElevatorSolenoid.set(DoubleSolenoid.Value.kForward);
+	public void carriageAndElevatorFloorExtend() {
+		this.carriageAndElevatorLockSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
 	}
 
-	public void carriageAndElevatorRetract() {
-		this.carriageAndElevatorSolenoid.set(DoubleSolenoid.Value.kReverse);
+	public void carriageAndElevatorFloorRetract() {
+		this.carriageAndElevatorLockSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
-	}
-
-	public void CarriageLockExtend() {
-		this.fingerSolenoid.set(DoubleSolenoid.Value.kForward);
-		Robot.carriage.setIsCarriageLockSolenoidExtended(true);
-	}
-
-	public void CarriageLockRetract() {
-		this.fingerSolenoid.set(DoubleSolenoid.Value.kReverse);
-		Robot.carriage.setIsCarriageLockSolenoidExtended(false);
 	}
 
 	public void hatchCollectorArmExtend() {
@@ -74,7 +63,7 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void hatchCollectorArmRetract() {
-		this.frontHatchSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.frontHatchSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.bbarm.setIsFrontHatchSolenoidExtended(false);
 	}
 

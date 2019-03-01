@@ -5,17 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Finger_Commands;
+package org.usfirst.frc.team319.robot.commands.hatchCollectorCommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class FingerPlace extends CommandGroup {
+public class HatchCollectorCollect extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public FingerPlace() {
-    addSequential(new FingerCarriageExtend());
-    addSequential(new FingerClose());
-    addSequential(new FingerCarriageRetract());
+  public HatchCollectorCollect() {
+    addSequential(new HatchCollectorExtend());
+    addSequential(new WaitCommand(0.5));
+    addSequential(new HatchCollectorOpen());
+    addSequential(new WaitCommand(0.5));
+    addSequential(new HatchCollectorRetract());
   }
 }

@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team319.robot;
 
+import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.robot.commands.autonomous_paths.ExampleAuto;
 import org.usfirst.frc.team319.robot.subsystems.BBArm;
 import org.usfirst.frc.team319.robot.subsystems.Carriage;
@@ -41,6 +42,7 @@ public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 
 	public static OI oi;
+	public static RobotMode mode = RobotMode.Normal;
 
 	// SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -50,6 +52,7 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		Robot.drivetrain.setDrivetrainPositionToZero();
 
+		System.out.println("Syntax Error: Invalid Syntax");
 		autoChooser = new SendableChooser<String>();
 		// autoChooser.addDefault("Example Auto", "Example Auto");
 		// SmartDashboard.putNumber("BBA Position", Robot.bbarm.getCurrentPosition());
@@ -116,4 +119,5 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+
 }

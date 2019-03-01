@@ -10,8 +10,8 @@ package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
 import org.usfirst.frc.team319.robot.Robot;
 
-public class BBAGoHome extends MotionMagicPositionCommand {
-  public BBAGoHome() {
-    super(Robot.bbarm, Robot.bbarm.getHomePosition());
+public class BbaGoToClimbStartPosition extends MotionMagicPositionCommand {
+  public BbaGoToClimbStartPosition() {
+    super(Robot.bbarm, Robot.bbarm.getBbaClimbStartPosition());
   }
 }

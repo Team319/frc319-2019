@@ -5,16 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
+package org.usfirst.frc.team319.robot.commands.hatchCollectorCommands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class toggleElevatorFloorSolenoid extends Command {
-  public toggleElevatorFloorSolenoid() {
-    // Use requires() here to declare subsystem dependencies
+public class HatchCollectorExtend extends Command {
+  public HatchCollectorExtend() {
     requires(Robot.pneumatics);
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -25,11 +26,7 @@ public class toggleElevatorFloorSolenoid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.elevator.isElevatorFloorSolenoidExtended = true) {
-      Robot.pneumatics.carriageAndElevatorFloorRetract();
-    } else {
-      Robot.pneumatics.carriageAndElevatorFloorExtend();
-    }
+    Robot.pneumatics.hatchCollectorArmExtend();
   }
 
   // Make this return true when this Command no longer needs to run execute()

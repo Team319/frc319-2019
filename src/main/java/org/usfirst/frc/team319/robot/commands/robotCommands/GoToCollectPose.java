@@ -5,22 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
+package org.usfirst.frc.team319.robot.commands.robotCommands;
 
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorCollect;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCargoCollectPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToSafePossition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CollectCargoCommandGroup extends CommandGroup {
+public class GoToCollectPose extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CollectCargoCommandGroup() {
+  public GoToCollectPose() {
     addSequential(new ElevatorGoToSafePossition());
-    addSequential(new BbaGoToCargoCollect());
+    addSequential(new BbaGoToCarriageSafePosition());
+    addParallel(new BbaGoToCargoCollect());
     addSequential(new ElevatorGoToCargoCollectPosition());
-    addSequential(new CollectorCollect(0.5));
   }
 }

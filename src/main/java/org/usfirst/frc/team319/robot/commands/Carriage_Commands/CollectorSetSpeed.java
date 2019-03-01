@@ -5,16 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
+package org.usfirst.frc.team319.robot.commands.Carriage_Commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class toggleElevatorFloorSolenoid extends Command {
-  public toggleElevatorFloorSolenoid() {
+public class CollectorSetSpeed extends Command {
+
+  private double targetSpeed;
+
+  public CollectorSetSpeed(double speed) {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
+    requires(Robot.bbarm);
+    this.targetSpeed = speed;
   }
 
   // Called just before this Command runs the first time
@@ -25,17 +29,13 @@ public class toggleElevatorFloorSolenoid extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.elevator.isElevatorFloorSolenoidExtended = true) {
-      Robot.pneumatics.carriageAndElevatorFloorRetract();
-    } else {
-      Robot.pneumatics.carriageAndElevatorFloorExtend();
-    }
+    Robot.bbarm.percentVbusCollector(this.targetSpeed);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

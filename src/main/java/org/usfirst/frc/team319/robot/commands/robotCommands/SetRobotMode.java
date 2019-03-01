@@ -5,27 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Finger_Commands;
+package org.usfirst.frc.team319.robot.commands.robotCommands;
 
+import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class FingerOpen extends Command {
-  public FingerOpen() {
-    // Use requires() here to declare subsystem dependencies
-    requires(Robot.pneumatics);
+public class SetRobotMode extends Command {
+  private RobotMode robotMode = RobotMode.Normal;
+
+  public SetRobotMode(RobotMode robotMode) {
+    this.robotMode = robotMode;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.mode = this.robotMode;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.pneumatics.FingerOpen();
   }
 
   // Make this return true when this Command no longer needs to run execute()
