@@ -12,6 +12,6 @@ import org.usfirst.frc.team319.robot.Robot;
 
 public class ElevatorGoToClimbPosition extends MotionMagicPositionCommand {
   public ElevatorGoToClimbPosition() {
-    super(Robot.elevator, Robot.elevator.getClimpPosition());
+    super(Robot.elevator, Robot.elevator.getClimbLimit());
   }
 }

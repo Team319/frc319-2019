@@ -10,8 +10,26 @@ package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
 import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
 import org.usfirst.frc.team319.robot.Robot;
 
-public class ElevatorGoToMiddleHatchPosition extends MotionMagicPositionCommand {
-  public ElevatorGoToMiddleHatchPosition() {
-    super(Robot.elevator, Robot.elevator.getHatchMiddlePosition());
+public class ElevatorGoToSafePosition extends MotionMagicPositionCommand {
+  private boolean alreadySafe = false;
+  private boolean force = false;
+
+  public ElevatorGoToSafePosition(boolean force) {
+    super(Robot.elevator, Robot.elevator.getBbaClearancePosition() + 200);
+    this.force = force;
+  }
+
+  @Override
+  protected void initialize() {
+    if (Robot.bbarm.getCurrentPosition() <= Robot.bbarm.getElevatorClearencePosition() && !force) {
+      alreadySafe = true;
+      return;
+    }
+    super.initialize();
+  }
+
+  @Override
+  protected boolean isFinished() {
+    return alreadySafe || super.isFinished();
   }
 }

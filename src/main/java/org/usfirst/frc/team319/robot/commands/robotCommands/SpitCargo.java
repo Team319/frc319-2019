@@ -8,19 +8,18 @@
 package org.usfirst.frc.team319.robot.commands.robotCommands;
 
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpeed;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSetSpeed;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceRetract;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class GoToSafePose extends CommandGroup {
+public class SpitCargo extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public GoToSafePose() {
-    addParallel(new PassthroughSetSpeed(0.0));
-    addParallel(new CollectorSetSpeed(0.0));
-    addSequential(new PlatypusFaceRetract());
-    addSequential(new GoToHomePose());
+  public SpitCargo() {
+    addSequential(new CollectorSetSpeed(-0.5));
+    addSequential(new WaitCommand(0.5));
+    addSequential(new CollectorSetSpeed(0.0));
+
   }
 }

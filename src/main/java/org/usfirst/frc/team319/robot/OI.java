@@ -8,6 +8,7 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
+import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpeed;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpit;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceExtend;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceRetract;
@@ -15,13 +16,16 @@ import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCarg
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorLockCarriage;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorUnlockCarriage;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorCollect;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorPlace;
 import org.usfirst.frc.team319.robot.commands.robotCommands.CollectCargo;
+import org.usfirst.frc.team319.robot.commands.robotCommands.GoToCargoShipPose;
+import org.usfirst.frc.team319.robot.commands.robotCommands.GoToCollectPose;
+import org.usfirst.frc.team319.robot.commands.robotCommands.GoToHighCargoPose;
+import org.usfirst.frc.team319.robot.commands.robotCommands.GoToLowCargoPose;
+import org.usfirst.frc.team319.robot.commands.robotCommands.GoToMiddleCargoPose;
 import org.usfirst.frc.team319.robot.commands.robotCommands.GoToSafePose;
-// import org.usfirst.frc.team319.robot.commands.autonomous_paths.DriveTrainDriveThreeFeet;
+import org.usfirst.frc.team319.robot.commands.robotCommands.SpitCargo;
 import org.usfirst.frc.team319.robot.commands.robotCommands.StartClimbMode;
 
 public class OI {
@@ -43,19 +47,32 @@ public class OI {
 		driverController.aButton.whenPressed(new PlatypusFaceExtend());
 		driverController.bButton.whenPressed(new PlatypusFaceRetract());
 
-		// ----Operator Controller---- \\
+		driverController.yButton.whileHeld(new CollectorSetSpeed(1.0));
+		driverController.yButton.whenReleased(new CollectorSetSpeed(0.0));
 
-		operatorController.aButton.whenPressed(new ElevatorGoToLowCargoPosition());
-		operatorController.bButton.whenPressed(new ElevatorGoToMiddleCargoPosition());
-		operatorController.yButton.whenPressed(new ElevatorGoToHighCargoPosition());
-		operatorController.xButton.whenPressed(new ElevatorGoToCargoShipPosition());
+		// ----Operator Controller---- \\
+		/*
+		 * operatorController.aButton.whenPressed(new ElevatorGoToLowCargoPosition());
+		 * operatorController.bButton.whenPressed(new
+		 * ElevatorGoToMiddleCargoPosition());
+		 * operatorController.yButton.whenPressed(new ElevatorGoToHighCargoPosition());
+		 * operatorController.xButton.whenPressed(new ElevatorGoToCargoShipPosition());
+		 */
+
+		operatorController.aButton.whenPressed(new GoToLowCargoPose());
+		operatorController.bButton.whenPressed(new GoToMiddleCargoPose());
+		operatorController.yButton.whenPressed(new GoToHighCargoPose());
+		operatorController.xButton.whenPressed(new GoToCargoShipPose());
 
 		operatorController.startButton.whenPressed(new StartClimbMode());
 
-		operatorController.leftBumper.whenPressed(new ElevatorLockCarriage());
-		operatorController.rightBumper.whenPressed(new ElevatorUnlockCarriage());
+		operatorController.leftBumper.whenPressed(new SpitCargo());
+		operatorController.rightBumper.whenPressed(new CollectCargo());
 
 		operatorController.leftTriggerButton.whenPressed(new GoToSafePose());
-		operatorController.rightTriggerButton.whenPressed(new CollectCargo());
+		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
+		// operatorController.rightTriggerButton.whenPressed(new
+		// PassThroughCollectCargo());
+
 	}
 }

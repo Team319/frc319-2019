@@ -5,39 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.models;
+package org.usfirst.frc.team319.robot.commands.drivetrain_Commands;
+
+import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MotionMagicPositionCommand extends Command {
-
-  private int targetPosition = 0;
-  private PositionControlledSubsystem requiredSubsystem;
-  private boolean succesfullySetPosition = false;
-
-  public MotionMagicPositionCommand(PositionControlledSubsystem subsystem, int targetPosition) {
-    this.requiredSubsystem = subsystem;
-    this.targetPosition = targetPosition;
-    requires(requiredSubsystem);
+public class DrivetrainDoNothing extends Command {
+  public DrivetrainDoNothing() {
+    // Use requires() here to declare subsystem dependencies
+    requires(Robot.drivetrain);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
-    this.succesfullySetPosition = requiredSubsystem.setTargetPosition(targetPosition);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    requiredSubsystem.motionMagicControl();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return !this.succesfullySetPosition || requiredSubsystem.isInPosition(targetPosition);
+    return false;
   }
 
   // Called once after isFinished returns true

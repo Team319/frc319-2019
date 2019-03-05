@@ -8,9 +8,8 @@
 package org.usfirst.frc.team319.robot.commands.robotCommands;
 
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCargoCollectPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToSafePossition;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToSafePosition;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorSafelyGoToCargoCollectPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -19,9 +18,8 @@ public class GoToCollectPose extends CommandGroup {
    * Add your docs here.
    */
   public GoToCollectPose() {
-    addSequential(new ElevatorGoToSafePossition());
-    addSequential(new BbaGoToCarriageSafePosition());
+    addSequential(new ElevatorGoToSafePosition(false));
     addParallel(new BbaGoToCargoCollect());
-    addSequential(new ElevatorGoToCargoCollectPosition());
+    addSequential(new ElevatorSafelyGoToCargoCollectPosition());
   }
 }

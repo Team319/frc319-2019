@@ -5,13 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
+package org.usfirst.frc.team319.robot.commands.autonomous_paths;
 
-import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
 import org.usfirst.frc.team319.robot.Robot;
 
-public class ElevatorGoToMiddleHatchPosition extends MotionMagicPositionCommand {
-  public ElevatorGoToMiddleHatchPosition() {
-    super(Robot.elevator, Robot.elevator.getHatchMiddlePosition());
+import com.team319.follower.FollowArc;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import frc.arcs.CrossTheLineArc;
+
+public class CrossTheLine extends CommandGroup {
+
+  public CrossTheLine() {
+    addSequential(new FollowArc(Robot.drivetrain, new CrossTheLineArc()));
   }
 }

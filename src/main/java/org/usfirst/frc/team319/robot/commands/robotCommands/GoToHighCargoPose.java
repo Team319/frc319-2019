@@ -5,18 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.autonomous_paths;
+package org.usfirst.frc.team319.robot.commands.robotCommands;
 
-import org.usfirst.frc.team319.robot.Robot;
-
-import com.team319.follower.FollowArc;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaSafelyGoToHomePosition;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.arcs.CrossTheLineArc;
 
-public class CrossTheLineMiddleHab extends CommandGroup {
-
-  public CrossTheLineMiddleHab() {
-    addSequential(new FollowArc(Robot.drivetrain, new CrossTheLineArc()));
+public class GoToHighCargoPose extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public GoToHighCargoPose() {
+    addParallel(new ElevatorGoToHighCargoPosition());
+    addSequential(new BbaSafelyGoToHomePosition());
   }
 }

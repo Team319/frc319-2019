@@ -5,22 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.robotCommands;
-
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpeed;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSetSpeed;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceRetract;
+package org.usfirst.frc.team319.robot.commands.Carriage_Commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class GoToSafePose extends CommandGroup {
+public class PassThroughCollectCargo extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public GoToSafePose() {
-    addParallel(new PassthroughSetSpeed(0.0));
-    addParallel(new CollectorSetSpeed(0.0));
-    addSequential(new PlatypusFaceRetract());
-    addSequential(new GoToHomePose());
+  public PassThroughCollectCargo() {
+    addSequential(new PassthroughSetSpeed(0.4));
+    addSequential(new WaitForCargo());
+    addSequential(new PassthroughSetSpeed(0.0));
+
   }
 }

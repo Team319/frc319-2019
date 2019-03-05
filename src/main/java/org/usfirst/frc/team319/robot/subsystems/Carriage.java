@@ -10,6 +10,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
@@ -39,6 +40,7 @@ public class Carriage extends Subsystem {
 
   public Carriage() {
     passthroughFollow.setInverted(InvertType.OpposeMaster);
+    passthroughFollow.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
@@ -88,7 +90,7 @@ public class Carriage extends Subsystem {
   }
 
   public boolean ballDetected() {
-    return canifier.getGeneralInput(GeneralPin.LIMF);
+    return canifier.getGeneralInput(GeneralPin.LIMR);
   }
 
   public boolean getManualCollectFinished() {

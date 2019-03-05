@@ -12,6 +12,6 @@ import org.usfirst.frc.team319.robot.Robot;
 
 public class ElevatorGoToLowHatchPosition extends MotionMagicPositionCommand {
   public ElevatorGoToLowHatchPosition() {
-   super(Robot.elevator, Robot.elevator.getLowHatchPosition());
+    super(Robot.elevator, Robot.elevator.getHatchLowPosition());
   }
 }

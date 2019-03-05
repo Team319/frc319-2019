@@ -12,6 +12,6 @@ import org.usfirst.frc.team319.robot.Robot;
 
 public class BbaGoToCarriageSafePosition extends MotionMagicPositionCommand {
   public BbaGoToCarriageSafePosition() {
-    super(Robot.bbarm, Robot.bbarm.getBbaCarriageSafePosition());
+    super(Robot.bbarm, Robot.bbarm.getElevatorClearencePosition() - 200);
   }
 }

@@ -5,13 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
+package org.usfirst.frc.team319.robot.commands.BBArm_Commands;
 
-import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
-import org.usfirst.frc.team319.robot.Robot;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class ElevatorGoToMiddleHatchPosition extends MotionMagicPositionCommand {
-  public ElevatorGoToMiddleHatchPosition() {
-    super(Robot.elevator, Robot.elevator.getHatchMiddlePosition());
+public class BbaSafelyGoToClimbStartPosition extends CommandGroup {
+  public BbaSafelyGoToClimbStartPosition() {
+    addSequential(new BbaWaitForClearance());
+    addSequential(new BbaGoToClimbStartPosition());
   }
 }

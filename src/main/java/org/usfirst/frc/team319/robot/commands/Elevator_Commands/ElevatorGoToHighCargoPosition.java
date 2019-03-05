@@ -12,7 +12,7 @@ import org.usfirst.frc.team319.robot.Robot;
 
 public class ElevatorGoToHighCargoPosition extends MotionMagicPositionCommand {
   public ElevatorGoToHighCargoPosition() {
-    super(Robot.elevator, Robot.elevator.getHighCargoPosition());
+    super(Robot.elevator, Robot.elevator.getCargoHighPosition());
   }
 
 }

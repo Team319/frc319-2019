@@ -7,20 +7,17 @@
 
 package org.usfirst.frc.team319.robot.commands.robotCommands;
 
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpeed;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSetSpeed;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceRetract;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaSafelyGoToHomePosition;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCargoShipPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class GoToSafePose extends CommandGroup {
+public class GoToCargoShipPose extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public GoToSafePose() {
-    addParallel(new PassthroughSetSpeed(0.0));
-    addParallel(new CollectorSetSpeed(0.0));
-    addSequential(new PlatypusFaceRetract());
-    addSequential(new GoToHomePose());
+  public GoToCargoShipPose() {
+    addSequential(new ElevatorGoToCargoShipPosition());
+    addSequential(new BbaSafelyGoToHomePosition());
   }
 }

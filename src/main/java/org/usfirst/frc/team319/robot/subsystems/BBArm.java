@@ -40,18 +40,20 @@ public class BBArm extends PositionControlledSubsystem {
   private int levelThreeHab = -4408;
   private int levelTwoHab = -7059;
   private int hatchFloorPosition = -8500;
-  private int cargoCollectPosition = -6500;
+  private int cargoCollectPosition = -6400;// 6200
   private int floorPosition = -8750;
   private int liftRobotPosition = -9001;
   private int bbaCarriageSafePosition = -4408;
   private int bbaClimbStartPosition = -4408;
+
+  private int elevatorClearencePosition = -4500;
 
   private int upPositionLimit = 0;
   private int downPositionLimit = liftRobotPosition;
 
   private int targetPosition = 0;
 
-  private final static int onTargetThreshold = 100;
+  private final static int onTargetThreshold = 200;
 
   public static final int BBA_UP = 0;
   public static final int BBA_DOWN = 1;
@@ -59,8 +61,8 @@ public class BBArm extends PositionControlledSubsystem {
   private final SRXGains upGains = new SRXGains(BBA_UP, 6.0, 0.0, 120.0, 1.0122, 0);
   private final SRXGains downGains = new SRXGains(BBA_DOWN, 6.0, 0.0, 120.0, 1.0122, 0);
 
-  private MotionParameters UpMotionParameters = new MotionParameters(1600, 800, upGains);
-  private MotionParameters DownMotionParameters = new MotionParameters(1600, 800, downGains);
+  private MotionParameters UpMotionParameters = new MotionParameters(1600, 1024, upGains);// 1600, 800
+  private MotionParameters DownMotionParameters = new MotionParameters(1600, 1024, downGains);// 1600, 800
 
   public BBArm() {
 
@@ -118,30 +120,17 @@ public class BBArm extends PositionControlledSubsystem {
     this.bbaFollow.configReverseSoftLimitEnable(true);
   }
 
-  public boolean isBBArmSafe(double targetBBArmPosition) {
-
-    double elevatorSafePosition = Robot.elevator.getSafePosition();
-    int elevatorPosition = Robot.elevator.getCurrentPosition();
-
-    boolean elevatorInterfering = elevatorPosition < elevatorSafePosition;
-
-    boolean bbaSafePosition = this.getCurrentPosition() < this.getSafePosition();
-
-    boolean maxLimitCheck = targetBBArmPosition < downPositionLimit;
-
-    if (!elevatorInterfering) {
-      return true;
-    } else if (bbaSafePosition && maxLimitCheck) {
-      return true;
-    } else {
-      return false;
+  public boolean hasClearance(int newTargetPosition) {
+    if (newTargetPosition > this.elevatorClearencePosition) {
+      return Robot.elevator.getCurrentPosition() > Robot.elevator.getBbaClearancePosition();
     }
+    return true;
   }
 
   //
   public boolean isValidPosition(int position) {
     boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
-    return withinBounds;
+    return withinBounds && this.hasClearance(position);
   }
 
   public void manageMotion(double targetPosition) {
@@ -175,13 +164,13 @@ public class BBArm extends PositionControlledSubsystem {
   }
 
   public void percentVbusCollector(double signal) {
-    this.collectorTalon.set(ControlMode.PercentOutput, signal);
+    this.collectorTalon.set(ControlMode.PercentOutput, -signal);
   }
 
   public void incrementTargetPosition(int increment) {
     int currentTargetPosition = this.targetPosition;
     int newTargetPosition = currentTargetPosition + increment;
-    if (isValidPosition(newTargetPosition) && isBBArmSafe(newTargetPosition)) {
+    if (isValidPosition(newTargetPosition) && this.hasClearance(newTargetPosition)) {
       this.targetPosition = newTargetPosition;
     }
   }
@@ -249,6 +238,10 @@ public class BBArm extends PositionControlledSubsystem {
     return bbaCarriageSafePosition;
   }
 
+  public int getElevatorClearencePosition() {
+    return elevatorClearencePosition;
+  }
+
   @Override
   public double getCurrentVelocity() {
     return this.bbaLead.getSelectedSensorVelocity();
@@ -268,6 +261,7 @@ public class BBArm extends PositionControlledSubsystem {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
+    SmartDashboard.putNumber("BBA Follow Rotation", this.getSecondaryPosition());
   }
 
   @Override

@@ -21,6 +21,7 @@ public class StartClimbMode extends CommandGroup {
     addSequential(new GoToClimbStartPose());
     addSequential(new ElevatorLockCarriage());
     addSequential(new WaitCommand(0.5));
+    // addSequential(new ElevatorTouchGround());
     addSequential(new SetRobotMode(RobotMode.Climb));
   }
 }

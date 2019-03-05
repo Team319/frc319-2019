@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class WaitForCargo extends Command {
   public WaitForCargo() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.carriage);
+    // requires(Robot.carriage);
   }
 
   // Called just before this Command runs the first time

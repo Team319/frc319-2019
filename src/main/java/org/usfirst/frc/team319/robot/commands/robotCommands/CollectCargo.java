@@ -10,8 +10,6 @@ package org.usfirst.frc.team319.robot.commands.robotCommands;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpeed;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSetSpeed;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.WaitForCargo;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToCollectPose;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToHomePose;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -21,11 +19,11 @@ public class CollectCargo extends CommandGroup {
    */
   public CollectCargo() {
     addSequential(new GoToCollectPose());
-    addParallel(new PassthroughSetSpeed(0.5));
+    addParallel(new PassthroughSetSpeed(0.4));
     addParallel(new CollectorSetSpeed(1.0));
     addSequential(new WaitForCargo());
     addParallel(new PassthroughSetSpeed(0.0));
     addParallel(new CollectorSetSpeed(0.0));
-    addSequential(new GoToHomePose());
+    // addSequential(new GoToHomePose());
   }
 }

@@ -7,7 +7,7 @@
 
 package org.usfirst.frc.team319.robot.commands.robotCommands;
 
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToClimbStartPosition;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaSafelyGoToClimbStartPosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLockPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -17,7 +17,7 @@ public class GoToClimbStartPose extends CommandGroup {
    * Add your docs here.
    */
   public GoToClimbStartPose() {
-    addParallel(new BbaGoToClimbStartPosition());
-    addSequential(new ElevatorGoToLockPosition());
+    addParallel(new ElevatorGoToLockPosition());
+    addSequential(new BbaSafelyGoToClimbStartPosition());
   }
 }

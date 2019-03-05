@@ -10,8 +10,9 @@ package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
 import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
 import org.usfirst.frc.team319.robot.Robot;
 
-public class ElevatorGoToMiddleHatchPosition extends MotionMagicPositionCommand {
-  public ElevatorGoToMiddleHatchPosition() {
-    super(Robot.elevator, Robot.elevator.getHatchMiddlePosition());
+public class ElevatorTouchGround extends MotionMagicPositionCommand {
+  public ElevatorTouchGround() {
+    super(Robot.elevator, Robot.elevator.getBearingsOnGroundPosition());
   }
+
 }

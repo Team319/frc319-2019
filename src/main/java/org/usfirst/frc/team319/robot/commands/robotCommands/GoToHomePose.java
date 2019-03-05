@@ -7,19 +7,17 @@
 
 package org.usfirst.frc.team319.robot.commands.robotCommands;
 
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToHomePosition;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaSafelyGoToHomePosition;
 import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHomePosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToSafePossition;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToSafePosition;
+import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorUnlockCarriage;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class GoToHomePose extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
   public GoToHomePose() {
-    addSequential(new ElevatorGoToSafePossition());
-    addSequential(new BBAGoToHomePosition());
+    addParallel(new ElevatorGoToSafePosition(true));
+    addSequential(new BbaSafelyGoToHomePosition());
     addSequential(new ElevatorGoToHomePosition());
   }
 }
