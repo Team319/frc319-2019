@@ -8,8 +8,6 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.RobotMode;
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.CrossTheLine;
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.RocketPaths.LeftHabLeftRocket.LeftHabLeftRocketPlaceLowHatch;
 import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.DrivetrainDoNothing;
 import org.usfirst.frc.team319.robot.commands.robotCommands.SetRobotMode;
 import org.usfirst.frc.team319.robot.subsystems.BBArm;
@@ -59,10 +57,6 @@ public class Robot extends TimedRobot {
 
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
 
-		autoChooser.addDefault("Do Nothing", "DrivetrainDoNothing");
-		autoChooser.addObject("3 Feet Forward", "CrossTheLine");
-		autoChooser.addObject("LeftHabToLeftRocket", "LeftHabLeftRocketPlaceLowHatch");
-
 		SmartDashboard.putData("Climb Mode", new SetRobotMode(RobotMode.Climb));
 		SmartDashboard.putData("Normal Mode", new SetRobotMode(RobotMode.Normal));
 
@@ -88,12 +82,6 @@ public class Robot extends TimedRobot {
 		switch (selectedAuto) {
 		case "Do Nothing":
 			autonomousCommand = new DrivetrainDoNothing();
-			break;
-		case "Cross The Line!":
-			autonomousCommand = new CrossTheLine();
-			break;
-		case "Left Habt To Left Rocket":
-			autonomousCommand = new LeftHabLeftRocketPlaceLowHatch();
 			break;
 		}
 

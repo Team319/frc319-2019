@@ -55,14 +55,27 @@ public class Elevator extends PositionControlledSubsystem {
 
   // ---- Gains, Pid Values, Talon Setup ---- //
 
+  private int climbAcceleration = 10000;
+  private int normalAcceleration = 10000;
+
+  private int climbVelocity = 5000;
+  private int normalVelocity = 5000;
+
   public final static int ELEVATOR_UP = 0;
   public final static int ELEVATOR_DOWN = 1;
 
   private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.5, 0.004, 24.0, .2046, 500);
   private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.5, 0.004, 24.0, .2046, 500);
 
-  private MotionParameters UpMotionParameters = new MotionParameters(10000, 5000, elevatorUpGains);// 10000, 4500
-  private MotionParameters DownMotionParameters = new MotionParameters(10000, 5000, elevatorDownGains);// 10000, 4500
+  private MotionParameters UpMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
+      elevatorUpGains);// 10000, 4500
+  private MotionParameters DownMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
+      elevatorDownGains);// 10000, 4500
+
+  private MotionParameters ClimbUpMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
+      elevatorUpGains);
+  private MotionParameters ClimbDownMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
+      elevatorDownGains);
 
   public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
   public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
@@ -82,8 +95,14 @@ public class Elevator extends PositionControlledSubsystem {
   }
 
   public void setupMotionParameters() {
-    this.elevatorLead.configMotionParameters(UpMotionParameters);
-    this.elevatorLead.configMotionParameters(DownMotionParameters);
+    if (Robot.mode == RobotMode.Climb) {
+      this.elevatorLead.configMotionParameters(ClimbUpMotionParameters);
+      this.elevatorLead.configMotionParameters(ClimbDownMotionParameters);
+    } else {
+      this.elevatorLead.configMotionParameters(UpMotionParameters);
+      this.elevatorLead.configMotionParameters(DownMotionParameters);
+    }
+
     this.elevatorLead.configMaxIntegralAccumulator(ELEVATOR_UP, 3000);
     this.elevatorLead.configMaxIntegralAccumulator(ELEVATOR_DOWN, 3000);
   }

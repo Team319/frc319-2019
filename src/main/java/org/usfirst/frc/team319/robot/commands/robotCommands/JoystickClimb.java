@@ -5,20 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.Elevator_Commands;
+package org.usfirst.frc.team319.robot.commands.robotCommands;
 
+import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class JoystickElevator extends Command {
+public class JoystickClimb extends Command {
 
-  private int positionIncrement = 200;
+  private int positionIncrement = 100;
 
-  public JoystickElevator() {
+  public JoystickClimb() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.elevator);
+
   }
 
   // Called just before this Command runs the first time
@@ -29,15 +30,16 @@ public class JoystickElevator extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double signal = -Robot.oi.operatorController.leftStick.getY();
-    Robot.elevator.incrementTargetPosition((int) (signal * positionIncrement));
-    Robot.elevator.motionMagicControl();
-
-    /*
-     * if (Robot.mode == RobotMode.Climb) {
-     * Robot.bbarm.incrementTargetPosition((int) (signal * bbaPositionIncrement));
-     * Robot.bbarm.motionMagicControl(); }
-     */
+    if (Robot.mode == RobotMode.Climb) {
+      double signal = Robot.oi.operatorController.rightStick.getY();
+      Robot.bbarm.incrementTargetPosition((int) (-signal * positionIncrement));
+      Robot.bbarm.motionMagicControl();
+      Robot.elevator.incrementTargetPosition((int) (signal * positionIncrement));
+      Robot.elevator.motionMagicControl();
+    }
+    double signal = Robot.oi.operatorController.rightStick.getY();
+    Robot.bbarm.incrementTargetPosition((int) (-signal * positionIncrement));
+    Robot.bbarm.motionMagicControl();
   }
 
   @Override

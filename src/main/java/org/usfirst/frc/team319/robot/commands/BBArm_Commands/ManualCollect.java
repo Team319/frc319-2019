@@ -42,12 +42,14 @@ public class ManualCollect extends Command {
 			Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, 0);
 			Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0);
 			Robot.carriage.setManualCollectFinished(true);
+			Robot.oi.operatorController.setRumble(0.0, 0.0);
 		} else {
 			if (joystickControl) {
 				double spitPower = Robot.oi.operatorController.triggers.getLeft();
 				targetSpeed = (spitPower * spitPower);
 				Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
 				Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
+				Robot.oi.operatorController.setRumble(1.0, 1.0);
 			} else {
 				Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, targetSpeed);
 			}

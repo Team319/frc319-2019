@@ -16,6 +16,7 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
+import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JoystickBBA;
@@ -53,6 +54,12 @@ public class BBArm extends PositionControlledSubsystem {
 
   private int targetPosition = 0;
 
+  private int climbAcceleration = 1600;
+  private int normalAcceleration = 1600;
+
+  private int climbVelocity = 1024;
+  private int normalVelocity = 1024;
+
   private final static int onTargetThreshold = 200;
 
   public static final int BBA_UP = 0;
@@ -61,12 +68,19 @@ public class BBArm extends PositionControlledSubsystem {
   private final SRXGains upGains = new SRXGains(BBA_UP, 6.0, 0.0, 120.0, 1.0122, 0);
   private final SRXGains downGains = new SRXGains(BBA_DOWN, 6.0, 0.0, 120.0, 1.0122, 0);
 
-  private MotionParameters UpMotionParameters = new MotionParameters(1600, 1024, upGains);// 1600, 800
-  private MotionParameters DownMotionParameters = new MotionParameters(1600, 1024, downGains);// 1600, 800
+  private MotionParameters UpMotionParameters = new MotionParameters(normalAcceleration, normalVelocity, upGains);// 1600,
+                                                                                                                  // 800
+  private MotionParameters DownMotionParameters = new MotionParameters(normalAcceleration, normalVelocity, downGains);// 1600,
+                                                                                                                      // 800
+  private MotionParameters ClimbUpMotionParameters = new MotionParameters(climbAcceleration, climbVelocity, upGains);
+  private MotionParameters ClimbDownMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
+      downGains);
 
   public BBArm() {
 
     configSoftLimits();
+
+    configMotionParameters();
 
     this.bbaLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
     this.bbaFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
@@ -85,10 +99,20 @@ public class BBArm extends PositionControlledSubsystem {
     this.bbaLead.setNeutralMode(NeutralMode.Brake);
     this.bbaFollow.setNeutralMode(NeutralMode.Brake);
 
+  }
+
+  public void configMotionParameters(){
+  if (Robot.mode == RobotMode.Climb) {
+    this.bbaLead.configMotionParameters(ClimbUpMotionParameters);
+    this.bbaFollow.configMotionParameters(ClimbUpMotionParameters);
+    this.bbaFollow.configMotionParameters(ClimbDownMotionParameters);
+    this.bbaLead.configMotionParameters(ClimbDownMotionParameters);
+  } else {
     this.bbaLead.configMotionParameters(UpMotionParameters);
-    this.bbaLead.configMotionParameters(DownMotionParameters);
     this.bbaFollow.configMotionParameters(UpMotionParameters);
     this.bbaFollow.configMotionParameters(DownMotionParameters);
+    this.bbaLead.configMotionParameters(DownMotionParameters);
+  }
   }
 
   @Override

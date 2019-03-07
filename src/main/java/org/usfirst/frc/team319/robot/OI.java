@@ -12,10 +12,6 @@ import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpee
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpit;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceExtend;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PlatypusFaceRetract;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCargoShipPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorCollect;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorPlace;
 import org.usfirst.frc.team319.robot.commands.robotCommands.CollectCargo;
