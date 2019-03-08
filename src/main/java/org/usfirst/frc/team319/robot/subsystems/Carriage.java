@@ -32,7 +32,7 @@ public class Carriage extends Subsystem {
   private boolean isFingerOpen = true;
 
   private boolean isCarriageLockSolenoidExtended = true;
-  private boolean isPlatypusFaceSolenoidExtended = false;
+  // private boolean isPlatypusFaceSolenoidExtended = false;
   private final double safePosition = 0.0;
 
   private BobTalonSRX passthroughFollow = new BobTalonSRX(8);
@@ -53,20 +53,20 @@ public class Carriage extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  public boolean IsPlatypusFaceSolenoidExtended() {
-    return IsPlatypusFaceSolenoidExtended();
-  }
-
-  public void setIsPlatypusFaceExtended(boolean IsPlatypusFaceSolenoidExtended) {
-    this.isPlatypusFaceSolenoidExtended = IsPlatypusFaceSolenoidExtended;
-  }
-
+  /*
+   * public boolean IsPlatypusFaceSolenoidExtended() { return
+   * IsPlatypusFaceSolenoidExtended(); }
+   * 
+   * public void setIsPlatypusFaceExtended(boolean IsPlatypusFaceSolenoidExtended)
+   * { this.isPlatypusFaceSolenoidExtended = IsPlatypusFaceSolenoidExtended; }
+   * 
+   * 
+   * 
+   * public boolean isPlatypusFaceSolenoidExtended() { return
+   * isPlatypusFaceSolenoidExtended; }
+   */
   public boolean isCarriageLockSolenoidExtended() {
     return isCarriageLockSolenoidExtended;
-  }
-
-  public boolean isPlatypusFaceSolenoidExtended() {
-    return isPlatypusFaceSolenoidExtended;
   }
 
   public void setIsCarriageLockSolenoidExtended(boolean isCarriageLockSolenoidExtended) {

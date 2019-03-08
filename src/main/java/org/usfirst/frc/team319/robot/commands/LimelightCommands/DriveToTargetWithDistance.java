@@ -1,4 +1,4 @@
-package org.usfirst.frc.team319.robot.commands.LimelightCommands;
+package org.usfirst.frc.team319.robot.commands.limelightCommands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -10,7 +10,7 @@ public class DriveToTargetWithDistance extends PIDCommand {
     super(kP, kI, kD);
   }
 
-  @Override 
+  @Override
   public void setSetpoint(double setpoint) {
     super.setSetpoint(setpoint);
   }
@@ -25,7 +25,7 @@ public class DriveToTargetWithDistance extends PIDCommand {
 
   @Override
   protected boolean isFinished() {
-    if(( this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)){
+    if ((this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)) {
       return true;
     }
     return false;
@@ -43,7 +43,7 @@ public class DriveToTargetWithDistance extends PIDCommand {
   @Override
   protected double returnPIDInput() {
     return Robot.limelight.getDistance();
-  
+
   }
 
   @Override

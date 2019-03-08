@@ -1,7 +1,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.robot.commands.LimelightCommands.DriveToTargetWithDistance;
-import org.usfirst.frc.team319.robot.commands.LimelightCommands.RotateToTarget;
+import org.usfirst.frc.team319.robot.commands.limelightCommands.DriveToTargetWithDistance;
+import org.usfirst.frc.team319.robot.commands.limelightCommands.RotateToTarget;
 import org.usfirst.frc.team319.utils.BobCircularBuffer;
 import org.usfirst.frc.team319.utils.HelperFunctions;
 
@@ -51,6 +51,10 @@ public class Limelight extends Subsystem {
 
    public void setSetpoints(double drive_setpoint, double rotate_setpoint) {
       pidD_.setSetpoint(drive_setpoint);
+      pidR_.setSetpoint(rotate_setpoint);
+   }
+
+   public void setRotationSetpoints(double rotate_setpoint) {
       pidR_.setSetpoint(rotate_setpoint);
    }
 

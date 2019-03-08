@@ -8,8 +8,8 @@
 package org.usfirst.frc.team319.robot.commands.robotCommands;
 
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToSafePosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorSafelyGoToCargoCollectPosition;
+import org.usfirst.frc.team319.robot.commands.elevatorCommands.ElevatorGoToSafePosition;
+import org.usfirst.frc.team319.robot.commands.elevatorCommands.ElevatorSafelyGoToCargoCollectPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 

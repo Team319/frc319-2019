@@ -5,19 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.robotCommands;
-
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaSafelyGoToHomePosition;
-import org.usfirst.frc.team319.robot.commands.elevatorCommands.ElevatorGoToHighCargoPosition;
+package org.usfirst.frc.team319.robot.commands.elevatorCommands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class GoToHighCargoPose extends CommandGroup {
+public class ElevatorSafelyGoToCargoCollectPosition extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public GoToHighCargoPose() {
-    addParallel(new ElevatorGoToHighCargoPosition());
-    addSequential(new BbaSafelyGoToHomePosition());
+  public ElevatorSafelyGoToCargoCollectPosition() {
+    addSequential(new ElevatorWaitForClearance());
+    addSequential(new ElevatorGoToCargoCollectPosition());
   }
 }

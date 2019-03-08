@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.LimelightCommands;
+package org.usfirst.frc.team319.robot.commands.limelightCommands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -29,7 +29,6 @@ public class CalculateDistanceFromArea extends Command {
     Robot.limelight.getDistanceBasedOnArea();
     SmartDashboard.putNumber("Distance", Robot.limelight.getDistanceBasedOnArea());
 
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()

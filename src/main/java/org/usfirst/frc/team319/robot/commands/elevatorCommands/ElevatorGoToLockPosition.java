@@ -5,19 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.robotCommands;
+package org.usfirst.frc.team319.robot.commands.elevatorCommands;
 
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaSafelyGoToHomePosition;
-import org.usfirst.frc.team319.robot.commands.elevatorCommands.ElevatorGoToHighCargoPosition;
+import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
+import org.usfirst.frc.team319.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-
-public class GoToHighCargoPose extends CommandGroup {
+public class ElevatorGoToLockPosition extends MotionMagicPositionCommand {
   /**
    * Add your docs here.
    */
-  public GoToHighCargoPose() {
-    addParallel(new ElevatorGoToHighCargoPosition());
-    addSequential(new BbaSafelyGoToHomePosition());
+  public ElevatorGoToLockPosition() {
+    super(Robot.elevator, Robot.elevator.getLockPosition());
   }
 }

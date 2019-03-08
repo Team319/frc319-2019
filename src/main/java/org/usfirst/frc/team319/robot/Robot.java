@@ -8,7 +8,7 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.RobotMode;
-import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.DrivetrainDoNothing;
+import org.usfirst.frc.team319.robot.commands.drivetrainCommands.DrivetrainDoNothing;
 import org.usfirst.frc.team319.robot.commands.robotCommands.SetRobotMode;
 import org.usfirst.frc.team319.robot.subsystems.BBArm;
 import org.usfirst.frc.team319.robot.subsystems.Carriage;

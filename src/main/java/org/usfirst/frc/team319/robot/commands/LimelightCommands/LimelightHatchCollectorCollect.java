@@ -1,6 +1,6 @@
-package org.usfirst.frc.team319.robot.commands.LimelightCommands;
+package org.usfirst.frc.team319.robot.commands.limelightCommands;
 
-import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.VisionDrive;
+import org.usfirst.frc.team319.robot.commands.drivetrainCommands.VisionDrive;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorExtend;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorOpen;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorRetract;

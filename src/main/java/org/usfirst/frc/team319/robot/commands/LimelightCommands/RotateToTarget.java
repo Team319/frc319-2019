@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.LimelightCommands;
+package org.usfirst.frc.team319.robot.commands.limelightCommands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -17,7 +17,7 @@ public class RotateToTarget extends PIDCommand {
     super(kP, kI, kD);
   }
 
-  @Override 
+  @Override
   public void setSetpoint(double setpoint) {
     super.setSetpoint(setpoint);
   }
@@ -35,7 +35,7 @@ public class RotateToTarget extends PIDCommand {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(( this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)){
+    if ((this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)) {
       return true;
     }
     return false;
@@ -44,7 +44,7 @@ public class RotateToTarget extends PIDCommand {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-   // Robot.limelight.stopRobot();
+    // Robot.limelight.stopRobot();
   }
 
   // Called when another command which requires one or more of the same

@@ -18,7 +18,7 @@ import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JoystickElevator;
+import org.usfirst.frc.team319.robot.commands.elevatorCommands.JoystickElevator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -130,6 +130,7 @@ public class Elevator extends PositionControlledSubsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new JoystickElevator());
+
   }
 
   public boolean isElevatorFloorSolenoidExtended() {

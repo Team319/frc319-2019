@@ -10,10 +10,11 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.team319.follower.FollowsArc;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
+import org.usfirst.frc.team319.models.DriveMode;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.SRXGains;
-import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.BobDrive;
+import org.usfirst.frc.team319.robot.commands.drivetrainCommands.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,6 +37,8 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollowerWithPigeon, new BobTalonSRX(5));
 
 	private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
+
+	public DriveMode mode = DriveMode.Normal;
 
 	public Drivetrain() {
 		leftLead.configFactoryDefault();

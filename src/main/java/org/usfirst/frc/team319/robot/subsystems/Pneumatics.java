@@ -14,7 +14,7 @@ public class Pneumatics extends Subsystem {
 
 	Compressor compressor = new Compressor(0);
 
-	DoubleSolenoid platypusFaceSolenoid = new DoubleSolenoid(0, 1);
+	// DoubleSolenoid platypusFaceSolenoid = new DoubleSolenoid(0, 1);
 	DoubleSolenoid frontHatchSolenoid = new DoubleSolenoid(2, 3);
 	DoubleSolenoid fingerSolenoid = new DoubleSolenoid(4, 5);
 	DoubleSolenoid carriageAndElevatorLockSolenoid = new DoubleSolenoid(6, 7);
@@ -27,14 +27,23 @@ public class Pneumatics extends Subsystem {
 		compressor.setClosedLoopControl(true);
 	}
 
-	public void PlatypusFaceExtend() {
-		this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kReverse);
-		Robot.carriage.setIsPlatypusFaceExtended(true);
+	/*
+	 * public void PlatypusFaceExtend() {
+	 * this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kReverse);
+	 * Robot.carriage.setIsPlatypusFaceExtended(true); }
+	 * 
+	 * public void PlatypusFaceRetract() {
+	 * this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kForward);
+	 * Robot.carriage.setIsPlatypusFaceExtended(false); }
+	 */
+	public void carriageAndElevatorFloorExtend() {
+		this.carriageAndElevatorLockSolenoid.set(DoubleSolenoid.Value.kForward);
+		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
 	}
 
-	public void PlatypusFaceRetract() {
-		this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kForward);
-		Robot.carriage.setIsPlatypusFaceExtended(false);
+	public void carriageAndElevatorFloorRetract() {
+		this.carriageAndElevatorLockSolenoid.set(DoubleSolenoid.Value.kReverse);
+		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
 
 	public void FingerOpen() {
@@ -45,16 +54,6 @@ public class Pneumatics extends Subsystem {
 	public void FingerClose() {
 		this.fingerSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.carriage.setIsFingerOpen(false);
-	}
-
-	public void carriageAndElevatorFloorExtend() {
-		this.carriageAndElevatorLockSolenoid.set(DoubleSolenoid.Value.kForward);
-		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
-	}
-
-	public void carriageAndElevatorFloorRetract() {
-		this.carriageAndElevatorLockSolenoid.set(DoubleSolenoid.Value.kReverse);
-		Robot.elevator.setIsElevatorFloorSolenoidExtended(false);
 	}
 
 	public void hatchCollectorArmExtend() {

@@ -5,21 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.limelightCommands;
+package org.usfirst.frc.team319.robot.commands.elevatorCommands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class DriveToTarget extends PIDCommand {
+public class ElevatorUnlockCarriage extends Command {
 
-  public DriveToTarget(double kP, double kI, double kD) {
-    super(kP, kI, kD);
-  }
-
-  @Override
-  public void setSetpoint(double setpoint) {
-    super.setSetpoint(setpoint);
+  public ElevatorUnlockCarriage() {
+    // Use requires() here to declare subsystem dependencies
+    requires(Robot.pneumatics);
   }
 
   // Called just before this Command runs the first time
@@ -30,37 +26,23 @@ public class DriveToTarget extends PIDCommand {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.pneumatics.carriageAndElevatorFloorRetract();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if ((this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)) {
-      return true;
-    }
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.limelight.stopRobot();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
-
-  @Override
-  protected double returnPIDInput() {
-    return Robot.limelight.getArea();
-
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    Robot.limelight.trackPIDD(output);
   }
 }

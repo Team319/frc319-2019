@@ -1,5 +1,5 @@
 
-package org.usfirst.frc.team319.robot.commands.LimelightCommands;
+package org.usfirst.frc.team319.robot.commands.limelightCommands;
 
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.robot.Robot;
@@ -15,12 +15,11 @@ import edu.wpi.first.wpilibj.command.Command;
 public class LimelightDrive extends Command {
 
 	BobDriveHelper helper;
-	//private double quickTurnThreshold = 0.2;
-	//private double threshold = 2.3;
+	// private double quickTurnThreshold = 0.2;
+	// private double threshold = 2.3;
 	public double finishedThreshold = 0.0;
 	public double area = Robot.limelight.getArea();
 	private double driveThreshold = 0.0;
-
 
 	public LimelightDrive(double finishedThreshold, double driveThreshold) {
 
@@ -28,20 +27,21 @@ public class LimelightDrive extends Command {
 		helper = new BobDriveHelper();
 		this.finishedThreshold = finishedThreshold;
 		this.driveThreshold = driveThreshold;
-	
+
 	}
 
 	protected void initialize() {
-		Robot.limelight.setSetpoints(driveThreshold,0.0);
+		Robot.limelight.setSetpoints(driveThreshold, 0.0);
 		Robot.limelight.execute();
 	}
 
 	protected void execute() {
-		
+
 		double moveValue = Robot.limelight.trackDrive();
 		double rotateValue = Robot.limelight.trackRotate();
 
-		//boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
+		// boolean quickTurn = (moveValue < quickTurnThreshold && moveValue >
+		// -quickTurnThreshold);
 		DriveSignal driveSignal = helper.cheesyDrive(-moveValue, rotateValue, false, false);
 		Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
 
@@ -55,10 +55,10 @@ public class LimelightDrive extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		if (area >= finishedThreshold){
+		if (area >= finishedThreshold) {
 			return true;
-			
-		}else{
+
+		} else {
 			return false;
 		}
 	}

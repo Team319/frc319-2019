@@ -8,7 +8,7 @@
 package org.usfirst.frc.team319.robot.commands.robotCommands;
 
 import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaSafelyGoToHomePosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToCargoShipPosition;
+import org.usfirst.frc.team319.robot.commands.elevatorCommands.ElevatorGoToCargoShipPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
