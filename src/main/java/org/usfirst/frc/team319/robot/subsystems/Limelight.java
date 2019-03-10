@@ -25,6 +25,9 @@ public class Limelight extends Subsystem {
    NetworkTableEntry tshort = table.getEntry("tshort");
    NetworkTableEntry tlong = table.getEntry("tlong");
 
+   private static double fovX = 54.0;
+   private static double fovY = 41.0;
+
    double moveValue = 0.0;
    double rotateValue = 0.0;
 
@@ -92,6 +95,14 @@ public class Limelight extends Subsystem {
 
    public double getTShort() {
       return tshort.getDouble(0.0);
+   }
+
+   public double getFovX() {
+      return fovX;
+   }
+
+   public double getFovY() {
+      return fovY;
    }
 
    public double getDistance() {

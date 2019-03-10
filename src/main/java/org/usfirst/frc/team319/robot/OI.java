@@ -9,6 +9,8 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.DriveMode;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToHomePosition;
+import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpeed;
 import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpit;
 import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorCollect;
@@ -60,6 +62,7 @@ public class OI {
 
 		operatorController.leftTriggerButton.whenPressed(new GoToSafePose());
 		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
+
 		/*
 		 * operatorController.rightTriggerButton.whenPressed(new
 		 * PassThroughCollectCargo());

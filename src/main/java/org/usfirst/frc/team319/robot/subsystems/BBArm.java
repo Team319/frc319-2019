@@ -31,23 +31,21 @@ public class BBArm extends PositionControlledSubsystem {
   private boolean isFrontHatchSolenoidExtended = false;
 
   public BobTalonSRX bbaFollow = new BobTalonSRX(6);
-  public BobTalonSRX bbaLead = new BobTalonSRX(10);
+  public BobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
   // towards floor = negative
 
   private int homePosition = 0;
-  private int safePosition = -4408;
   private int levelThreeHab = -4408;
   private int levelTwoHab = -7059;
   private int hatchFloorPosition = -8500;
-  private int cargoCollectPosition = -6400;// 6200
-  private int floorPosition = -8750;
-  private int liftRobotPosition = -9001;
-  private int bbaCarriageSafePosition = -4408;
-  private int bbaClimbStartPosition = -4408;
+  private int cargoCollectPosition = -4200;// 6200
+  private int floorPosition = -5700;
+  private int liftRobotPosition = -5900;
+  private int bbaClimbStartPosition = -3000;
 
-  private int elevatorClearencePosition = -4500;
+  private int elevatorClearencePosition = -2750;
 
   private int upPositionLimit = 0;
   private int downPositionLimit = liftRobotPosition;
@@ -57,8 +55,8 @@ public class BBArm extends PositionControlledSubsystem {
   private int climbAcceleration = 1600;
   private int normalAcceleration = 1600;
 
-  private int climbVelocity = 1024;
-  private int normalVelocity = 1024;
+  private int climbVelocity = 600;// 600 is max
+  private int normalVelocity = 600;
 
   private final static int onTargetThreshold = 200;
 
@@ -77,42 +75,42 @@ public class BBArm extends PositionControlledSubsystem {
       downGains);
 
   public BBArm() {
+    this.bbaLead.configFactoryDefault();
+    this.bbaFollow.configFactoryDefault();
 
     configSoftLimits();
 
     configMotionParameters();
 
     this.bbaLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    this.bbaFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
+    // this.bbaFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
     this.bbaLead.setInverted(false);
-    this.bbaLead.setSensorPhase(false);
-
     this.bbaFollow.setInverted(true);
-    this.bbaFollow.setSensorPhase(false);
-
+    this.bbaLead.setSensorPhase(false);
+    /*
+     * this.bbaFollow.setInverted(true); this.bbaFollow.setSensorPhase(false);
+     */
     this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
     this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-    this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
-    this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-
+    /*
+     * this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,
+     * 10); this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.
+     * Status_10_MotionMagic, 10);
+     */
     this.bbaLead.setNeutralMode(NeutralMode.Brake);
     this.bbaFollow.setNeutralMode(NeutralMode.Brake);
 
   }
 
-  public void configMotionParameters(){
-  if (Robot.mode == RobotMode.Climb) {
-    this.bbaLead.configMotionParameters(ClimbUpMotionParameters);
-    this.bbaFollow.configMotionParameters(ClimbUpMotionParameters);
-    this.bbaFollow.configMotionParameters(ClimbDownMotionParameters);
-    this.bbaLead.configMotionParameters(ClimbDownMotionParameters);
-  } else {
-    this.bbaLead.configMotionParameters(UpMotionParameters);
-    this.bbaFollow.configMotionParameters(UpMotionParameters);
-    this.bbaFollow.configMotionParameters(DownMotionParameters);
-    this.bbaLead.configMotionParameters(DownMotionParameters);
-  }
+  public void configMotionParameters() {
+    if (Robot.mode == RobotMode.Climb) {
+      this.bbaLead.configMotionParameters(ClimbUpMotionParameters);
+      this.bbaLead.configMotionParameters(ClimbDownMotionParameters);
+    } else {
+      this.bbaLead.configMotionParameters(UpMotionParameters);
+      this.bbaLead.configMotionParameters(DownMotionParameters);
+    }
   }
 
   @Override
@@ -135,13 +133,6 @@ public class BBArm extends PositionControlledSubsystem {
 
     this.bbaLead.configForwardSoftLimitEnable(true);
     this.bbaLead.configReverseSoftLimitEnable(true);
-
-    // ------------Follow Limits------------//
-    this.bbaFollow.configForwardSoftLimitThreshold(upPositionLimit);
-    this.bbaFollow.configReverseSoftLimitThreshold(downPositionLimit);
-
-    this.bbaFollow.configForwardSoftLimitEnable(true);
-    this.bbaFollow.configReverseSoftLimitEnable(true);
   }
 
   public boolean hasClearance(int newTargetPosition) {
@@ -153,7 +144,12 @@ public class BBArm extends PositionControlledSubsystem {
 
   //
   public boolean isValidPosition(int position) {
-    boolean withinBounds = position <= upPositionLimit && position >= downPositionLimit;
+    boolean withinBounds = false;
+    if (Robot.mode == RobotMode.Climb && getCurrentPosition() <= cargoCollectPosition) {
+      withinBounds = position <= cargoCollectPosition && position >= downPositionLimit;
+    } else {
+      withinBounds = position <= upPositionLimit && position >= downPositionLimit;
+    }
     return withinBounds && this.hasClearance(position);
   }
 
@@ -161,10 +157,10 @@ public class BBArm extends PositionControlledSubsystem {
     double currentPosition = getCurrentPosition();
     if (currentPosition < targetPosition) {
       bbaLead.selectMotionParameters(UpMotionParameters);
-      bbaFollow.selectMotionParameters(UpMotionParameters);
+      // bbaFollow.selectMotionParameters(UpMotionParameters);
     } else {
       bbaLead.selectMotionParameters(DownMotionParameters);
-      bbaFollow.selectMotionParameters(DownMotionParameters);
+      // bbaFollow.selectMotionParameters(DownMotionParameters);
 
     }
   }
@@ -172,7 +168,7 @@ public class BBArm extends PositionControlledSubsystem {
   public void motionMagicControl() {
     this.manageMotion(targetPosition);
     this.bbaLead.set(ControlMode.MotionMagic, targetPosition);
-    this.bbaFollow.set(ControlMode.MotionMagic, targetPosition);
+    // this.bbaFollow.set(ControlMode.MotionMagic, targetPosition);
   }
 
   public void percentVbus(double signal) {
@@ -194,7 +190,7 @@ public class BBArm extends PositionControlledSubsystem {
   public void incrementTargetPosition(int increment) {
     int currentTargetPosition = this.targetPosition;
     int newTargetPosition = currentTargetPosition + increment;
-    if (isValidPosition(newTargetPosition) && this.hasClearance(newTargetPosition)) {
+    if (isValidPosition(newTargetPosition)) {
       this.targetPosition = newTargetPosition;
     }
   }
@@ -246,20 +242,8 @@ public class BBArm extends PositionControlledSubsystem {
     return this.bbaLead.getSelectedSensorPosition();
   }
 
-  public int getSecondaryPosition() {
-    return this.bbaFollow.getSelectedSensorPosition();
-  }
-
-  public int getSafePosition() {
-    return safePosition;
-  }
-
   public int getFloorPosition() {
     return floorPosition;
-  }
-
-  public int getBbaCarriageSafePosition() {
-    return bbaCarriageSafePosition;
   }
 
   public int getElevatorClearencePosition() {
@@ -271,10 +255,10 @@ public class BBArm extends PositionControlledSubsystem {
     return this.bbaLead.getSelectedSensorVelocity();
   }
 
-  public double getFollowCurrentVelocity() {
-    return this.bbaFollow.getSelectedSensorVelocity();
-  }
-
+  /*
+   * public double getFollowCurrentVelocity() { return
+   * this.bbaFollow.getSelectedSensorVelocity(); }
+   */
   @Override
   public boolean isInPosition(int targetPosition) {
     int currentPosition = this.getCurrentPosition();
@@ -284,8 +268,9 @@ public class BBArm extends PositionControlledSubsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("BBA Rotation", this.getCurrentPosition());
-    SmartDashboard.putNumber("BBA Follow Rotation", this.getSecondaryPosition());
+    SmartDashboard.putNumber("BBA Position", this.getCurrentPosition());
+    SmartDashboard.putNumber("BBA Velocity", this.getCurrentVelocity());
+    // SmartDashboard.putNumber("BBA Follow Rotation", this.getSecondaryPosition());
   }
 
   @Override

@@ -102,9 +102,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+
+		Robot.elevator.forceSetTargetPosition(Robot.elevator.getCurrentPosition());
+		Robot.bbarm.forceSetTargetPosition(Robot.bbarm.getCurrentPosition());
 	}
 
 	/**

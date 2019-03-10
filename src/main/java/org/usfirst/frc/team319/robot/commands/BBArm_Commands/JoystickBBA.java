@@ -38,6 +38,7 @@ public class JoystickBBA extends Command {
     double signal = Robot.oi.operatorController.rightStick.getY();
     Robot.bbarm.incrementTargetPosition((int) (-signal * positionIncrement));
     Robot.bbarm.motionMagicControl();
+    // Robot.bbarm.percentVbus(signal);
   }
 
   @Override

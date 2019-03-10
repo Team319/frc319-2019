@@ -17,6 +17,7 @@ public class JoystickElevator extends Command {
 
   private int bbaPositionIncrement = 100;
   private int elevatorPositionIncrement = 200;
+  private double elevatorBbaClimbCorrelation = 12;
 
   public JoystickElevator() {
     // Use requires() here to declare subsystem dependencies
@@ -32,10 +33,12 @@ public class JoystickElevator extends Command {
   @Override
   protected void execute() {
     if (Robot.mode == RobotMode.Climb) {
+      bbaPositionIncrement = 50;
       double signal = Robot.oi.operatorController.rightStick.getY();
-      Robot.bbarm.incrementTargetPosition((int) (-signal * bbaPositionIncrement));
+      double bbaIncrement = -signal * bbaPositionIncrement;
+      Robot.bbarm.incrementTargetPosition((int) (bbaIncrement));
       Robot.bbarm.motionMagicControl();
-      Robot.elevator.incrementTargetPosition((int) (signal * elevatorPositionIncrement));
+      Robot.elevator.incrementTargetPosition((int) (elevatorBbaClimbCorrelation * bbaIncrement));
       Robot.elevator.motionMagicControl();
     } else {
       double signal = -Robot.oi.operatorController.leftStick.getY();

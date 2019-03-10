@@ -32,7 +32,7 @@ public class BobDrive extends Command {
 	protected void execute() {
 		double rotateValue = 0;
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
-			rotateValue = Robot.limelight.getX() / 27;
+			rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
 
 		} else {
 			rotateValue = Robot.oi.driverController.rightStick.getX();

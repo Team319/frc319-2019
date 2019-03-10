@@ -17,7 +17,7 @@ public class AutoTuneDrivetrainLeft extends CommandGroup {
 		addSequential(new AutoTuneVelocityConfigure(Robot.drivetrain, Robot.drivetrain.leftLead,
 				Drivetrain.DRIVE_PROFILE, FeedbackDevice.QuadEncoder, true, true));
 
-		addSequential(new AutoTuneVelocity(Robot.drivetrain, Robot.drivetrain.leftLead,
-				Drivetrain.DRIVE_PROFILE, 6000, 50));
+		addSequential(
+				new AutoTuneVelocity(Robot.drivetrain, Robot.drivetrain.leftLead, Drivetrain.DRIVE_PROFILE, 6000, 50));
 	}
 }

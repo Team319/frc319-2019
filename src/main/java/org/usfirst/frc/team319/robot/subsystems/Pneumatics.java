@@ -1,5 +1,6 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
+import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.pneumatics.CompressorRun;
 
@@ -24,7 +25,12 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void compressorRun() {
-		compressor.setClosedLoopControl(true);
+		if (Robot.mode == RobotMode.Climb) {
+			compressor.setClosedLoopControl(false);
+			compressor.stop();
+		} else {
+			compressor.setClosedLoopControl(true);
+		}
 	}
 
 	/*

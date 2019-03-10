@@ -26,7 +26,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class Carriage extends Subsystem {
 
   DigitalInput digitalCargoSensor = new DigitalInput(0);
-  CANifier canifier = new CANifier(0);
+  // CANifier canifier = new CANifier(0);
 
   private boolean manualCollectFinished = false;
   private boolean isFingerOpen = true;
@@ -90,7 +90,8 @@ public class Carriage extends Subsystem {
   }
 
   public boolean ballDetected() {
-    return canifier.getGeneralInput(GeneralPin.LIMR);
+    // return canifier.getGeneralInput(GeneralPin.LIMR);
+    return false;
   }
 
   public boolean getManualCollectFinished() {
