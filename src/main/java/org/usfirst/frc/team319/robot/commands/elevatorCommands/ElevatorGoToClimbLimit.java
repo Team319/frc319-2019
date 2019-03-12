@@ -10,11 +10,8 @@ package org.usfirst.frc.team319.robot.commands.elevatorCommands;
 import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
 import org.usfirst.frc.team319.robot.Robot;
 
-public class ElevatorGoToTouchFloorPosition extends MotionMagicPositionCommand {
-  /**
-   * Add your docs here.
-   */
-  public ElevatorGoToTouchFloorPosition() {
-    super(Robot.elevator, Robot.elevator.getTouchFloorPosition());
+public class ElevatorGoToClimbLimit extends MotionMagicPositionCommand {
+  public ElevatorGoToClimbLimit() {
+    super(Robot.elevator, Robot.elevator.getClimbLimit());
   }
 }

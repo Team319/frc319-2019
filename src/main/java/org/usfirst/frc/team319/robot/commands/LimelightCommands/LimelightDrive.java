@@ -1,11 +1,11 @@
 
 package org.usfirst.frc.team319.robot.commands.limelightCommands;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.utils.BobDriveHelper;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.command.Command;
 

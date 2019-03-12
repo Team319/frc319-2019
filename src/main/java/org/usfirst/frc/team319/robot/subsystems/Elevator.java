@@ -51,8 +51,8 @@ public class Elevator extends PositionControlledSubsystem {
   private int minVerticalLimit = cargoCollectPosition;
   private int climbLimit = 1300;
   private int lockPosition = 17800;
-  private int touchFloorPosition = 13000;
-
+  private int climbPosition = 13000;
+  private int touchFloorPosition = 1500;
   // ---- Gains, Pid Values, Talon Setup ---- //
 
   private int climbAcceleration = 10000;
@@ -222,6 +222,10 @@ public class Elevator extends PositionControlledSubsystem {
 
   public int getTouchFloorPosition() {
     return touchFloorPosition;
+  }
+
+  public int getClimbPosition() {
+    return climbPosition;
   }
 
   public void percentVbus(double signal) {
