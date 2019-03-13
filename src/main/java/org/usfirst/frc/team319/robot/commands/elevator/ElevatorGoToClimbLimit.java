@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.elevatorCommands;
+package org.usfirst.frc.team319.robot.commands.elevator;
 
 import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
 import org.usfirst.frc.team319.robot.Robot;
