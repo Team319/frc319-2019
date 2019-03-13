@@ -7,9 +7,10 @@
 
 package org.usfirst.frc.team319.robot.subsystems;
 
-import com.ctre.phoenix.CANifier;
-import com.ctre.phoenix.CANifier.GeneralPin;
+//import com.ctre.phoenix.CANifier;
+//import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
@@ -25,14 +26,14 @@ import edu.wpi.first.wpilibj.DigitalInput;
 public class Carriage extends Subsystem {
 
   DigitalInput digitalCargoSensor = new DigitalInput(0);
-  CANifier canifier = new CANifier(0);
+  // CANifier canifier = new CANifier(0);
 
   private boolean manualCollectFinished = false;
   private boolean isFingerOpen = true;
   private boolean isFrontHatchCollectorExtended = true;
 
   private boolean isCarriageLockSolenoidExtended = true;
-  private boolean isPlatypusFaceSolenoidExtended = false;
+  // private boolean isPlatypusFaceSolenoidExtended = false;
   private final double safePosition = 0.0;
 
   private BobTalonSRX passthroughFollow = new BobTalonSRX(8);
@@ -40,6 +41,7 @@ public class Carriage extends Subsystem {
 
   public Carriage() {
     passthroughFollow.setInverted(InvertType.OpposeMaster);
+    passthroughFollow.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override
@@ -52,20 +54,20 @@ public class Carriage extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  public boolean IsPlatypusFaceSolenoidExtended() {
-    return IsPlatypusFaceSolenoidExtended();
-  }
-
-  public void setIsPlatypusFaceExtended(boolean IsPlatypusFaceSolenoidExtended) {
-    this.isPlatypusFaceSolenoidExtended = IsPlatypusFaceSolenoidExtended;
-  }
-
+  /*
+   * public boolean IsPlatypusFaceSolenoidExtended() { return
+   * IsPlatypusFaceSolenoidExtended(); }
+   * 
+   * public void setIsPlatypusFaceExtended(boolean IsPlatypusFaceSolenoidExtended)
+   * { this.isPlatypusFaceSolenoidExtended = IsPlatypusFaceSolenoidExtended; }
+   * 
+   * 
+   * 
+   * public boolean isPlatypusFaceSolenoidExtended() { return
+   * isPlatypusFaceSolenoidExtended; }
+   */
   public boolean isCarriageLockSolenoidExtended() {
     return isCarriageLockSolenoidExtended;
-  }
-
-  public boolean isPlatypusFaceSolenoidExtended() {
-    return isPlatypusFaceSolenoidExtended;
   }
 
   public void setIsCarriageLockSolenoidExtended(boolean isCarriageLockSolenoidExtended) {
@@ -97,7 +99,8 @@ public class Carriage extends Subsystem {
   }
 
   public boolean ballDetected() {
-    return canifier.getGeneralInput(GeneralPin.LIMF);
+    // return canifier.getGeneralInput(GeneralPin.LIMR);
+    return false;
   }
 
   public boolean getManualCollectFinished() {

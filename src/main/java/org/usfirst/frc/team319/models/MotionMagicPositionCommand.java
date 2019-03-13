@@ -13,6 +13,7 @@ public class MotionMagicPositionCommand extends Command {
 
   private int targetPosition = 0;
   private PositionControlledSubsystem requiredSubsystem;
+  private boolean succesfullySetPosition = false;
 
   public MotionMagicPositionCommand(PositionControlledSubsystem subsystem, int targetPosition) {
     this.requiredSubsystem = subsystem;
@@ -23,7 +24,8 @@ public class MotionMagicPositionCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    requiredSubsystem.setTargetPosition(targetPosition);
+
+    this.succesfullySetPosition = requiredSubsystem.setTargetPosition(targetPosition);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -35,7 +37,7 @@ public class MotionMagicPositionCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return requiredSubsystem.isInPosition(targetPosition);
+    return !this.succesfullySetPosition || requiredSubsystem.isInPosition(targetPosition);
   }
 
   // Called once after isFinished returns true

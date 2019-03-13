@@ -8,16 +8,21 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitBack;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpitFront;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCarriageSafePosition;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.CollectCargoCommandGroup;
-import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerCollect;
-import org.usfirst.frc.team319.robot.commands.Finger_Commands.FingerPlace;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToHighCargoPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToLowCargoPosition;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.ElevatorGoToMiddleCargoPosition;
-import org.usfirst.frc.team319.robot.commands.drivetrain_Commands.Climb;
+import org.usfirst.frc.team319.models.DriveMode;
+import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
+import org.usfirst.frc.team319.robot.commands.carriage.PassthroughSpit;
+import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorCollect;
+import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorPlace;
+import org.usfirst.frc.team319.robot.commands.robot.CollectCargo;
+import org.usfirst.frc.team319.robot.commands.robot.GoToCargoShipPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToCollectPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToHighCargoPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToLowCargoPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToMiddleCargoPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToSafePose;
+import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
+import org.usfirst.frc.team319.robot.commands.robot.SpitCargo;
+import org.usfirst.frc.team319.robot.commands.robot.StartClimbMode;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -31,16 +36,39 @@ public class OI {
 		driverController = new BobXboxController(0, 0.10, 0.10);
 		operatorController = new BobXboxController(1, 0.10, 0.1);
 
-		driverController.rightTriggerButton.whileHeld(new PassthroughSpitFront());
-		driverController.leftTriggerButton.whileHeld(new PassthroughSpitBack());
-		driverController.rightBumper.whenPressed(new FingerPlace());
-		driverController.leftBumper.whenPressed(new FingerCollect());
+		// ----Driver Controller---- \\
 
-		operatorController.Dpad.Down.whenPressed(new Climb());
-		operatorController.aButton.whenPressed(new ElevatorGoToLowCargoPosition());
-		operatorController.bButton.whenPressed(new ElevatorGoToMiddleCargoPosition());
-		operatorController.yButton.whenPressed(new ElevatorGoToHighCargoPosition());
-		operatorController.leftTriggerButton.whenPressed(new BbaGoToCarriageSafePosition());
-		operatorController.rightTriggerButton.whenPressed(new CollectCargoCommandGroup());
+		driverController.rightTriggerButton.whileHeld(new PassthroughSpit());
+		driverController.leftTriggerButton.whileHeld(new PassthroughSpit());
+
+		driverController.leftBumper.whenPressed(new HatchCollectorCollect());
+		driverController.rightBumper.whenPressed(new HatchCollectorPlace());
+
+		driverController.aButton.whenPressed(new SetDriveMode(DriveMode.Limelight));
+		driverController.aButton.whenReleased(new SetDriveMode(DriveMode.Normal));
+
+		driverController.yButton.whileHeld(new CollectorSetSpeed(1.0));
+		driverController.yButton.whenReleased(new CollectorSetSpeed(0.0));
+
+		// ----Operator Controller---- \\
+
+		operatorController.aButton.whenPressed(new GoToLowCargoPose());
+		operatorController.bButton.whenPressed(new GoToMiddleCargoPose());
+		operatorController.yButton.whenPressed(new GoToHighCargoPose());
+		operatorController.xButton.whenPressed(new GoToCargoShipPose());
+
+		operatorController.startButton.whenPressed(new StartClimbMode());
+
+		operatorController.leftBumper.whenPressed(new SpitCargo());
+		operatorController.rightBumper.whenPressed(new CollectCargo());
+
+		operatorController.leftTriggerButton.whenPressed(new GoToSafePose());
+		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
+
+		/*
+		 * operatorController.rightTriggerButton.whenPressed(new
+		 * PassThroughCollectCargo());
+		 */
+
 	}
 }

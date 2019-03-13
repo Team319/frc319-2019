@@ -7,13 +7,16 @@
 
 package org.usfirst.frc.team319.robot;
 
-import org.usfirst.frc.team319.robot.commands.autonomous_paths.ExampleAuto;
+import org.usfirst.frc.team319.models.RobotMode;
+import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainDoNothing;
+import org.usfirst.frc.team319.robot.commands.robot.SetRobotMode;
 import org.usfirst.frc.team319.robot.subsystems.BBArm;
 import org.usfirst.frc.team319.robot.subsystems.Carriage;
 import org.usfirst.frc.team319.robot.subsystems.Drivetrain;
 import org.usfirst.frc.team319.robot.subsystems.Elevator;
 import org.usfirst.frc.team319.robot.subsystems.Limelight;
 import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,7 +35,6 @@ public class Robot extends TimedRobot {
 
 	Command autonomousCommand;
 	SendableChooser<String> autoChooser;
-
 	public static final BBArm bbarm = new BBArm();
 	public static final Elevator elevator = new Elevator();
 	public static final Carriage carriage = new Carriage();
@@ -41,6 +43,7 @@ public class Robot extends TimedRobot {
 	public static final Drivetrain drivetrain = new Drivetrain();
 
 	public static OI oi;
+	public static RobotMode mode = RobotMode.Normal;
 
 	// SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -51,10 +54,11 @@ public class Robot extends TimedRobot {
 		Robot.drivetrain.setDrivetrainPositionToZero();
 
 		autoChooser = new SendableChooser<String>();
-		// autoChooser.addDefault("Example Auto", "Example Auto");
-		// SmartDashboard.putNumber("BBA Position", Robot.bbarm.getCurrentPosition());
+
 		SmartDashboard.putData("Autonomous Chooser", autoChooser);
-		// SmartDashboard.putData("CrossTheLine", new FollowArc(new ()));
+
+		SmartDashboard.putData("Climb Mode", new SetRobotMode(RobotMode.Climb));
+		SmartDashboard.putData("Normal Mode", new SetRobotMode(RobotMode.Normal));
 
 	}
 
@@ -73,12 +77,11 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 
-		// SmartDashboard.putData("Auto mode", m_chooser);
 		String selectedAuto = (String) autoChooser.getSelected();
 		System.out.println(selectedAuto);
 		switch (selectedAuto) {
-		case "ExampleAuto":
-			autonomousCommand = new ExampleAuto();
+		case "Do Nothing":
+			autonomousCommand = new DrivetrainDoNothing();
 			break;
 		}
 
@@ -99,9 +102,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
+
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+
+		Robot.elevator.forceSetTargetPosition(Robot.elevator.getCurrentPosition());
+		Robot.bbarm.forceSetTargetPosition(Robot.bbarm.getCurrentPosition());
 	}
 
 	/**
@@ -116,4 +123,5 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+
 }

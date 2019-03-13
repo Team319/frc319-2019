@@ -15,54 +15,67 @@ import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.MotionParameters;
 import org.usfirst.frc.team319.models.PositionControlledSubsystem;
+import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.Elevator_Commands.JoystickElevator;
+import org.usfirst.frc.team319.robot.commands.elevator.JoystickElevator;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends PositionControlledSubsystem {
   public boolean isElevatorFloorSolenoidExtended = false;
 
   private boolean isHoldingPosition = false;
-  private int onTargetThreshold = 100;
+  private int onTargetThreshold = 300;
+  private int targetPosition = 0;
 
   private int homePosition = 0;
 
   // ---- Hatch Positions ---- //
-
   private int hatchCollectPosition = 0;
-  private int highHatchPosition = 33300;
-  private int middleHatchPosition = 16000;
-  private int lowHatchPosition = 0; // this value is correct
+  private int hatchHighPosition = 33300;
+  private int hatchMiddlePosition = 17000;
+  private int hatchLowPosition = 0; // this value is correct
 
   // ---- Cargo Positions ---- //
   private int cargoCollectPosition = -5000;
-  private int highCargoPosition = 33300;
-  private int middleCargoPosition = 16000;
-  private int lowCargoRocketPosition = 0; // this value is correct
-  private int cargoShipCargoPosition = 0;
+  private int cargoHighPosition = 33300;
+  private int cargoMiddlePosition = 17000;
+  private int cargoLowPosition = 0; // this value is correct
+  private int cargoCargoShipPosition = 10000;
   // cargoShipCargoPosition should be around the same as middleHatchPosition
 
   // ---- Travel Limits Positions ---- //
-  private int topOfFirstStagePosition = 0;
   private int maxVerticalLimit = 37400;
+  private int bbaClearancePosition = 7500;
   private int minVerticalLimit = cargoCollectPosition;
-
-  private int bbaSafePosition = -1000; // TODO
-  private int climbLimit = 0;
-  private int targetPosition = 0;
-
-  private int climbPosition = 0;
-
+  private int climbLimit = 1300;
+  private int lockPosition = 17800;
+  private int climbPosition = 13000;
+  private int touchFloorPosition = 1500;
   // ---- Gains, Pid Values, Talon Setup ---- //
+
+  private int climbAcceleration = 10000;
+  private int normalAcceleration = 10000;
+
+  private int climbVelocity = 5000;
+  private int normalVelocity = 5000;
 
   public final static int ELEVATOR_UP = 0;
   public final static int ELEVATOR_DOWN = 1;
 
-  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.3, 0.0, 0.0, .2046, 0);
-  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.3, 0.0, 0.0, .2046, 0);
+  private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.5, 0.004, 24.0, .2046, 500);
+  private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.5, 0.004, 24.0, .2046, 500);
 
-  private MotionParameters UpMotionParameters = new MotionParameters(8000, 4000, elevatorUpGains);
-  private MotionParameters DownMotionParameters = new MotionParameters(4000, 3000, elevatorDownGains);
+  private MotionParameters UpMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
+      elevatorUpGains);// 10000, 4500
+  private MotionParameters DownMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
+      elevatorDownGains);// 10000, 4500
+
+  private MotionParameters ClimbUpMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
+      elevatorUpGains);
+  private MotionParameters ClimbDownMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
+      elevatorDownGains);
 
   public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
   public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
@@ -73,7 +86,7 @@ public class Elevator extends PositionControlledSubsystem {
     setupSensors();
     setupMotionParameters();
 
-    this.elevatorLead.configClosedloopRamp(0.25);
+    this.elevatorLead.configClosedloopRamp(0.125);
 
     this.elevatorLead.configVoltageCompSaturation(11.5);
     this.elevatorLead.enableVoltageCompensation(true);
@@ -82,8 +95,16 @@ public class Elevator extends PositionControlledSubsystem {
   }
 
   public void setupMotionParameters() {
-    this.elevatorLead.configMotionParameters(UpMotionParameters);
-    this.elevatorLead.configMotionParameters(DownMotionParameters);
+    if (Robot.mode == RobotMode.Climb) {
+      this.elevatorLead.configMotionParameters(ClimbUpMotionParameters);
+      this.elevatorLead.configMotionParameters(ClimbDownMotionParameters);
+    } else {
+      this.elevatorLead.configMotionParameters(UpMotionParameters);
+      this.elevatorLead.configMotionParameters(DownMotionParameters);
+    }
+
+    this.elevatorLead.configMaxIntegralAccumulator(ELEVATOR_UP, 3000);
+    this.elevatorLead.configMaxIntegralAccumulator(ELEVATOR_DOWN, 3000);
   }
 
   public void setupSensors() {
@@ -93,7 +114,7 @@ public class Elevator extends PositionControlledSubsystem {
     this.elevatorLead.configForwardSoftLimitThreshold(maxVerticalLimit);
 
     this.elevatorLead.configReverseSoftLimitEnable(true);
-    canElevatorClimb();
+    this.elevatorLead.configReverseSoftLimitThreshold(minVerticalLimit);
 
     this.elevatorLead.setInverted(false);
     this.elevatorFollow14.setInverted(false);
@@ -106,40 +127,10 @@ public class Elevator extends PositionControlledSubsystem {
     this.elevatorLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
   }
 
-  public void canElevatorClimb() {
-    if (this.isElevatorFloorSolenoidExtended = false) {
-      this.elevatorLead.configReverseSoftLimitThreshold(homePosition);// elevator floor limit
-    } else {
-      this.elevatorLead.configReverseSoftLimitThreshold(climbLimit);// climb limit
-    }
-  }
-
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
     setDefaultCommand(new JoystickElevator());
-  }
 
-  // Tests if elevator can move to desired position without interfering BBA
-  public boolean isCarriageSafe(double targetElevatorPosition) {
-    double bbaPosition = Robot.bbarm.getCurrentPosition();
-    // Check if the BBA can interfere with the elevator
-    boolean bbaInterfering = bbaPosition > bbaSafePosition;
-
-    // Check if the elevator is above a point where it will interfere with the BBA.
-    boolean aboveBBASafePosition = this.getCurrentPosition() > this.getSafePosition();
-
-    // Check if the elevator is below the max amount we can travel.
-    boolean maxLimitCheck = targetElevatorPosition < maxVerticalLimit;
-
-    // if we are moving down
-    if (!bbaInterfering) {
-      return true;
-    } else if (aboveBBASafePosition && maxLimitCheck) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   public boolean isElevatorFloorSolenoidExtended() {
@@ -151,12 +142,21 @@ public class Elevator extends PositionControlledSubsystem {
   }
 
   public boolean isValidPosition(int position) {
-    boolean withinBounds = position <= maxVerticalLimit && position >= minVerticalLimit;
-    return withinBounds;
+    boolean withinBounds = false;
+    if (Robot.mode != RobotMode.Climb) {
+      withinBounds = position <= maxVerticalLimit && position >= minVerticalLimit;
+    } else {
+      withinBounds = position <= maxVerticalLimit && position >= climbLimit;
+    }
+    return withinBounds && this.hasClearance(position);
   }
 
   public boolean isHoldingPosition() {
     return this.isHoldingPosition;
+  }
+
+  public int getBbaClearancePosition() {
+    return bbaClearancePosition;
   }
 
   // ----Get Misc Positions----//
@@ -168,8 +168,8 @@ public class Elevator extends PositionControlledSubsystem {
     return this.minVerticalLimit;
   }
 
-  public int getClimpPosition() {
-    return this.climbPosition;
+  public int getClimbLimit() {
+    return this.climbLimit;
   }
 
   // ----Get Hatch Positions----//
@@ -177,16 +177,16 @@ public class Elevator extends PositionControlledSubsystem {
     return this.hatchCollectPosition;
   }
 
-  public int getHighHatchPosition() {
-    return this.highHatchPosition;
+  public int getHatchHighPosition() {
+    return this.hatchHighPosition;
   }
 
-  public int getMiddleHatchPosition() {
-    return this.middleHatchPosition;
+  public int getHatchMiddlePosition() {
+    return this.hatchMiddlePosition;
   }
 
-  public int getLowHatchPosition() {
-    return this.lowHatchPosition;
+  public int getHatchLowPosition() {
+    return this.hatchLowPosition;
   }
 
   // ----Get Cargo Positions----//
@@ -194,29 +194,38 @@ public class Elevator extends PositionControlledSubsystem {
     return this.cargoCollectPosition;
   }
 
-  public int getHighCargoPosition() {
-    return this.highCargoPosition;
+  public int getCargoHighPosition() {
+    return this.cargoHighPosition;
   }
 
-  public int getMiddleCargoPosition() {
-    return this.middleCargoPosition;
+  public int getCargoMiddlePosition() {
+    return this.cargoMiddlePosition;
   }
 
-  public int getLowCargoPosition() {
-    return this.lowCargoRocketPosition;
+  public int getCargoLowPosition() {
+    return this.cargoLowPosition;
   }
 
   public int getCargoShipPosition() {
-    return this.cargoShipCargoPosition;
+    return this.cargoCargoShipPosition;
   }
 
   // ----Get Travel Limits----//
-  public int getTopOfFirstStagePosition() {
-    return this.topOfFirstStagePosition;
-  }
 
   public int getMaxVerticalLimit() {
     return this.maxVerticalLimit;
+  }
+
+  public int getLockPosition() {
+    return lockPosition;
+  }
+
+  public int getTouchFloorPosition() {
+    return touchFloorPosition;
+  }
+
+  public int getClimbPosition() {
+    return climbPosition;
   }
 
   public void percentVbus(double signal) {
@@ -229,7 +238,6 @@ public class Elevator extends PositionControlledSubsystem {
       elevatorLead.selectMotionParameters(UpMotionParameters);
     } else {
       elevatorLead.selectMotionParameters(DownMotionParameters);
-
     }
   }
 
@@ -246,18 +254,17 @@ public class Elevator extends PositionControlledSubsystem {
     }
   }
 
-  public double getSafePosition() {
-    return 0;
+  public boolean hasClearance(int newTargetPosition) {
+    if (newTargetPosition < this.homePosition) {
+      return Robot.bbarm.getCurrentPosition() < Robot.bbarm.getElevatorClearencePosition();
+    }
+    return true;
   }
 
   @Override
   public void periodic() {
-    /*
-     * SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
-     * SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
-     * SmartDashboard.putNumber("Elevator Target Position",
-     * this.getTargetPosition());
-     */
+    SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
+    SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
   }
 
   @Override
@@ -294,7 +301,6 @@ public class Elevator extends PositionControlledSubsystem {
     } else {
       return false;
     }
-
   }
 
   @Override
