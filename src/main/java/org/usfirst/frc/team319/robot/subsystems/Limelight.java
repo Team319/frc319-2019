@@ -1,7 +1,7 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.robot.commands.limelightCommands.DriveToTargetWithDistance;
-import org.usfirst.frc.team319.robot.commands.limelightCommands.RotateToTarget;
+import org.usfirst.frc.team319.robot.commands.limelight.DriveToTargetWithDistance;
+import org.usfirst.frc.team319.robot.commands.limelight.RotateToTarget;
 import org.usfirst.frc.team319.utils.BobCircularBuffer;
 import org.usfirst.frc.team319.utils.HelperFunctions;
 

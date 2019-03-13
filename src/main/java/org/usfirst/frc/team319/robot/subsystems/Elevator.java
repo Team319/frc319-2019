@@ -18,7 +18,7 @@ import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.elevatorCommands.JoystickElevator;
+import org.usfirst.frc.team319.robot.commands.elevator.JoystickElevator;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 

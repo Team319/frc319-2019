@@ -30,6 +30,7 @@ public class Carriage extends Subsystem {
 
   private boolean manualCollectFinished = false;
   private boolean isFingerOpen = true;
+  private boolean isFrontHatchCollectorExtended = true;
 
   private boolean isCarriageLockSolenoidExtended = true;
   // private boolean isPlatypusFaceSolenoidExtended = false;
@@ -79,6 +80,14 @@ public class Carriage extends Subsystem {
 
   public void setIsFingerOpen(boolean isFingerOpen) {
     this.isFingerOpen = isFingerOpen;
+  }
+
+  public boolean isFrontHatchCollectorExtended() {
+    return isFrontHatchCollectorExtended;
+  }
+
+  public void setisFrontHatchCollectorExtended(boolean isFrontHatchCollectorExtended) {
+    this.isFrontHatchCollectorExtended = isFrontHatchCollectorExtended;
   }
 
   public double isCarraigeSafe(int newTargetPosition) {

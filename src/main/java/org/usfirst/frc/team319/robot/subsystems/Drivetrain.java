@@ -14,7 +14,7 @@ import org.usfirst.frc.team319.models.DriveMode;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.SRXGains;
-import org.usfirst.frc.team319.robot.commands.drivetrainCommands.BobDrive;
+import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

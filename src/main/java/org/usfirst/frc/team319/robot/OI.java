@@ -9,23 +9,27 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.DriveMode;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BBAGoToHomePosition;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.BbaGoToCargoCollect;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.CollectorSetSpeed;
-import org.usfirst.frc.team319.robot.commands.Carriage_Commands.PassthroughSpit;
-import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorCollect;
-import org.usfirst.frc.team319.robot.commands.hatchCollectorCommands.HatchCollectorPlace;
-import org.usfirst.frc.team319.robot.commands.robotCommands.CollectCargo;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToCargoShipPose;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToCollectPose;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToHighCargoPose;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToLowCargoPose;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToMiddleCargoPose;
-import org.usfirst.frc.team319.robot.commands.robotCommands.GoToSafePose;
-import org.usfirst.frc.team319.robot.commands.robotCommands.SetDriveMode;
-import org.usfirst.frc.team319.robot.commands.robotCommands.SpitCargo;
-import org.usfirst.frc.team319.robot.commands.robotCommands.StartClimbMode;
+import org.usfirst.frc.team319.robot.commands.bba.BBAGoToHomePosition;
+import org.usfirst.frc.team319.robot.commands.bba.BbaGoToCargoCollect;
+import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
+import org.usfirst.frc.team319.robot.commands.carriage.PassthroughSpit;
+import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorCollect;
+import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorPlace;
+import org.usfirst.frc.team319.robot.commands.robot.CollectCargo;
+import org.usfirst.frc.team319.robot.commands.robot.GoToCargoShipPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToCollectPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToHighCargoPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToLowCargoPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToMiddleCargoPose;
+import org.usfirst.frc.team319.robot.commands.robot.GoToSafePose;
+import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
+import org.usfirst.frc.team319.robot.commands.robot.SpitCargo;
+import org.usfirst.frc.team319.robot.commands.robot.StartClimbMode;
 
+/**
+ * This class is the glue that binds the controls on the physical operator
+ * interface to the commands and command groups that allow control of the robot.
+ */
 public class OI {
 	public BobXboxController driverController;
 	public BobXboxController operatorController;

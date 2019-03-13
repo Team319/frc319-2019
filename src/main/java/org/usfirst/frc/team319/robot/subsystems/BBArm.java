@@ -19,7 +19,7 @@ import org.usfirst.frc.team319.models.PositionControlledSubsystem;
 import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.BBArm_Commands.JoystickBBA;
+import org.usfirst.frc.team319.robot.commands.bba.JoystickBBA;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
