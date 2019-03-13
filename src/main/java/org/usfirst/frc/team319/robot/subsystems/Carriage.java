@@ -7,8 +7,8 @@
 
 package org.usfirst.frc.team319.robot.subsystems;
 
-import com.ctre.phoenix.CANifier;
-import com.ctre.phoenix.CANifier.GeneralPin;
+//import com.ctre.phoenix.CANifier;
+//import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
