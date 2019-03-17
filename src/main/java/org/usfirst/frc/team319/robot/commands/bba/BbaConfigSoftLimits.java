@@ -7,56 +7,44 @@
 
 package org.usfirst.frc.team319.robot.commands.bba;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
-import org.usfirst.frc.team319.models.RobotMode;
 import org.usfirst.frc.team319.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class JoystickBBA extends Command {
+public class BbaConfigSoftLimits extends Command {
+  private boolean softLimitsEnabled = true;
 
-  private int positionIncrement = 100;
+  public BbaConfigSoftLimits(boolean softLimitsEnabled) {
 
-  public JoystickBBA() {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.bbarm);
+    this.softLimitsEnabled = softLimitsEnabled;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.bbarm.configSoftLimits(this.softLimitsEnabled);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.mode == RobotMode.Climb) {
-      double driveSignal = -Robot.oi.driverController.leftStick.getY();
-      Robot.bbarm.collectorTalon.set(ControlMode.PercentOutput, driveSignal);
-    }
-
-    double signal = Robot.oi.operatorController.rightStick.getY();
-    int increment = (int) (-signal * positionIncrement);
-
-    if (Robot.oi.operatorController.Dpad.Down.get()) {
-      Robot.bbarm.forceIncrementTargetPosition(increment);
-    }
-    Robot.bbarm.incrementTargetPosition(increment);
-    Robot.bbarm.motionMagicControl();
-    // Robot.bbarm.percentVbus(signal);
   }
 
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return true;
   }
 
+  // Called once after isFinished returns true
   @Override
   protected void end() {
-
   }
 
+  // Called when another command which requires one or more of the same
+  // subsystems is scheduled to run
   @Override
   protected void interrupted() {
   }

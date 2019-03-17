@@ -7,23 +7,17 @@
 
 package org.usfirst.frc.team319.robot.commands.robot;
 
-import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
-import org.usfirst.frc.team319.robot.commands.carriage.PassthroughSetSpeed;
-import org.usfirst.frc.team319.robot.commands.carriage.WaitForCargo;
+import org.usfirst.frc.team319.models.RobotMode;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorUnlockCarriage;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CollectCargo extends CommandGroup {
+public class RevertClimbMode extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public CollectCargo() {
-    addSequential(new GoToCollectPose());
-    addParallel(new PassthroughSetSpeed(0.4));
-    addParallel(new CollectorSetSpeed(-1.0));
-    addSequential(new WaitForCargo());
-    addParallel(new PassthroughSetSpeed(0.0));
-    addParallel(new CollectorSetSpeed(0.0));
-    // addSequential(new GoToHomePose());
+  public RevertClimbMode() {
+    addSequential(new SetRobotMode(RobotMode.Normal));
+    addSequential(new ElevatorUnlockCarriage());
   }
 }

@@ -9,6 +9,8 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.DriveMode;
+import org.usfirst.frc.team319.robot.commands.bba.BbaConfigSoftLimits;
+import org.usfirst.frc.team319.robot.commands.bba.ResetBbaPosition;
 import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
 import org.usfirst.frc.team319.robot.commands.carriage.PassthroughSpit;
 import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorCollect;
@@ -22,6 +24,7 @@ import org.usfirst.frc.team319.robot.commands.robot.GoToMiddleCargoPose;
 import org.usfirst.frc.team319.robot.commands.robot.GoToSafePose;
 import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
 import org.usfirst.frc.team319.robot.commands.robot.SpitCargo;
+import org.usfirst.frc.team319.robot.commands.robot.StartClimbLevelTwoMode;
 import org.usfirst.frc.team319.robot.commands.robot.StartClimbMode;
 
 /**
@@ -58,12 +61,16 @@ public class OI {
 		operatorController.xButton.whenPressed(new GoToCargoShipPose());
 
 		operatorController.startButton.whenPressed(new StartClimbMode());
+		operatorController.selectButton.whenPressed(new StartClimbLevelTwoMode());
 
 		operatorController.leftBumper.whenPressed(new SpitCargo());
 		operatorController.rightBumper.whenPressed(new CollectCargo());
 
 		operatorController.leftTriggerButton.whenPressed(new GoToSafePose());
 		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
+
+		operatorController.Dpad.Down.whenPressed(new BbaConfigSoftLimits(false));
+		operatorController.Dpad.Down.whenReleased(new ResetBbaPosition());
 
 		/*
 		 * operatorController.rightTriggerButton.whenPressed(new

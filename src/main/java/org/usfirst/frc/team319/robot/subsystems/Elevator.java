@@ -50,9 +50,10 @@ public class Elevator extends PositionControlledSubsystem {
   private int bbaClearancePosition = 7500;
   private int minVerticalLimit = cargoCollectPosition;
   private int climbLimit = 1300;
-  private int lockPosition = 17800;
+  private int climbUpperLimit = 16330;
+  private int lockPosition = 18800;
   private int climbPosition = 13000;
-  private int touchFloorPosition = 1500;
+  private int touchFloorPosition = 15000;
   // ---- Gains, Pid Values, Talon Setup ---- //
 
   private int climbAcceleration = 10000;
@@ -79,8 +80,8 @@ public class Elevator extends PositionControlledSubsystem {
 
   public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
   public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
-  public BobTalonSRX elevatorFollow14 = new BobTalonSRX(14);
-  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(15, elevatorFollow1, elevatorFollow2, elevatorFollow14);
+  public BobTalonSRX elevatorFollow3 = new BobTalonSRX(14);
+  public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(15, elevatorFollow1, elevatorFollow2, elevatorFollow3);
 
   public Elevator() {
     setupSensors();
@@ -117,7 +118,7 @@ public class Elevator extends PositionControlledSubsystem {
     this.elevatorLead.configReverseSoftLimitThreshold(minVerticalLimit);
 
     this.elevatorLead.setInverted(false);
-    this.elevatorFollow14.setInverted(false);
+    this.elevatorFollow3.setInverted(false);
     this.elevatorFollow1.setInverted(true);
     this.elevatorFollow2.setInverted(true);
 
@@ -146,7 +147,7 @@ public class Elevator extends PositionControlledSubsystem {
     if (Robot.mode != RobotMode.Climb) {
       withinBounds = position <= maxVerticalLimit && position >= minVerticalLimit;
     } else {
-      withinBounds = position <= maxVerticalLimit && position >= climbLimit;
+      withinBounds = position <= climbUpperLimit && position >= climbLimit;
     }
     return withinBounds && this.hasClearance(position);
   }
@@ -265,6 +266,12 @@ public class Elevator extends PositionControlledSubsystem {
   public void periodic() {
     SmartDashboard.putNumber("Elevator Position", this.getCurrentPosition());
     SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
+
+    SmartDashboard.putNumber("Elevator Lead Current", this.elevatorLead.getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Follow 1 Current", this.elevatorFollow1.getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Follow 2 Current", this.elevatorFollow2.getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Follow 3 Current", this.elevatorFollow3.getOutputCurrent());
+
   }
 
   @Override

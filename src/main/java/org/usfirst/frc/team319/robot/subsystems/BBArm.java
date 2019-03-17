@@ -38,7 +38,7 @@ public class BBArm extends PositionControlledSubsystem {
 
   private int homePosition = 0;
   private int levelThreeHab = -4408;
-  private int levelTwoHab = -7059;
+  private int levelTwoHab = -5000;
   private int hatchFloorPosition = -8500;
   private int cargoCollectPosition = -4200;// 6200
   private int floorPosition = -5700;
@@ -78,7 +78,7 @@ public class BBArm extends PositionControlledSubsystem {
     this.bbaLead.configFactoryDefault();
     this.bbaFollow.configFactoryDefault();
 
-    configSoftLimits();
+    configSoftLimits(true);
 
     configMotionParameters();
 
@@ -126,13 +126,17 @@ public class BBArm extends PositionControlledSubsystem {
     this.isFrontHatchSolenoidExtended = isFrontHatchSolenoidExtended;
   }
 
-  public void configSoftLimits() {
+  public void configSoftLimits(boolean softLimitsEnabled) {
     // ------------Lead Limits------------//
     this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);
     this.bbaLead.configReverseSoftLimitThreshold(downPositionLimit);
 
-    this.bbaLead.configForwardSoftLimitEnable(true);
-    this.bbaLead.configReverseSoftLimitEnable(true);
+    this.bbaLead.configForwardSoftLimitEnable(softLimitsEnabled);
+    this.bbaLead.configReverseSoftLimitEnable(softLimitsEnabled);
+  }
+
+  public void resetPosition() {
+    this.bbaLead.setSelectedSensorPosition(0);
   }
 
   public boolean hasClearance(int newTargetPosition) {
@@ -195,11 +199,17 @@ public class BBArm extends PositionControlledSubsystem {
     }
   }
 
+  public void forceIncrementTargetPosition(int increment) {
+    int currentTargetPosition = this.targetPosition;
+    int newTargetPosition = currentTargetPosition + increment;
+    this.targetPosition = newTargetPosition;
+  }
+
   public double getLevelThreeHab() {
     return levelThreeHab;
   }
 
-  public double getLevelTwoHab() {
+  public int getLevelTwoHab() {
     return levelTwoHab;
   }
 

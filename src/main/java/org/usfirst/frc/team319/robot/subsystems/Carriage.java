@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team319.robot.subsystems;
 
+import com.ctre.phoenix.CANifier;
+import com.ctre.phoenix.CANifier.GeneralPin;
 //import com.ctre.phoenix.CANifier;
 //import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -15,9 +17,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.DigitalInput;
 
 /**
  * Add your docs here.
@@ -25,8 +27,8 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Carriage extends Subsystem {
 
-  DigitalInput digitalCargoSensor = new DigitalInput(0);
-  // CANifier canifier = new CANifier(0);
+  private DigitalInput digitalCargoSensor = new DigitalInput(0);
+  public CANifier canifier = new CANifier(0);
 
   private boolean manualCollectFinished = false;
   private boolean isFingerOpen = true;
@@ -40,6 +42,7 @@ public class Carriage extends Subsystem {
   public LeaderBobTalonSRX passThroughLead = new LeaderBobTalonSRX(7, passthroughFollow);
 
   public Carriage() {
+    passThroughLead.setInverted(true);
     passthroughFollow.setInverted(InvertType.OpposeMaster);
     passthroughFollow.setNeutralMode(NeutralMode.Brake);
   }
@@ -99,8 +102,7 @@ public class Carriage extends Subsystem {
   }
 
   public boolean ballDetected() {
-    // return canifier.getGeneralInput(GeneralPin.LIMR);
-    return false;
+    return canifier.getGeneralInput(GeneralPin.LIMR);
   }
 
   public boolean getManualCollectFinished() {

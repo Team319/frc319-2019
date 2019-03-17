@@ -32,9 +32,11 @@ public class BobDrive extends Command {
 	protected void execute() {
 		double rotateValue = 0;
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
+			Robot.limelight.setLedMode(3);// turns limelight LED on
 			rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
 
 		} else {
+			Robot.limelight.setLedMode(1);// turns limelight LED off
 			rotateValue = Robot.oi.driverController.rightStick.getX();
 		}
 
