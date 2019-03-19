@@ -60,6 +60,14 @@ public class Limelight extends Subsystem {
       return tx.getDouble(0.0);
    }
 
+   public double circularBufferX() {
+      return HelperFunctions.mean(limelightbuffer.toArray());
+   }
+
+   public double getXProportional() {
+      return getX() / getFovX() / 2;
+   }
+
    public double getY() {
       return ty.getDouble(0.0);
    }
@@ -123,6 +131,7 @@ public class Limelight extends Subsystem {
 
    @Override
    public void periodic() {
-      limelightbuffer.addLast(getDistance());
+      limelightbuffer.addLast(getX());
+
    }
 }
