@@ -9,12 +9,12 @@ import org.usfirst.frc.team319.robot.commands.elevator.ElevatorLockCarriage;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class StartClimbMode extends CommandGroup {
+public class StartClimbLevelTwoMode extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public StartClimbMode() {
-    addSequential(new GoToClimbStartPose());
+  public StartClimbLevelTwoMode() {
+    addSequential(new GoToClimbLevelTwoStartPose());
     addSequential(new ElevatorLockCarriage());
     addSequential(new WaitCommand(0.5));
     addSequential(new ElevatorGoToClimbPosition(), 1.0);

@@ -5,21 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.robot;
+package org.usfirst.frc.team319.robot.commands.bba;
 
-import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
+import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
+import org.usfirst.frc.team319.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-
-public class SpitCargo extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public SpitCargo() {
-    addSequential(new CollectorSetSpeed(0.5));
-    addSequential(new WaitCommand(0.5));
-    addSequential(new CollectorSetSpeed(0.0));
-
+public class BbaGoToClimbLevelTwoStartPosition extends MotionMagicPositionCommand {
+  public BbaGoToClimbLevelTwoStartPosition() {
+    super(Robot.bbarm, Robot.bbarm.getLevelTwoHab());
   }
 }

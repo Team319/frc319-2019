@@ -8,7 +8,7 @@
 package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.models.RobotMode;
-import org.usfirst.frc.team319.robot.commands.drivetrain.DrivetrainDoNothing;
+import org.usfirst.frc.team319.robot.commands.robot.RevertClimbMode;
 import org.usfirst.frc.team319.robot.commands.robot.SetRobotMode;
 import org.usfirst.frc.team319.robot.subsystems.BBArm;
 import org.usfirst.frc.team319.robot.subsystems.Carriage;
@@ -20,7 +20,6 @@ import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,7 +33,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 
 	Command autonomousCommand;
-	SendableChooser<String> autoChooser;
 	public static final BBArm bbarm = new BBArm();
 	public static final Elevator elevator = new Elevator();
 	public static final Carriage carriage = new Carriage();
@@ -49,17 +47,11 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void robotInit() {
-
 		oi = new OI();
 		Robot.drivetrain.setDrivetrainPositionToZero();
-
-		autoChooser = new SendableChooser<String>();
-
-		SmartDashboard.putData("Autonomous Chooser", autoChooser);
-
 		SmartDashboard.putData("Climb Mode", new SetRobotMode(RobotMode.Climb));
 		SmartDashboard.putData("Normal Mode", new SetRobotMode(RobotMode.Normal));
-
+		SmartDashboard.putData("EXIT CLIMB MODE", new RevertClimbMode());
 	}
 
 	@Override
@@ -76,19 +68,12 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-
-		String selectedAuto = (String) autoChooser.getSelected();
-		System.out.println(selectedAuto);
-		switch (selectedAuto) {
-		case "Do Nothing":
-			autonomousCommand = new DrivetrainDoNothing();
-			break;
-		}
-
-		// schedule the autonomous command (example)
-		if (autonomousCommand != null) {
-			autonomousCommand.start();
-		}
+		/*
+		 * autonomousCommand = new DrivetrainDoNothing();
+		 * 
+		 * // schedule the autonomous command (example) if (autonomousCommand != null) {
+		 * autonomousCommand.start(); }
+		 */
 	}
 
 	/**

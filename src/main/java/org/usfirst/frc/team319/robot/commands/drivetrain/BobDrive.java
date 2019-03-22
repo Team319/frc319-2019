@@ -31,10 +31,28 @@ public class BobDrive extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double rotateValue = 0;
+
+		double rotateCap = 0.45;
+		double limelightScale = 0.319;
+		double loadingStationOffset = 0;
+
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
-			rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
+			Robot.limelight.setLedMode(3); // turns limelight LED on
+
+			rotateValue = (Robot.limelight.circularBufferX() - loadingStationOffset) * limelightScale;
+
+			if (rotateValue > rotateCap) {
+				rotateValue = rotateCap;
+			} else if (rotateValue < -rotateCap) {
+				rotateValue = -rotateCap;
+			} else {
+				rotateValue = 0;
+			}
+
+			// rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
 
 		} else {
+			Robot.limelight.setLedMode(1); // turns limelight LED off
 			rotateValue = Robot.oi.driverController.rightStick.getX();
 		}
 
@@ -44,17 +62,13 @@ public class BobDrive extends Command {
 		Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
 	}
 
-	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		return false;
 	}
 
-	// Called once after isFinished returns true
 	protected void end() {
 	}
 
-	// Called when another command which requires one or more of the same
-	// subsystems is scheduled to run
 	protected void interrupted() {
 	}
 }

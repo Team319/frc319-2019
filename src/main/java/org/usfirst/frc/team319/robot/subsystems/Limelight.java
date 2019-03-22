@@ -18,12 +18,7 @@ public class Limelight extends Subsystem {
    NetworkTableEntry tx = table.getEntry("tx");
    NetworkTableEntry ty = table.getEntry("ty");
    NetworkTableEntry ta = table.getEntry("ta");
-   NetworkTableEntry thor = table.getEntry("thor");
-   NetworkTableEntry tvert = table.getEntry("tvert");
-   NetworkTableEntry tv = table.getEntry("tv");
-   NetworkTableEntry ts = table.getEntry("ts");
-   NetworkTableEntry tshort = table.getEntry("tshort");
-   NetworkTableEntry tlong = table.getEntry("tlong");
+   NetworkTableEntry ledMode = table.getEntry("ledMode");
 
    private static double fovX = 54.0;
    private static double fovY = 41.0;
@@ -65,6 +60,14 @@ public class Limelight extends Subsystem {
       return tx.getDouble(0.0);
    }
 
+   public double circularBufferX() {
+      return HelperFunctions.mean(limelightbuffer.toArray());
+   }
+
+   public double getXProportional() {
+      return getX() / getFovX() / 2;
+   }
+
    public double getY() {
       return ty.getDouble(0.0);
    }
@@ -73,28 +76,8 @@ public class Limelight extends Subsystem {
       return ta.getDouble(0.0);
    }
 
-   public double getThor() {
-      return thor.getDouble(0.0);
-   }
-
-   public double getVert() {
-      return tvert.getDouble(0.0);
-   }
-
-   public double getTv() {
-      return tv.getDouble(0.0);
-   }
-
-   public double getTs() {
-      return ts.getDouble(0.0);
-   }
-
-   public double getTLong() {
-      return tlong.getDouble(0.0);
-   }
-
-   public double getTShort() {
-      return tshort.getDouble(0.0);
+   public double setLedMode(double ledMode) {
+      return this.ledMode.getDouble(ledMode);// the led modes are 0-3, 1 is force off, 3 is force on
    }
 
    public double getFovX() {
@@ -111,15 +94,12 @@ public class Limelight extends Subsystem {
       return distance;
    }
 
-   public double getAngle() {
-      double longshort = getTLong() / getTShort();
-      System.out.println(longshort);
-      double partone = 0.014;
-      double squareroot = 5893 - Math.sqrt(18686429 - 7300000 * longshort);
-      double angle = partone * squareroot;
-      return angle;
-   }
-
+   /*
+    * public double getAngle() { double longshort = getTLong() / getTShort();
+    * System.out.println(longshort); double partone = 0.014; double squareroot =
+    * 5893 - Math.sqrt(18686429 - 7300000 * longshort); double angle = partone *
+    * squareroot; return angle; }
+    */
    public void trackPIDD(double output) {
       moveValue = -output;
    }
@@ -151,6 +131,7 @@ public class Limelight extends Subsystem {
 
    @Override
    public void periodic() {
-      limelightbuffer.addLast(getDistance());
+      limelightbuffer.addLast(getX());
+
    }
 }
