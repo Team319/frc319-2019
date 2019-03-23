@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends Subsystem {
 
@@ -19,6 +20,7 @@ public class Limelight extends Subsystem {
    NetworkTableEntry ty = table.getEntry("ty");
    NetworkTableEntry ta = table.getEntry("ta");
    NetworkTableEntry ledMode = table.getEntry("ledMode");
+   NetworkTableEntry stream = table.getEntry("stream");
 
    private static double fovX = 54.0;
    private static double fovY = 41.0;
@@ -31,14 +33,14 @@ public class Limelight extends Subsystem {
    double kDD = 0.3;
    DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
 
-   double kPR = 0.07;
+   double kPR = 0.12;// 0.015 is good
    double kIR = 0.0;
-   double kDR = 0.07;
+   double kDR = 0.0;// 0.005 is good
    RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
 
    public Limelight() {
 
-      this.limelightbuffer = new BobCircularBuffer(5);
+      this.limelightbuffer = new BobCircularBuffer(3);
 
    }
 
@@ -76,8 +78,12 @@ public class Limelight extends Subsystem {
       return ta.getDouble(0.0);
    }
 
-   public double setLedMode(double ledMode) {
-      return this.ledMode.getDouble(ledMode);// the led modes are 0-3, 1 is force off, 3 is force on
+   public boolean setLedModeOn() {
+      return this.ledMode.setNumber(3);// 3 is Limelight LED force on
+   }
+
+   public boolean setLedModeOff() {
+      return this.ledMode.setNumber(1);// 1 is Limelight LED force off
    }
 
    public double getFovX() {
@@ -92,6 +98,10 @@ public class Limelight extends Subsystem {
       double area = this.getArea();
       double distance = Math.pow((area / 17.854), (1 / -2.272));
       return distance;
+   }
+
+   public double setStreamType(double streamSetting) {
+      return stream.getDouble(streamSetting);
    }
 
    /*

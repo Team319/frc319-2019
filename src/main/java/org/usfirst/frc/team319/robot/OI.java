@@ -15,6 +15,7 @@ import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
 import org.usfirst.frc.team319.robot.commands.carriage.PassthroughSpit;
 import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorCollect;
 import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorPlace;
+import org.usfirst.frc.team319.robot.commands.limelight.TurnLedOn;
 import org.usfirst.frc.team319.robot.commands.robot.CollectCargo;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCargoShipPose;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCollectPose;
@@ -26,6 +27,7 @@ import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
 import org.usfirst.frc.team319.robot.commands.robot.SpitCargo;
 import org.usfirst.frc.team319.robot.commands.robot.StartClimbLevelTwoMode;
 import org.usfirst.frc.team319.robot.commands.robot.StartClimbMode;
+import org.usfirst.frc.team319.robot.commands.robot.StopCollectCargo;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -53,6 +55,8 @@ public class OI {
 		driverController.yButton.whileHeld(new CollectorSetSpeed(1.0));
 		driverController.yButton.whenReleased(new CollectorSetSpeed(0.0));
 
+		// driverController.xButton.whileHeld(new TurnLedOn());
+
 		// ----Operator Controller---- \\
 
 		operatorController.aButton.whenPressed(new GoToLowCargoPose());
@@ -69,6 +73,7 @@ public class OI {
 		operatorController.leftTriggerButton.whenPressed(new GoToSafePose());
 		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
 
+		operatorController.Dpad.Right.whenPressed(new StopCollectCargo());
 		operatorController.Dpad.Down.whenPressed(new BbaConfigSoftLimits(false));
 		operatorController.Dpad.Down.whenReleased(new ResetBbaPosition());
 

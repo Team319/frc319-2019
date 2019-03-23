@@ -56,10 +56,10 @@ public class Elevator extends PositionControlledSubsystem {
   private int touchFloorPosition = 15000;
   // ---- Gains, Pid Values, Talon Setup ---- //
 
-  private int climbAcceleration = 10000;
+  private int climbAcceleration = 2500;
   private int normalAcceleration = 10000;
 
-  private int climbVelocity = 5000;
+  private int climbVelocity = 2500;
   private int normalVelocity = 5000;
 
   public final static int ELEVATOR_UP = 0;
@@ -68,14 +68,14 @@ public class Elevator extends PositionControlledSubsystem {
   private final SRXGains elevatorUpGains = new SRXGains(ELEVATOR_UP, 0.5, 0.004, 24.0, .2046, 500);
   private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.5, 0.004, 24.0, .2046, 500);
 
-  private MotionParameters UpMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
+  private MotionParameters upMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
       elevatorUpGains);// 10000, 4500
-  private MotionParameters DownMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
+  private MotionParameters downMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
       elevatorDownGains);// 10000, 4500
 
-  private MotionParameters ClimbUpMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
+  private MotionParameters climbUpMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
       elevatorUpGains);
-  private MotionParameters ClimbDownMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
+  private MotionParameters climbDownMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
       elevatorDownGains);
 
   public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
@@ -93,15 +93,19 @@ public class Elevator extends PositionControlledSubsystem {
     this.elevatorLead.enableVoltageCompensation(true);
 
     this.elevatorLead.configPeakOutputReverse(-1.0);
+
+    this.elevatorLead.configPeakCurrentLimit(20);
+    this.elevatorLead.configPeakCurrentDuration(500);
+    this.elevatorLead.configContinuousCurrentLimit(10);
   }
 
   public void setupMotionParameters() {
     if (Robot.mode == RobotMode.Climb) {
-      this.elevatorLead.configMotionParameters(ClimbUpMotionParameters);
-      this.elevatorLead.configMotionParameters(ClimbDownMotionParameters);
+      this.elevatorLead.configMotionParameters(climbUpMotionParameters);
+      this.elevatorLead.configMotionParameters(climbDownMotionParameters);
     } else {
-      this.elevatorLead.configMotionParameters(UpMotionParameters);
-      this.elevatorLead.configMotionParameters(DownMotionParameters);
+      this.elevatorLead.configMotionParameters(upMotionParameters);
+      this.elevatorLead.configMotionParameters(downMotionParameters);
     }
 
     this.elevatorLead.configMaxIntegralAccumulator(ELEVATOR_UP, 3000);
@@ -235,11 +239,22 @@ public class Elevator extends PositionControlledSubsystem {
 
   public void manageMotion(double targetPosition) {
     double currentPosition = getCurrentPosition();
-    if (currentPosition < targetPosition) {
-      elevatorLead.selectMotionParameters(UpMotionParameters);
+    if (Robot.mode == RobotMode.Climb) {
+      this.elevatorLead.configPeakOutputReverse(-0.5);
+      if (currentPosition < targetPosition) {
+        elevatorLead.selectMotionParameters(climbUpMotionParameters);
+      } else {
+        elevatorLead.selectMotionParameters(climbDownMotionParameters);
+      }
     } else {
-      elevatorLead.selectMotionParameters(DownMotionParameters);
+      this.elevatorLead.configPeakOutputReverse(-1.0);
+      if (currentPosition < targetPosition) {
+        elevatorLead.selectMotionParameters(upMotionParameters);
+      } else {
+        elevatorLead.selectMotionParameters(downMotionParameters);
+      }
     }
+
   }
 
   public void motionMagicControl() {
@@ -268,9 +283,13 @@ public class Elevator extends PositionControlledSubsystem {
     SmartDashboard.putNumber("Elevator Velocity", this.getCurrentVelocity());
 
     SmartDashboard.putNumber("Elevator Lead Current", this.elevatorLead.getOutputCurrent());
-    SmartDashboard.putNumber("Elevator Follow 1 Current", this.elevatorFollow1.getOutputCurrent());
-    SmartDashboard.putNumber("Elevator Follow 2 Current", this.elevatorFollow2.getOutputCurrent());
-    SmartDashboard.putNumber("Elevator Follow 3 Current", this.elevatorFollow3.getOutputCurrent());
+    SmartDashboard.putNumber("Elevator Lead Voltage", this.elevatorLead.getMotorOutputVoltage());
+    // SmartDashboard.putNumber("Elevator Follow 1 Current",
+    // this.elevatorFollow1.getOutputCurrent());
+    // SmartDashboard.putNumber("Elevator Follow 2 Current",
+    // this.elevatorFollow2.getOutputCurrent());
+    // SmartDashboard.putNumber("Elevator Follow 3 Current",
+    // this.elevatorFollow3.getOutputCurrent());
 
   }
 

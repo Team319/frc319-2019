@@ -33,6 +33,7 @@ public class Carriage extends Subsystem {
   private boolean manualCollectFinished = false;
   private boolean isFingerOpen = true;
   private boolean isFrontHatchCollectorExtended = true;
+  private boolean isCollecting = false;
 
   private boolean isCarriageLockSolenoidExtended = true;
   // private boolean isPlatypusFaceSolenoidExtended = false;
@@ -49,7 +50,7 @@ public class Carriage extends Subsystem {
 
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("Ball Detected", this.ballDetected());
+    // SmartDashboard.putBoolean("Ball Detected", this.ballDetected());
     SmartDashboard.putBoolean("Collect Finished", this.getManualCollectFinished());
   }
 

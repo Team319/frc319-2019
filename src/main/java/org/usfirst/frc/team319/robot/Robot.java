@@ -48,10 +48,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
+		limelight.setStreamType(2);// sets secondary as the main camera feed.
 		Robot.drivetrain.setDrivetrainPositionToZero();
 		SmartDashboard.putData("Climb Mode", new SetRobotMode(RobotMode.Climb));
 		SmartDashboard.putData("Normal Mode", new SetRobotMode(RobotMode.Normal));
 		SmartDashboard.putData("EXIT CLIMB MODE", new RevertClimbMode());
+		SmartDashboard.putNumber("LimeightX", limelight.circularBufferX());
 	}
 
 	@Override

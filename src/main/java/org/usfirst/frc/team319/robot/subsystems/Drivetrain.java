@@ -157,7 +157,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 
 	@Override
 	public void periodic() {
-		// SmartDashboard.putNumber("Velocity", this.getVelocity());
+		SmartDashboard.putNumber("Velocity", this.getVelocity());
 		SmartDashboard.putNumber("Distance Right", this.getRightDriveLeadDistance());
 		SmartDashboard.putNumber("Distance Left", this.getLeftDriveLeadDistance());
 		// SmartDashboard.putNumber("Angle", this.getAngle());
