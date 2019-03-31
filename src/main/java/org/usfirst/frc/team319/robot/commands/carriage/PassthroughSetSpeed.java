@@ -19,13 +19,13 @@ public class PassthroughSetSpeed extends Command {
   public PassthroughSetSpeed(double speed) {
     // Use requires() here to declare subsystem dependencies
     requires(Robot.carriage);
-
     this.speed = speed;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.oi.operatorController.setRumble(1.0, 1.0);
     Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, speed);
   }
 
@@ -43,6 +43,7 @@ public class PassthroughSetSpeed extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.oi.operatorController.setRumble(0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same

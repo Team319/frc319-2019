@@ -55,5 +55,8 @@ public class WaitForCargo extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.bbarm.percentVbusCollector(0);
+    Robot.carriage.percentVbusPassthrough(0);
+
   }
 }

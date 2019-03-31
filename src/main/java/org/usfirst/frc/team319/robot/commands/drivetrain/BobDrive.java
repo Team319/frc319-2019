@@ -34,13 +34,13 @@ public class BobDrive extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		System.out.println("Drive Mode: " + Robot.drivetrain.mode);
 		double rotateValue = 0;
 
 		Robot.limelight.setLedModeOn();
 
-		double rotateCap = 0.35;
+		double rotateCap = 0.5;
 
+		//
 		double distanceScale = 1;
 		/*
 		 * double limelightScale = 0.0319; double loadingStationOffset = 0;
@@ -55,29 +55,15 @@ public class BobDrive extends Command {
 			// Area is the area of the target rectangle with the respect to the image size.
 			// the area far away of the target will be small and ~0.4
 			// the area close up of the target will be ~4.0
-			double area = 0.4;
-			if (Robot.limelight.getArea() >= 4) {
-				area = 4;
-			} else if (Robot.limelight.getArea() <= 0.4) {
-				area = 0.4;
-			}
-			double offset = (-13 + (0.4 - 1.6 * area));
-			Robot.limelight.setRotationSetpoints(offset);
-			Robot.limelight.execute();
 			/*
-			 * // 1 - Off // 2 - Blink // 3 - On Robot.limelight.setLedModeOn(); // turns
-			 * limelight LED on
-			 * 
-			 * // Take the average X of the past 5 values and computer //
-			 * loadingStationOffset is the value away from the crosshair, if the offset is
-			 * // calibrated, this should be 0. // scale is the value of intensity the scale
-			 * should be rotated. rotateValue = (Robot.limelight.circularBufferX() -
-			 * loadingStationOffset) * limelightScale;
-			 * 
-			 * SmartDashboard.putNumber("X value from limelight: ", rotateValue);
-			 * 
-			 * // RotateCap is the threshold and the only speed that will be rotated
+			 * double area = 0.4; if (Robot.limelight.getArea() >= 4) { area = 4; } else if
+			 * (Robot.limelight.getArea() <= 0.4) { area = 0.4; }
 			 */
+			// double offset = (-13 + (0.4 - 1.6 * area));
+			double target = 0;
+			Robot.limelight.setRotationSetpoints(target);
+			Robot.limelight.execute();
+
 			if (rotateValue > rotateCap) {
 				rotateValue = rotateCap;
 			} else if (rotateValue < -rotateCap) {
@@ -88,7 +74,7 @@ public class BobDrive extends Command {
 				// rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
 
 		} else {
-			// Robot.limelight.setLedModeOff(); // turns limelight LED off
+			Robot.limelight.setLedModeOff(); // turns limelight LED off
 			rotateValue = Robot.oi.driverController.rightStick.getX();
 		}
 

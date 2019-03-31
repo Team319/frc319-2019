@@ -39,7 +39,7 @@ public class Elevator extends PositionControlledSubsystem {
 
   // ---- Cargo Positions ---- //
   private int cargoCollectPosition = -5000;
-  private int cargoHighPosition = 33300;
+  private int cargoHighPosition = 35000;
   private int cargoMiddlePosition = 17000;
   private int cargoLowPosition = 0; // this value is correct
   private int cargoCargoShipPosition = 10000;
@@ -49,10 +49,13 @@ public class Elevator extends PositionControlledSubsystem {
   private int maxVerticalLimit = 37400;
   private int bbaClearancePosition = 7500;
   private int minVerticalLimit = cargoCollectPosition;
-  private int climbLimit = 1300;
-  private int climbUpperLimit = 16330;
-  private int lockPosition = 18800;
-  private int climbPosition = 13000;
+
+  private int climbLimit = 0;// 1300, 0 for low locks
+  private int climbUpperLimit = 15000;// 16330, 15000 for low lock position
+
+  private int lockPosition = 18800;// 18800
+  private int LowlockPosition = 15200;
+  private int climbPosition = 13000 - 2000;// 13000, - 2000 offset for low locks
   private int touchFloorPosition = 15000;
   // ---- Gains, Pid Values, Talon Setup ---- //
 
@@ -223,6 +226,10 @@ public class Elevator extends PositionControlledSubsystem {
 
   public int getLockPosition() {
     return lockPosition;
+  }
+
+  public int getLowlockPosition() {
+    return LowlockPosition;
   }
 
   public int getTouchFloorPosition() {

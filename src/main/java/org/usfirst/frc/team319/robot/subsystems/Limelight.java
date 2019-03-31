@@ -33,9 +33,9 @@ public class Limelight extends Subsystem {
    double kDD = 0.3;
    DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
 
-   double kPR = 0.12;// 0.015 is good
+   double kPR = 0.16;
    double kIR = 0.0;
-   double kDR = 0.0;// 0.005 is good
+   double kDR = 0.05;
    RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
 
    public Limelight() {
@@ -100,8 +100,8 @@ public class Limelight extends Subsystem {
       return distance;
    }
 
-   public double setStreamType(double streamSetting) {
-      return stream.getDouble(streamSetting);
+   public boolean setStreamType() {
+      return stream.setNumber(2);
    }
 
    /*

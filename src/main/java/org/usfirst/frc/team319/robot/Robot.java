@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		oi = new OI();
-		limelight.setStreamType(2);// sets secondary as the main camera feed.
+		limelight.setStreamType();// sets secondary as the main camera feed.
 		Robot.drivetrain.setDrivetrainPositionToZero();
 		SmartDashboard.putData("Climb Mode", new SetRobotMode(RobotMode.Climb));
 		SmartDashboard.putData("Normal Mode", new SetRobotMode(RobotMode.Normal));
@@ -64,12 +64,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
+		limelight.setStreamType();// sets secondary as the main camera feed.
 		Robot.elevator.forceSetTargetPosition(Robot.elevator.getCurrentPosition());
 		Robot.bbarm.forceSetTargetPosition(Robot.bbarm.getCurrentPosition());
 	}
 
 	@Override
 	public void autonomousInit() {
+		limelight.setStreamType();// sets secondary as the main camera feed.
 		/*
 		 * autonomousCommand = new DrivetrainDoNothing();
 		 * 
@@ -84,6 +86,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		limelight.setStreamType();// sets secondary as the main camera feed.
 
 	}
 
@@ -93,7 +96,7 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
-
+		limelight.setStreamType();// sets secondary as the main camera feed.
 		Robot.elevator.forceSetTargetPosition(Robot.elevator.getCurrentPosition());
 		Robot.bbarm.forceSetTargetPosition(Robot.bbarm.getCurrentPosition());
 	}
@@ -104,6 +107,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		limelight.setStreamType();// sets secondary as the main camera feed.
 
 	}
 
