@@ -5,14 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatchCollector;
+package org.usfirst.frc.team319.robot.commands.hatch_collector;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class HatchCollectorOpenToggle extends Command {
-  public HatchCollectorOpenToggle() {
+public class HatchCollectorExtendToggle extends Command {
+  public HatchCollectorExtendToggle() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
   }
@@ -20,10 +20,11 @@ public class HatchCollectorOpenToggle extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (Robot.carriage.isFingerOpen) {
-      Robot.pneumatics.fingerClose();
+    if (Robot.carriage.isHatchCollectorExtended) {
+      Robot.pneumatics.hatchCollectorArmRetract();
     } else {
-      Robot.pneumatics.fingerOpen();
+      Robot.pneumatics.hatchCollectorArmExtend();
+
     }
   }
 

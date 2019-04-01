@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatchCollector;
+package org.usfirst.frc.team319.robot.commands.hatch_collector;
 
 import org.usfirst.frc.team319.robot.Robot;
 
@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class HatchCollectorStagedScore extends Command {
-  Timer timer = new Timer();
+  private Timer timer = new Timer();
 
   public HatchCollectorStagedScore() {
     // Use requires() here to declare subsystem dependencies

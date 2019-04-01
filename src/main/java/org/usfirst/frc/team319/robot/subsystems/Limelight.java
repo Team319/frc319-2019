@@ -9,34 +9,33 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends Subsystem {
 
    private BobCircularBuffer limelightbuffer;
 
-   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-   NetworkTableEntry tx = table.getEntry("tx");
-   NetworkTableEntry ty = table.getEntry("ty");
-   NetworkTableEntry ta = table.getEntry("ta");
-   NetworkTableEntry ledMode = table.getEntry("ledMode");
-   NetworkTableEntry stream = table.getEntry("stream");
+   private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+   private NetworkTableEntry tx = table.getEntry("tx");
+   private NetworkTableEntry ty = table.getEntry("ty");
+   private NetworkTableEntry ta = table.getEntry("ta");
+   private NetworkTableEntry ledMode = table.getEntry("ledMode");
+   private NetworkTableEntry stream = table.getEntry("stream");
 
    private static double fovX = 54.0;
    private static double fovY = 41.0;
 
-   double moveValue = 0.0;
-   double rotateValue = 0.0;
+   private double moveValue = 0.0;
+   private double rotateValue = 0.0;
 
-   double kPD = 0.2;
-   double kID = 0.0;
-   double kDD = 0.3;
-   DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
+   private double kPD = 0.2;
+   private double kID = 0.0;
+   private double kDD = 0.3;
+   private DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
 
-   double kPR = 0.16;
-   double kIR = 0.0;
-   double kDR = 0.05;
-   RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
+   private double kPR = 0.16;
+   private double kIR = 0.0;
+   private double kDR = 0.05;
+   private RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
 
    public Limelight() {
 

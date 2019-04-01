@@ -5,32 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatchCollector;
+package org.usfirst.frc.team319.robot.commands.hatch_collector;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class HatchCollectorExtendToggle extends Command {
-  public HatchCollectorExtendToggle() {
+public class HatchCollectorClose extends Command {
+  public HatchCollectorClose() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    requires(Robot.pneumatics);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    if (Robot.carriage.isHatchCollectorExtended) {
-      Robot.pneumatics.hatchCollectorArmRetract();
-    } else {
-      Robot.pneumatics.hatchCollectorArmExtend();
-
-    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.pneumatics.fingerClose();
   }
 
   // Make this return true when this Command no longer needs to run execute()

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team319.robot.commands.limelight;
 
 import org.usfirst.frc.team319.robot.commands.drivetrain.VisionDrive;
-import org.usfirst.frc.team319.robot.commands.hatchCollector.HatchCollectorPlace;
+import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorPlace;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
