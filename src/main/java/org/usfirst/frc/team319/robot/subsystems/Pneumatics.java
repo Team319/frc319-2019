@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Pneumatics extends Subsystem {
 
-	Compressor compressor = new Compressor(0);
+	private Compressor compressor = new Compressor(0);
 
-	DoubleSolenoid HatchCollectorSolenoid = new DoubleSolenoid(2, 3);
-	DoubleSolenoid fingerSolenoid = new DoubleSolenoid(4, 5);
-	DoubleSolenoid carriageAndElevatorLockSolenoid = new DoubleSolenoid(6, 7);
+	private DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(2, 3);
+	private DoubleSolenoid fingerSolenoid = new DoubleSolenoid(4, 5);
+	private DoubleSolenoid carriageAndElevatorLockSolenoid = new DoubleSolenoid(6, 7);
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new CompressorRun());
@@ -53,12 +53,12 @@ public class Pneumatics extends Subsystem {
 	}
 
 	public void hatchCollectorArmExtend() {
-		this.HatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
+		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setisFrontHatchCollectorExtended(true);
 	}
 
 	public void hatchCollectorArmRetract() {
-		this.HatchCollectorSolenoid.set(DoubleSolenoid.Value.kReverse);
+		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kReverse);
 		Robot.carriage.setisFrontHatchCollectorExtended(false);
 	}
 

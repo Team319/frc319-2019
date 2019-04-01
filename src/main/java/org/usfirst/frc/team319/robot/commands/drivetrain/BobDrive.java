@@ -36,8 +36,6 @@ public class BobDrive extends Command {
 
 		double rotateCap = 0.5;
 
-		//
-		double distanceScale = 1;
 		/*
 		 * double limelightScale = 0.0319; double loadingStationOffset = 0;
 		 */

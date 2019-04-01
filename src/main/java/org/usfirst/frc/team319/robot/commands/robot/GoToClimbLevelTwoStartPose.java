@@ -8,9 +8,7 @@
 package org.usfirst.frc.team319.robot.commands.robot;
 
 import org.usfirst.frc.team319.robot.commands.bba.BbaSafelyGoToClimbLevelTwoStartPosition;
-//import org.usfirst.frc.team319.robot.commands.bba.BbaSafelyGoToClimbStartPosition;
 import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToLockPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToLowLockPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
