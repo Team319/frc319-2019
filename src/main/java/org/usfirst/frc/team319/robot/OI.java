@@ -24,6 +24,7 @@ import org.usfirst.frc.team319.robot.commands.robot.GoToMiddleCargoPose;
 import org.usfirst.frc.team319.robot.commands.robot.GoToSafePose;
 import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
 import org.usfirst.frc.team319.robot.commands.robot.SpitCargo;
+import org.usfirst.frc.team319.robot.commands.robot.StartClimbLevelTwoLowLockMode;
 import org.usfirst.frc.team319.robot.commands.robot.StartClimbLevelTwoMode;
 import org.usfirst.frc.team319.robot.commands.robot.StartClimbMode;
 import org.usfirst.frc.team319.robot.commands.robot.StartLowLockClimbMode;
@@ -69,7 +70,7 @@ public class OI {
 
 		// operatorController.startButton.whenPressed(new StartClimbMode());
 		operatorController.startButton.whenPressed(new StartLowLockClimbMode());
-		operatorController.selectButton.whenPressed(new StartClimbLevelTwoMode());
+		operatorController.selectButton.whenPressed(new StartClimbLevelTwoLowLockMode());
 
 		operatorController.leftBumper.whenPressed(new SpitCargo());
 		operatorController.rightBumper.whenPressed(new CollectCargo());

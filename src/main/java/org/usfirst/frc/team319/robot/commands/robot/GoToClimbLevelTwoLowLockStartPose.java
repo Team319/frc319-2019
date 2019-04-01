@@ -14,12 +14,12 @@ import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToLowLockPositi
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class GoToClimbLevelTwoStartPose extends CommandGroup {
+public class GoToClimbLevelTwoLowLockStartPose extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public GoToClimbLevelTwoStartPose() {
-    addParallel(new ElevatorGoToLockPosition());
+  public GoToClimbLevelTwoLowLockStartPose() {
+    addParallel(new ElevatorGoToLowLockPosition());
     addSequential(new BbaSafelyGoToClimbLevelTwoStartPosition());
   }
 }
