@@ -32,14 +32,31 @@ public class BobDrive extends Command {
 	protected void execute() {
 		double rotateValue = 0;
 
-		double rotateCap = 0.45;
-		double limelightScale = 0.319;
-		double loadingStationOffset = 0;
+		Robot.limelight.setLedModeOn();
 
+		double rotateCap = 0.5;
+
+		/*
+		 * double limelightScale = 0.0319; double loadingStationOffset = 0;
+		 */
+
+		// if A button is held
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
-			Robot.limelight.setLedMode(3); // turns limelight LED on
-
-			rotateValue = (Robot.limelight.circularBufferX() - loadingStationOffset) * limelightScale;
+			Robot.limelight.setLedModeOn();
+			rotateValue = Robot.limelight.trackRotate();
+			// Linear function to calculate the offset value of our vision target.
+			// offset = -13 + (0.4 - 1.6*Area)
+			// Area is the area of the target rectangle with the respect to the image size.
+			// the area far away of the target will be small and ~0.4
+			// the area close up of the target will be ~4.0
+			/*
+			 * double area = 0.4; if (Robot.limelight.getArea() >= 4) { area = 4; } else if
+			 * (Robot.limelight.getArea() <= 0.4) { area = 0.4; }
+			 */
+			// double offset = (-13 + (0.4 - 1.6 * area));
+			double target = 0;
+			Robot.limelight.setRotationSetpoints(target);
+			Robot.limelight.execute();
 
 			if (rotateValue > rotateCap) {
 				rotateValue = rotateCap;
@@ -47,12 +64,11 @@ public class BobDrive extends Command {
 				rotateValue = -rotateCap;
 			} else {
 				rotateValue = 0;
-			}
-
-			// rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
+			} //
+				// rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
 
 		} else {
-			Robot.limelight.setLedMode(1); // turns limelight LED off
+			Robot.limelight.setLedModeOff(); // turns limelight LED off
 			rotateValue = Robot.oi.driverController.rightStick.getX();
 		}
 

@@ -5,20 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.carriage;
+package org.usfirst.frc.team319.robot.commands.limelight;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CollectorSetSpeed extends Command {
-
-  private double targetSpeed;
-
-  public CollectorSetSpeed(double speed) {
+public class TurnLedOn extends Command {
+  public TurnLedOn() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.bbarm);
-    this.targetSpeed = speed;
+    requires(Robot.limelight);
   }
 
   // Called just before this Command runs the first time
@@ -29,8 +25,7 @@ public class CollectorSetSpeed extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.oi.operatorController.setRumble(1.0, 1.0);
-    Robot.bbarm.percentVbusCollector(this.targetSpeed);
+    Robot.limelight.setLedModeOn();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,7 +37,6 @@ public class CollectorSetSpeed extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.oi.operatorController.setRumble(0.0, 0.0);
   }
 
   // Called when another command which requires one or more of the same

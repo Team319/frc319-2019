@@ -5,20 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatchCollector;
+package org.usfirst.frc.team319.robot.commands.elevator;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.usfirst.frc.team319.models.MotionMagicPositionCommand;
+import org.usfirst.frc.team319.robot.Robot;
 
-public class HatchCollectorCollect extends CommandGroup {
+public class ElevatorGoToLowLockPosition extends MotionMagicPositionCommand {
   /**
    * Add your docs here.
    */
-  public HatchCollectorCollect() {
-    addSequential(new HatchCollectorExtend());
-    addSequential(new WaitCommand(0.5));
-    addSequential(new HatchCollectorOpen());
-    addSequential(new WaitCommand(0.5));
-    addSequential(new HatchCollectorRetract());
+  public ElevatorGoToLowLockPosition() {
+    super(Robot.elevator, Robot.elevator.getLowlockPosition());
   }
 }

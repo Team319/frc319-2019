@@ -5,20 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatchCollector;
+package org.usfirst.frc.team319.robot.commands.robot;
+
+import org.usfirst.frc.team319.robot.commands.bba.BbaSafelyGoToClimbStartPosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToLowLockPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class HatchCollectorPlace extends CommandGroup {
+public class GoToLowLockClimbStartPose extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public HatchCollectorPlace() {
-    addSequential(new HatchCollectorExtend());
-    addSequential(new WaitCommand(0.5));
-    addSequential(new HatchCollectorClose());
-    addSequential(new WaitCommand(0.5));
-    addSequential(new HatchCollectorRetract());
+  public GoToLowLockClimbStartPose() {
+    addParallel(new ElevatorGoToLowLockPosition());
+    addSequential(new BbaSafelyGoToClimbStartPosition());
   }
 }

@@ -13,12 +13,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Pneumatics extends Subsystem {
 
-	Compressor compressor = new Compressor(0);
+	private Compressor compressor = new Compressor(0);
 
-	// DoubleSolenoid platypusFaceSolenoid = new DoubleSolenoid(0, 1);
-	DoubleSolenoid frontHatchSolenoid = new DoubleSolenoid(2, 3);
-	DoubleSolenoid fingerSolenoid = new DoubleSolenoid(4, 5);
-	DoubleSolenoid carriageAndElevatorLockSolenoid = new DoubleSolenoid(6, 7);
+	private DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(2, 3);
+	private DoubleSolenoid fingerSolenoid = new DoubleSolenoid(4, 5);
+	private DoubleSolenoid carriageAndElevatorLockSolenoid = new DoubleSolenoid(6, 7);
 
 	public void initDefaultCommand() {
 		setDefaultCommand(new CompressorRun());
@@ -33,15 +32,6 @@ public class Pneumatics extends Subsystem {
 		}
 	}
 
-	/*
-	 * public void PlatypusFaceExtend() {
-	 * this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kReverse);
-	 * Robot.carriage.setIsPlatypusFaceExtended(true); }
-	 * 
-	 * public void PlatypusFaceRetract() {
-	 * this.platypusFaceSolenoid.set(DoubleSolenoid.Value.kForward);
-	 * Robot.carriage.setIsPlatypusFaceExtended(false); }
-	 */
 	public void carriageAndElevatorFloorExtend() {
 		this.carriageAndElevatorLockSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.elevator.setIsElevatorFloorSolenoidExtended(true);
@@ -62,24 +52,14 @@ public class Pneumatics extends Subsystem {
 		Robot.carriage.setIsFingerOpen(false);
 	}
 
-	public void frontHatchExtend() {
-		this.frontHatchSolenoid.set(DoubleSolenoid.Value.kForward);
+	public void hatchCollectorArmExtend() {
+		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kForward);
 		Robot.carriage.setisFrontHatchCollectorExtended(true);
 	}
 
-	public void frontHatchRetract() {
-		this.frontHatchSolenoid.set(DoubleSolenoid.Value.kReverse);
-		Robot.carriage.setisFrontHatchCollectorExtended(false);
-	}
-
-	public void hatchCollectorArmExtend() {
-		this.frontHatchSolenoid.set(DoubleSolenoid.Value.kForward);
-		Robot.bbarm.setIsFrontHatchSolenoidExtended(true);
-	}
-
 	public void hatchCollectorArmRetract() {
-		this.frontHatchSolenoid.set(DoubleSolenoid.Value.kReverse);
-		Robot.bbarm.setIsFrontHatchSolenoidExtended(false);
+		this.hatchCollectorSolenoid.set(DoubleSolenoid.Value.kReverse);
+		Robot.carriage.setisFrontHatchCollectorExtended(false);
 	}
 
 }

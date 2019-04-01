@@ -14,31 +14,32 @@ public class Limelight extends Subsystem {
 
    private BobCircularBuffer limelightbuffer;
 
-   NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-   NetworkTableEntry tx = table.getEntry("tx");
-   NetworkTableEntry ty = table.getEntry("ty");
-   NetworkTableEntry ta = table.getEntry("ta");
-   NetworkTableEntry ledMode = table.getEntry("ledMode");
+   private NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+   private NetworkTableEntry tx = table.getEntry("tx");
+   private NetworkTableEntry ty = table.getEntry("ty");
+   private NetworkTableEntry ta = table.getEntry("ta");
+   private NetworkTableEntry ledMode = table.getEntry("ledMode");
+   private NetworkTableEntry stream = table.getEntry("stream");
 
    private static double fovX = 54.0;
    private static double fovY = 41.0;
 
-   double moveValue = 0.0;
-   double rotateValue = 0.0;
+   private double moveValue = 0.0;
+   private double rotateValue = 0.0;
 
-   double kPD = 0.2;
-   double kID = 0.0;
-   double kDD = 0.3;
-   DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
+   private double kPD = 0.2;
+   private double kID = 0.0;
+   private double kDD = 0.3;
+   private DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
 
-   double kPR = 0.07;
-   double kIR = 0.0;
-   double kDR = 0.07;
-   RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
+   private double kPR = 0.16;
+   private double kIR = 0.0;
+   private double kDR = 0.05;
+   private RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
 
    public Limelight() {
 
-      this.limelightbuffer = new BobCircularBuffer(5);
+      this.limelightbuffer = new BobCircularBuffer(3);
 
    }
 
@@ -76,8 +77,12 @@ public class Limelight extends Subsystem {
       return ta.getDouble(0.0);
    }
 
-   public double setLedMode(double ledMode) {
-      return this.ledMode.getDouble(ledMode);// the led modes are 0-3, 1 is force off, 3 is force on
+   public boolean setLedModeOn() {
+      return this.ledMode.setNumber(3);// 3 is Limelight LED force on
+   }
+
+   public boolean setLedModeOff() {
+      return this.ledMode.setNumber(1);// 1 is Limelight LED force off
    }
 
    public double getFovX() {
@@ -92,6 +97,10 @@ public class Limelight extends Subsystem {
       double area = this.getArea();
       double distance = Math.pow((area / 17.854), (1 / -2.272));
       return distance;
+   }
+
+   public boolean setStreamType() {
+      return stream.setNumber(2);
    }
 
    /*

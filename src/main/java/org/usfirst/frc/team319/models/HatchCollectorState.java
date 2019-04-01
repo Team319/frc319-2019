@@ -5,20 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.robot;
+package org.usfirst.frc.team319.models;
 
-import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
-
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
-
-public class SpitCargo extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public SpitCargo() {
-    addSequential(new CollectorSetSpeed(0.5));
-    addSequential(new WaitCommand(2.0));
-    addSequential(new CollectorSetSpeed(0.0));
-  }
+/**
+ * Add your docs here.
+ */
+public enum HatchCollectorState {
+    ClosedRetracted, ClosedExtended, OpenRetracted, OpenExtended
 }
