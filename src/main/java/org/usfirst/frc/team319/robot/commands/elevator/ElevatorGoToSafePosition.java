@@ -21,7 +21,9 @@ public class ElevatorGoToSafePosition extends MotionMagicPositionCommand {
 
   @Override
   protected void initialize() {
-    if (Robot.bbarm.getCurrentPosition() <= Robot.bbarm.getElevatorClearencePosition() && !force) {
+    boolean bbaSafe = Robot.bbarm.getCurrentPosition() <= Robot.bbarm.getElevatorClearencePosition();
+    boolean carriageAboveSafePos = Robot.elevator.getCurrentPosition() >= Robot.elevator.getBbaClearancePosition();
+    if ((bbaSafe || carriageAboveSafePos) && !force) {
       alreadySafe = true;
       return;
     }
