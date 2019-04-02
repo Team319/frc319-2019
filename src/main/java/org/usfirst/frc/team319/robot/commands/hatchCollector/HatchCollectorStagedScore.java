@@ -5,38 +5,56 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.autotune;
+package org.usfirst.frc.team319.robot.commands.hatchCollector;
 
+import org.usfirst.frc.team319.robot.Robot;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class PrintCommand extends Command {
-  private String toPrint;
-  public PrintCommand(String toPrint) {
-    this.toPrint = toPrint;
+public class HatchCollectorStagedScore extends Command {
+  Timer timer = new Timer();
+
+  public HatchCollectorStagedScore() {
     // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    // requires(Robot.carriage);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println(this.toPrint);
+    timer.reset();
+    timer.start();
+    SmartDashboard.putBoolean("Hatch Collector Extended", Robot.carriage.isHatchCollectorExtended);
+    if (Robot.carriage.isHatchCollectorExtended) {
+      Robot.pneumatics.fingerClose();
+    } else {
+      Robot.pneumatics.fingerOpen();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    System.out.println("timer has passed" + timer.hasPeriodPassed(0.2));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return !Robot.carriage.isHatchCollectorExtended || timer.hasPeriodPassed(0.2);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    if (Robot.carriage.isHatchCollectorExtended) {
+      Robot.pneumatics.hatchCollectorArmRetract();
+    } else {
+      Robot.pneumatics.hatchCollectorArmExtend();
+    }
+    timer.stop();
   }
 
   // Called when another command which requires one or more of the same

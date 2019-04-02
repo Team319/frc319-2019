@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PassthroughSpit extends Command {
   private double targetSpeed;
@@ -40,7 +39,6 @@ public class PassthroughSpit extends Command {
       targetSpeed = spitPower * spitPower;
     }
     targetSpeed /= 2;
-    SmartDashboard.putNumber("Ball Tunnel Target Speed", targetSpeed);
     Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
   }
 

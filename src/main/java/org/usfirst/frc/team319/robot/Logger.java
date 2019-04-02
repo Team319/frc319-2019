@@ -127,7 +127,7 @@ public class Logger {
 				// Robot.drivetrain.getTalonVoltage(Robot.drivetrain.getLeft3Talon())));
 
 				sb.append(String.format("%f,", Robot.oi.driverController.leftStick.getY()));
-				sb.append(String.format("%f,", Robot.drivetrain.getLeftDriveLeadVelocity()));
+				// sb.append(String.format("%f,", Robot.drivetrain.getLeftDriveLeadVelocity()));
 
 				// sb.append(String.format("%f,",
 				// Robot.drivetrain.getTalonDirectionalCurrent(Robot.drivetrain.getRightLeadTalon())));
@@ -139,13 +139,14 @@ public class Logger {
 				// Robot.drivetrain.getTalonDirectionalCurrent(Robot.drivetrain.getRight3Talon())));
 				// --/\---------fix all of these---------------/\--//
 
-				sb.append(String.format("%f,", Robot.drivetrain.getRightLeadVoltage()));
+				// sb.append(String.format("%f,", Robot.drivetrain.getRightLeadVoltage()));
 				// sb.append(String.format("%f,", Robot.drivetrain.getRight5Voltage()));
 				// sb.append(String.format("%f,", Robot.drivetrain.getRight6Voltage()));
 				// sb.append(String.format("%f,", Robot.drivetrain.getRight7Voltage()));
 
 				sb.append(String.format("%f,", Robot.oi.driverController.rightStick.getX()));
-				sb.append(String.format("%f,", Robot.drivetrain.getRightDriveLeadVelocity()));
+				// sb.append(String.format("%f,",
+				// Robot.drivetrain.getRightDriveLeadVelocity()));
 
 				// sb.append(String.format("%f,", Robot.drivetrain.getpdp0Current())); // talon
 				// sb.append(String.format("%f,", Robot.drivetrain.getpdp1Current())); // talon

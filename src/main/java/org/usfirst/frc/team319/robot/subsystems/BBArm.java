@@ -28,8 +28,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class BBArm extends PositionControlledSubsystem {
 
-  private boolean isFrontHatchSolenoidExtended = false;
-
   public BobTalonSRX bbaFollow = new BobTalonSRX(6);
   public BobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
@@ -116,14 +114,6 @@ public class BBArm extends PositionControlledSubsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new JoystickBBA());
-  }
-
-  public boolean isFrontHatchSolenoidExtended() {
-    return isFrontHatchSolenoidExtended;
-  }
-
-  public void setIsFrontHatchSolenoidExtended(boolean isFrontHatchSolenoidExtended) {
-    this.isFrontHatchSolenoidExtended = isFrontHatchSolenoidExtended;
   }
 
   public void configSoftLimits(boolean softLimitsEnabled) {

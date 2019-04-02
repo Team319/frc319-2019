@@ -5,18 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.autonomous_paths;
+package org.usfirst.frc.team319.robot.commands.robot;
 
-import org.usfirst.frc.team319.robot.Robot;
-
-import com.team319.follower.FollowArc;
+import org.usfirst.frc.team319.robot.commands.bba.BbaSafelyGoToClimbStartPosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToLowLockPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.arcs.DistanceScalingArc;
 
-public class DriveTrainDriveThreeFeet extends CommandGroup {
-
-  public DriveTrainDriveThreeFeet() {
-    addSequential(new FollowArc(Robot.drivetrain, new DistanceScalingArc()));
+public class GoToLowLockClimbStartPose extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public GoToLowLockClimbStartPose() {
+    addParallel(new ElevatorGoToLowLockPosition());
+    addSequential(new BbaSafelyGoToClimbStartPosition());
   }
 }

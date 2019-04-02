@@ -9,6 +9,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 //import com.ctre.phoenix.CANifier;
 //import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
@@ -30,9 +31,10 @@ public class Carriage extends Subsystem {
   private DigitalInput digitalCargoSensor = new DigitalInput(0);
   public CANifier canifier = new CANifier(0);
 
-  private boolean manualCollectFinished = false;
-  private boolean isFingerOpen = true;
-  private boolean isFrontHatchCollectorExtended = true;
+  public boolean manualCollectFinished = false;
+  public boolean isFingerOpen = true;
+  public boolean isHatchCollectorExtended = false;
+  public boolean isCollecting = false;
 
   private boolean isCarriageLockSolenoidExtended = true;
   // private boolean isPlatypusFaceSolenoidExtended = false;
@@ -42,7 +44,10 @@ public class Carriage extends Subsystem {
   public LeaderBobTalonSRX passThroughLead = new LeaderBobTalonSRX(7, passthroughFollow);
 
   public Carriage() {
-    passThroughLead.setInverted(true);
+    passThroughLead.setInverted(false);
+    passthroughFollow.setInverted(false);
+
+    passThroughLead.setNeutralMode(NeutralMode.Brake);
     passthroughFollow.setInverted(InvertType.OpposeMaster);
     passthroughFollow.setNeutralMode(NeutralMode.Brake);
   }
@@ -86,11 +91,11 @@ public class Carriage extends Subsystem {
   }
 
   public boolean isFrontHatchCollectorExtended() {
-    return isFrontHatchCollectorExtended;
+    return isHatchCollectorExtended;
   }
 
   public void setisFrontHatchCollectorExtended(boolean isFrontHatchCollectorExtended) {
-    this.isFrontHatchCollectorExtended = isFrontHatchCollectorExtended;
+    this.isHatchCollectorExtended = isFrontHatchCollectorExtended;
   }
 
   public double isCarraigeSafe(int newTargetPosition) {
@@ -107,6 +112,11 @@ public class Carriage extends Subsystem {
 
   public boolean getManualCollectFinished() {
     return manualCollectFinished;
+  }
+
+  public void percentVbusPassthrough(double speed) {
+    this.passThroughLead.set(ControlMode.PercentOutput, speed);
+
   }
 
   public void setManualCollectFinished(boolean manualCollectFinished) {

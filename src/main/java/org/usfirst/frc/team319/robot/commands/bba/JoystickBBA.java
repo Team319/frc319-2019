@@ -41,8 +41,9 @@ public class JoystickBBA extends Command {
 
     if (Robot.oi.operatorController.Dpad.Down.get()) {
       Robot.bbarm.forceIncrementTargetPosition(increment);
+    } else {
+      Robot.bbarm.incrementTargetPosition(increment);
     }
-    Robot.bbarm.incrementTargetPosition(increment);
     Robot.bbarm.motionMagicControl();
     // Robot.bbarm.percentVbus(signal);
   }

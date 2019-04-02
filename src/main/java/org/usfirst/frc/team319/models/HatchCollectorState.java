@@ -5,18 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.autonomous_paths;
+package org.usfirst.frc.team319.models;
 
-import org.usfirst.frc.team319.robot.Robot;
-
-import com.team319.follower.FollowArc;
-
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import frc.arcs.CrossTheLineArc;
-
-public class CrossTheLine extends CommandGroup {
-
-  public CrossTheLine() {
-    addSequential(new FollowArc(Robot.drivetrain, new CrossTheLineArc()));
-  }
+/**
+ * Add your docs here.
+ */
+public enum HatchCollectorState {
+    ClosedRetracted, ClosedExtended, OpenRetracted, OpenExtended
 }

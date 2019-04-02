@@ -25,7 +25,8 @@ import org.usfirst.frc.team319.robot.commands.robot.GoToSafePose;
 import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
 import org.usfirst.frc.team319.robot.commands.robot.SpitCargo;
 import org.usfirst.frc.team319.robot.commands.robot.StartClimbLevelTwoMode;
-import org.usfirst.frc.team319.robot.commands.robot.StartClimbMode;
+import org.usfirst.frc.team319.robot.commands.robot.StartLowLockClimbMode;
+import org.usfirst.frc.team319.robot.commands.robot.StopCollectCargo;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -45,13 +46,18 @@ public class OI {
 		driverController.leftTriggerButton.whileHeld(new PassthroughSpit());
 
 		driverController.leftBumper.whenPressed(new HatchCollectorCollect());
+		// driverController.leftBumper.whenPressed(new HatchCollectorStagedCollect());
 		driverController.rightBumper.whenPressed(new HatchCollectorPlace());
+		// driverController.rightBumper.whenPressed(new HatchCollectorStagedScore());
 
 		driverController.aButton.whenPressed(new SetDriveMode(DriveMode.Limelight));
 		driverController.aButton.whenReleased(new SetDriveMode(DriveMode.Normal));
 
 		driverController.yButton.whileHeld(new CollectorSetSpeed(1.0));
 		driverController.yButton.whenReleased(new CollectorSetSpeed(0.0));
+
+		// driverController.xButton.whenPressed(new ElevatorGoToLockPosition());
+		// driverController.xButton.whileHeld(new TurnLedOn());
 
 		// ----Operator Controller---- \\
 
@@ -60,7 +66,8 @@ public class OI {
 		operatorController.yButton.whenPressed(new GoToHighCargoPose());
 		operatorController.xButton.whenPressed(new GoToCargoShipPose());
 
-		operatorController.startButton.whenPressed(new StartClimbMode());
+		// operatorController.startButton.whenPressed(new StartClimbMode());
+		operatorController.startButton.whenPressed(new StartLowLockClimbMode());
 		operatorController.selectButton.whenPressed(new StartClimbLevelTwoMode());
 
 		operatorController.leftBumper.whenPressed(new SpitCargo());
@@ -69,6 +76,7 @@ public class OI {
 		operatorController.leftTriggerButton.whenPressed(new GoToSafePose());
 		operatorController.rightTriggerButton.whenPressed(new GoToCollectPose());
 
+		operatorController.Dpad.Right.whenPressed(new StopCollectCargo());
 		operatorController.Dpad.Down.whenPressed(new BbaConfigSoftLimits(false));
 		operatorController.Dpad.Down.whenReleased(new ResetBbaPosition());
 

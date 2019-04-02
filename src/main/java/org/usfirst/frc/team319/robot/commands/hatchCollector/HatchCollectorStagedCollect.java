@@ -5,44 +5,54 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.carriage;
+package org.usfirst.frc.team319.robot.commands.hatchCollector;
 
 import org.usfirst.frc.team319.robot.Robot;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class CollectorSetSpeed extends Command {
+public class HatchCollectorStagedCollect extends Command {
+  Timer timer = new Timer();
 
-  private double targetSpeed;
-
-  public CollectorSetSpeed(double speed) {
+  public HatchCollectorStagedCollect() {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.bbarm);
-    this.targetSpeed = speed;
+    // requires(Robot.carriage);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    timer.reset();
+    timer.start();
+    if (Robot.carriage.isHatchCollectorExtended) {
+      Robot.pneumatics.fingerOpen();
+    } else {
+      Robot.pneumatics.fingerClose();
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.oi.operatorController.setRumble(1.0, 1.0);
-    Robot.bbarm.percentVbusCollector(this.targetSpeed);
+    System.out.println("timer has passed" + timer.hasPeriodPassed(0.2));
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return !Robot.carriage.isHatchCollectorExtended || timer.hasPeriodPassed(0.2);
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.oi.operatorController.setRumble(0.0, 0.0);
+    if (Robot.carriage.isHatchCollectorExtended) {
+      Robot.pneumatics.hatchCollectorArmRetract();
+    } else {
+      Robot.pneumatics.hatchCollectorArmExtend();
+    }
+    timer.stop();
   }
 
   // Called when another command which requires one or more of the same

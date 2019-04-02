@@ -1,7 +1,5 @@
 package org.usfirst.frc.team319.robot.commands.drivetrain;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import org.usfirst.frc.team319.models.DriveMode;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.robot.Robot;
@@ -20,26 +18,25 @@ public class BobDrive extends Command {
 	public BobDrive() {
 		requires(Robot.drivetrain);
 		helper = new BobDriveHelper();
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
 	}
 
-	// Called just before this Command runs the first time
 	protected void initialize() {
 	}
 
-	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double rotateValue = 0;
 
-		double rotateCap = 0.45;
-		double limelightScale = 0.319;
-		double loadingStationOffset = 0;
+		Robot.limelight.setLedModeOn();
+
+		double rotateCap = 0.5;
 
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
-			Robot.limelight.setLedMode(3); // turns limelight LED on
+			Robot.limelight.setLedModeOn();
+			rotateValue = Robot.limelight.trackRotate();
 
-			rotateValue = (Robot.limelight.circularBufferX() - loadingStationOffset) * limelightScale;
+			double target = 0;
+			Robot.limelight.setRotationSetpoints(target);
+			Robot.limelight.execute();
 
 			if (rotateValue > rotateCap) {
 				rotateValue = rotateCap;
@@ -48,18 +45,15 @@ public class BobDrive extends Command {
 			} else {
 				rotateValue = 0;
 			}
-
-			// rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
-
 		} else {
-			Robot.limelight.setLedMode(1); // turns limelight LED off
+			Robot.limelight.setLedModeOff();
 			rotateValue = Robot.oi.driverController.rightStick.getX();
 		}
 
 		double moveValue = -Robot.oi.driverController.leftStick.getY();
 		boolean quickTurn = (moveValue < quickTurnThreshold && moveValue > -quickTurnThreshold);
 		DriveSignal driveSignal = helper.cheesyDrive(moveValue, rotateValue, quickTurn, false);
-		Robot.drivetrain.drive(ControlMode.PercentOutput, driveSignal);
+		Robot.drivetrain.drive(driveSignal);
 	}
 
 	protected boolean isFinished() {
