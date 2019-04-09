@@ -44,16 +44,7 @@ public class BobDrive extends Command {
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
 			Robot.limelight.setLedModeOn();
 			rotateValue = Robot.limelight.trackRotate();
-			// Linear function to calculate the offset value of our vision target.
-			// offset = -13 + (0.4 - 1.6*Area)
-			// Area is the area of the target rectangle with the respect to the image size.
-			// the area far away of the target will be small and ~0.4
-			// the area close up of the target will be ~4.0
-			/*
-			 * double area = 0.4; if (Robot.limelight.getArea() >= 4) { area = 4; } else if
-			 * (Robot.limelight.getArea() <= 0.4) { area = 0.4; }
-			 */
-			// double offset = (-13 + (0.4 - 1.6 * area));
+
 			double target = 0;
 			Robot.limelight.setRotationSetpoints(target);
 			Robot.limelight.execute();

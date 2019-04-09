@@ -14,7 +14,9 @@ import org.usfirst.frc.team319.robot.commands.bba.ResetBbaPosition;
 import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
 import org.usfirst.frc.team319.robot.commands.carriage.PassthroughSpit;
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorCollect;
+import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorCollectAtDistance;
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorPlace;
+import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorPlaceAtDistance;
 import org.usfirst.frc.team319.robot.commands.robot.CollectCargo;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCargoShipPose;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCollectPose;
@@ -53,11 +55,15 @@ public class OI {
 		driverController.aButton.whenPressed(new SetDriveMode(DriveMode.Limelight));
 		driverController.aButton.whenReleased(new SetDriveMode(DriveMode.Normal));
 
-		driverController.yButton.whileHeld(new CollectorSetSpeed(1.0));
-		driverController.yButton.whenReleased(new CollectorSetSpeed(0.0));
+		driverController.yButton.whenPressed(new SetDriveMode(DriveMode.Normal));
 
-		// driverController.xButton.whenPressed(new ElevatorGoToLockPosition());
-		// driverController.xButton.whileHeld(new TurnLedOn());
+		driverController.xButton.whenPressed(new HatchCollectorCollectAtDistance());
+
+		driverController.bButton.whenPressed(new HatchCollectorPlaceAtDistance());
+
+		// driverController.leftBumper.whenPressed(new
+		// HatchCollectorLimelightCollect());
+		// driverController.rightBumper.whenPressed(new HatchCollectorLimelightPlace());
 
 		// ----Operator Controller---- \\
 

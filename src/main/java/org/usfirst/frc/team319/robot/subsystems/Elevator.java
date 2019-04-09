@@ -42,12 +42,12 @@ public class Elevator extends PositionControlledSubsystem {
   private int cargoHighPosition = 35000;
   private int cargoMiddlePosition = 17000;
   private int cargoLowPosition = 0; // this value is correct
-  private int cargoCargoShipPosition = 10000;
+  private int cargoCargoShipPosition = 6500;
   // cargoShipCargoPosition should be around the same as middleHatchPosition
 
   // ---- Travel Limits Positions ---- //
   private int maxVerticalLimit = 37400;
-  private int bbaClearancePosition = 7500;
+  private int bbaClearancePosition = 6200;
   private int minVerticalLimit = cargoCollectPosition;
 
   private int climbLimit = 0;// 1300, 0 for low locks
@@ -90,7 +90,7 @@ public class Elevator extends PositionControlledSubsystem {
     setupSensors();
     setupMotionParameters();
 
-    this.elevatorLead.configClosedloopRamp(0.125);
+    this.elevatorLead.configClosedloopRamp(0.125);// .125
 
     this.elevatorLead.configVoltageCompSaturation(11.5);
     this.elevatorLead.enableVoltageCompensation(true);

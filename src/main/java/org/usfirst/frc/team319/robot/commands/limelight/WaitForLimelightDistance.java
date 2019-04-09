@@ -5,59 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.carriage;
-
-import com.ctre.phoenix.motorcontrol.ControlMode;
+package org.usfirst.frc.team319.robot.commands.limelight;
 
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PassthroughSpit extends Command {
-  private double targetSpeed;
+public class WaitForLimelightDistance extends Command {
 
-  public PassthroughSpit() {
-    requires(Robot.carriage);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+  public double distance = 0;
+
+  public WaitForLimelightDistance(double distance) {
+    this.distance = distance;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double spitPower = -Robot.oi.driverController.triggers.getTwist();
-
-    if (spitPower < 0) {
-      targetSpeed = -(spitPower * spitPower);
-    } else {
-      targetSpeed = spitPower * spitPower;
-    }
-    // targetSpeed /= 2;
-    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, targetSpeed);
+    Robot.limelight.setLedModeOn();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.limelight.getDistance() <= distance;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0.0);
+    Robot.limelight.setLedModeOff();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.carriage.passThroughLead.set(ControlMode.PercentOutput, 0.0);
+    Robot.limelight.setLedModeOff();
   }
 }

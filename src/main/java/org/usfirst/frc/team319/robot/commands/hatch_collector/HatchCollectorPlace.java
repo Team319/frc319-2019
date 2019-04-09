@@ -11,14 +11,14 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 public class HatchCollectorPlace extends CommandGroup {
-  /**
+  /*
    * Add your docs here.
    */
   public HatchCollectorPlace() {
     addSequential(new HatchCollectorExtend());
-    addSequential(new WaitCommand(0.5));
+    addSequential(new WaitCommand(0.2));// 0.5
     addSequential(new HatchCollectorClose());
-    addSequential(new WaitCommand(0.5));
+    addSequential(new WaitCommand(0.2));// 0.5
     addSequential(new HatchCollectorRetract());
   }
 }
