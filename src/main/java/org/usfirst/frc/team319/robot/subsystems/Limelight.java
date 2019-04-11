@@ -96,6 +96,7 @@ public class Limelight extends Subsystem {
    public double getDistance() {
       double area = this.getArea();
       double distance = Math.pow((area / 17.854), (1 / -2.272));
+      // System.out.println("Distance in feet:" + distance);
       return distance;
    }
 

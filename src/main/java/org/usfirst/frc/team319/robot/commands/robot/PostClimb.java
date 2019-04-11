@@ -7,17 +7,17 @@
 
 package org.usfirst.frc.team319.robot.commands.robot;
 
-import org.usfirst.frc.team319.robot.commands.bba.BbaSafelyGoToClimbLevelTwoStartPosition;
-import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToLowLockPosition;
+import org.usfirst.frc.team319.models.RobotMode;
+import org.usfirst.frc.team319.robot.commands.bba.BBAGoToHomePosition;
+import org.usfirst.frc.team319.robot.commands.elevator.ElevatorGoToLockPosition;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class GoToClimbLevelTwoLowLockStartPose extends CommandGroup {
-  /**
-   * Add your docs here.
-   */
-  public GoToClimbLevelTwoLowLockStartPose() {
-    addParallel(new ElevatorGoToLowLockPosition());
-    addSequential(new BbaSafelyGoToClimbLevelTwoStartPosition());
+public class PostClimb extends CommandGroup {
+
+  public PostClimb() {
+    addSequential(new SetRobotMode(RobotMode.Normal));
+    addSequential(new ElevatorGoToLockPosition());
+    addSequential(new BBAGoToHomePosition());
   }
 }

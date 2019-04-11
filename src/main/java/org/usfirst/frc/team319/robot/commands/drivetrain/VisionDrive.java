@@ -19,7 +19,7 @@ public class VisionDrive extends Command {
   public double driveSetPoint = 0;
   public double rotateSetPoint = 0;
   double moveValue = Robot.limelight.trackDrive();
-  double rotateValue = Robot.limelight.getX();
+  double rotateValue = Robot.limelight.trackRotate();
 
   public VisionDrive(double driveSetPoint, double rotateSetPoint) {
     requires(Robot.drivetrain);
@@ -32,6 +32,7 @@ public class VisionDrive extends Command {
   protected void initialize() {
     Robot.limelight.setSetpoints(driveSetPoint, rotateSetPoint);
     Robot.limelight.execute();
+    Robot.limelight.setLedModeOn();
   }
 
   protected void execute() {
@@ -44,12 +45,16 @@ public class VisionDrive extends Command {
   }
 
   protected boolean isFinished() {
-    return Robot.limelight.getDistance() <= driveSetPoint;
+    return Robot.limelight.getDistance() <= driveSetPoint + 0.5;
   }
 
   protected void end() {
+    Robot.limelight.setLedModeOff();
+
   }
 
   protected void interrupted() {
+    Robot.limelight.setLedModeOff();
+
   }
 }
