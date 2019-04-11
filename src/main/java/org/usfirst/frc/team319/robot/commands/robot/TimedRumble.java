@@ -5,24 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatch_collector;
+package org.usfirst.frc.team319.robot.commands.robot;
 
-import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.robot.commands.robot.TimedRumble;
+import org.usfirst.frc.team319.controllers.BobXboxController;
+import org.usfirst.frc.team319.robot.commands.StartControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StopControllerRumble;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class HatchCollectorCollect extends CommandGroup {
+public class TimedRumble extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public HatchCollectorCollect() {
-    addSequential(new HatchCollectorExtend());
-    addSequential(new WaitCommand(0.2));// 0.5
-    addSequential(new HatchCollectorOpen());
-    addSequential(new WaitCommand(0.2));// 0.5
-    addSequential(new HatchCollectorRetract());
-    addSequential(new TimedRumble(Robot.oi.driverController, 1.0, 0.5));
+  public TimedRumble(BobXboxController controller, double strength, double time) {
+    addSequential(new StartControllerRumble(controller, strength));
+    addSequential(new WaitCommand(time));
+    addSequential(new StopControllerRumble(controller));
+
   }
 }

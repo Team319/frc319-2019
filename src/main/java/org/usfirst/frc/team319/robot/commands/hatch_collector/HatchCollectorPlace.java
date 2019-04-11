@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team319.robot.commands.hatch_collector;
 
+import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.robot.commands.robot.TimedRumble;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
@@ -19,6 +22,7 @@ public class HatchCollectorPlace extends CommandGroup {
     addSequential(new WaitCommand(0.2));// 0.5
     addSequential(new HatchCollectorClose());
     addSequential(new WaitCommand(0.2));// 0.5
+    addSequential(new TimedRumble(Robot.oi.driverController, 1.0, 0.5));
     addSequential(new HatchCollectorRetract());
   }
 }

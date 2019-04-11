@@ -24,11 +24,7 @@ public class HatchCollectorCollectAtDistance extends CommandGroup {
     addSequential(new TurnLedOn());
     addSequential(new WaitCommand(0.5));
     addSequential(new WaitForLimelightDistance(1.8));// in feet
-    addSequential(new HatchCollectorExtend());
-    addSequential(new WaitCommand(0.2));// 0.5
-    addSequential(new HatchCollectorOpen());
-    addSequential(new WaitCommand(0.2));// 0.5
-    addSequential(new HatchCollectorRetract());
+    addSequential(new HatchCollectorCollect());// will collect, and then rumble once collected
     addSequential(new SetDriveMode(DriveMode.Normal));
 
   }

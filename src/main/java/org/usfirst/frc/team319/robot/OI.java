@@ -48,9 +48,7 @@ public class OI {
 		driverController.leftTriggerButton.whileHeld(new PassthroughSpit());
 
 		driverController.leftBumper.whenPressed(new HatchCollectorCollect());
-		// driverController.leftBumper.whenPressed(new HatchCollectorStagedCollect());
 		driverController.rightBumper.whenPressed(new HatchCollectorPlace());
-		// driverController.rightBumper.whenPressed(new HatchCollectorStagedScore());
 
 		driverController.aButton.whenPressed(new SetDriveMode(DriveMode.Limelight));
 		driverController.aButton.whenReleased(new SetDriveMode(DriveMode.Normal));
@@ -58,12 +56,7 @@ public class OI {
 		driverController.yButton.whenPressed(new SetDriveMode(DriveMode.Normal));
 
 		driverController.xButton.whenPressed(new HatchCollectorCollectAtDistance());
-
 		driverController.bButton.whenPressed(new HatchCollectorPlaceAtDistance());
-
-		// driverController.leftBumper.whenPressed(new
-		// HatchCollectorLimelightCollect());
-		// driverController.rightBumper.whenPressed(new HatchCollectorLimelightPlace());
 
 		// ----Operator Controller---- \\
 
@@ -72,7 +65,6 @@ public class OI {
 		operatorController.yButton.whenPressed(new GoToHighCargoPose());
 		operatorController.xButton.whenPressed(new GoToCargoShipPose());
 
-		// operatorController.startButton.whenPressed(new StartClimbMode());
 		operatorController.startButton.whenPressed(new StartLowLockClimbMode());
 		operatorController.selectButton.whenPressed(new StartClimbLevelTwoLowLockMode());
 
