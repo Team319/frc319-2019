@@ -65,6 +65,7 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 		limelight.setStreamType();// sets secondary as the main camera feed.
+		limelight.setLedModeOff();
 		Robot.elevator.forceSetTargetPosition(Robot.elevator.getCurrentPosition());
 		Robot.bbarm.forceSetTargetPosition(Robot.bbarm.getCurrentPosition());
 	}

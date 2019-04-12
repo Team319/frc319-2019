@@ -9,6 +9,10 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.DriveMode;
+import org.usfirst.frc.team319.robot.commands.StartDriverControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StartOperatorControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StopDriverControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StopOperatorControllerRumble;
 import org.usfirst.frc.team319.robot.commands.bba.BbaConfigSoftLimits;
 import org.usfirst.frc.team319.robot.commands.bba.ResetBbaPosition;
 import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
@@ -58,6 +62,9 @@ public class OI {
 		driverController.xButton.whenPressed(new HatchCollectorCollectAtDistance());
 		driverController.bButton.whenPressed(new HatchCollectorPlaceAtDistance());
 
+		driverController.Dpad.Down.whenPressed(new StartDriverControllerRumble(1.0));
+		driverController.Dpad.Up.whenPressed(new StopDriverControllerRumble());
+
 		// ----Operator Controller---- \\
 
 		operatorController.aButton.whenPressed(new GoToLowCargoPose());
@@ -77,6 +84,10 @@ public class OI {
 		operatorController.Dpad.Right.whenPressed(new StopCollectCargo());
 		operatorController.Dpad.Down.whenPressed(new BbaConfigSoftLimits(false));
 		operatorController.Dpad.Down.whenReleased(new ResetBbaPosition());
+
+		// operatorController.Dpad.Left.whenPressed(new
+		// StartOperatorControllerRumble(1.0));
+		// operatorController.Dpad.Up.whenPressed(new StopOperatorControllerRumble());
 
 		/*
 		 * operatorController.rightTriggerButton.whenPressed(new

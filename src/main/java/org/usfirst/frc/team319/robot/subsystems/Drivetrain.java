@@ -35,7 +35,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12), new BobTalonSRX(13));
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollowerWithPigeon, new BobTalonSRX(5));
 
-	private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
+	// private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
 
 	public DriveMode mode = DriveMode.Normal;
 
@@ -57,17 +57,23 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	}
 
 	public void setupSensors() {
-		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
-		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
-
-		rightLead.configRemoteSensor0(leftLead.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor);
-		rightLead.configSensorSum(FeedbackDevice.RemoteSensor0, FeedbackDevice.CTRE_MagEncoder_Relative);
-		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
-
-		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
-		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (3600.0 / 8192.0));
-
-		rightLead.configAuxPIDPolarity(false, 0);
+		/*
+		 * leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative)
+		 * ; leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
+		 * 
+		 * rightLead.configRemoteSensor0(leftLead.getDeviceID(),
+		 * RemoteSensorSource.TalonSRX_SelectedSensor);
+		 * rightLead.configSensorSum(FeedbackDevice.RemoteSensor0,
+		 * FeedbackDevice.CTRE_MagEncoder_Relative);
+		 * rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
+		 * 
+		 * rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(),
+		 * RemoteSensorSource.GadgeteerPigeon_Yaw);
+		 * rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (3600.0
+		 * / 8192.0));
+		 * 
+		 * rightLead.configAuxPIDPolarity(false, 0);
+		 */
 	}
 
 	public void initDefaultCommand() {
@@ -131,17 +137,13 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		this.rightLead.setNeutralMode(neutralMode);
 	}
 
-	public double getAngle() {
-		double[] ypr = new double[3];
-		pigeon.getYawPitchRoll(ypr);
-		return ypr[0];
-	}
-
-	public void resetPigeon() {
-		this.pigeon.setYaw(0.0, 0);
-		// Yaw is rotation of robot during autos
-	}
-
+	/*
+	 * public double getAngle() { double[] ypr = new double[3];
+	 * pigeon.getYawPitchRoll(ypr); return ypr[0]; }
+	 * 
+	 * public void resetPigeon() { this.pigeon.setYaw(0.0, 0); // Yaw is rotation of
+	 * robot during autos }
+	 */
 	public double getRightDistance() {
 		return rightLead.getPrimarySensorPosition();
 	}

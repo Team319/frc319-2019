@@ -8,11 +8,10 @@
 package org.usfirst.frc.team319.robot.commands.hatch_collector;
 
 import org.usfirst.frc.team319.models.DriveMode;
-import org.usfirst.frc.team319.robot.Robot;
 import org.usfirst.frc.team319.robot.commands.limelight.TurnLedOn;
 import org.usfirst.frc.team319.robot.commands.limelight.WaitForLimelightDistance;
+import org.usfirst.frc.team319.robot.commands.robot.DriverControllerTimedRumble;
 import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
-import org.usfirst.frc.team319.robot.commands.robot.TimedRumble;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -27,7 +26,8 @@ public class HatchCollectorPlaceAtDistance extends CommandGroup {
     addSequential(new WaitCommand(0.5));
     addSequential(new WaitForLimelightDistance(1.8));// in feet
     addSequential(new HatchCollectorExtend());
-    addSequential(new TimedRumble(Robot.oi.driverController, 1.0, 0.5));
     addSequential(new SetDriveMode(DriveMode.Normal));
+    addSequential(new DriverControllerTimedRumble(1.0, 0.5));
+
   }
 }

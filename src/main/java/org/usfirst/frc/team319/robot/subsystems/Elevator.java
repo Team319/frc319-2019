@@ -9,6 +9,7 @@ package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
@@ -89,6 +90,8 @@ public class Elevator extends PositionControlledSubsystem {
   public Elevator() {
     setupSensors();
     setupMotionParameters();
+
+    elevatorLead.setNeutralMode(NeutralMode.Coast);
 
     this.elevatorLead.configClosedloopRamp(0.125);// .125
 

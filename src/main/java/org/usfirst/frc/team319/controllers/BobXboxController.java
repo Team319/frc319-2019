@@ -39,8 +39,17 @@ public class BobXboxController extends Joystick {
 	public BobTriggers triggers = new BobTriggers(this);
 
 	public void setRumble(double leftValue, double rightValue) {
-		setRumble(RumbleType.kLeftRumble, leftValue);
-		setRumble(RumbleType.kRightRumble, rightValue);
+		// System.out.println("RumbleLeftValue" + leftValue);
+		this.setRumble(RumbleType.kLeftRumble, leftValue);
+		this.setRumble(RumbleType.kRightRumble, rightValue);
+	}
+
+	public void fastRumble(double intensity) {
+		this.setRumble(RumbleType.kRightRumble, intensity);
+	}
+
+	public void slowRumble(double intensity) {
+		this.setRumble(RumbleType.kLeftRumble, intensity);
 	}
 
 	static enum XboxButton {
@@ -73,8 +82,8 @@ public class BobXboxController extends Joystick {
 	}
 
 	static enum XboxDpad {
-		UNPRESSED(-1), UP(0), UP_RIGHT(45), RIGHT(90), DOWN_RIGHT(135), DOWN(180), DOWN_LEFT(225), LEFT(270), UP_LEFT(
-				315);
+		UNPRESSED(-1), UP(0), UP_RIGHT(45), RIGHT(90), DOWN_RIGHT(135), DOWN(180), DOWN_LEFT(225), LEFT(270),
+		UP_LEFT(315);
 
 		final int value;
 

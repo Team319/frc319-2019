@@ -42,6 +42,7 @@ public class BBArm extends PositionControlledSubsystem {
   private int floorPosition = -5700;
   private int liftRobotPosition = -5900;
   private int bbaClimbStartPosition = -3000;
+  private int elevatorCatchPosition = -1500;
 
   private int elevatorClearencePosition = -2750;
 
@@ -221,6 +222,10 @@ public class BBArm extends PositionControlledSubsystem {
 
   public int getBbaClimbStartPosition() {
     return bbaClimbStartPosition;
+  }
+
+  public int getElevatorCatchPosition() {
+    return elevatorCatchPosition;
   }
 
   @Override

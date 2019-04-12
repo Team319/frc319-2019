@@ -7,21 +7,19 @@
 
 package org.usfirst.frc.team319.robot.commands.robot;
 
-import org.usfirst.frc.team319.controllers.BobXboxController;
-import org.usfirst.frc.team319.robot.commands.StartControllerRumble;
-import org.usfirst.frc.team319.robot.commands.StopControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StartDriverControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StopDriverControllerRumble;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class TimedRumble extends CommandGroup {
+public class DriverControllerTimedRumble extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public TimedRumble(BobXboxController controller, double strength, double time) {
-    addSequential(new StartControllerRumble(controller, strength));
+  public DriverControllerTimedRumble(double strength, double time) {
+    addSequential(new StartDriverControllerRumble(strength));
     addSequential(new WaitCommand(time));
-    addSequential(new StopControllerRumble(controller));
-
+    addSequential(new StopDriverControllerRumble());
   }
 }
