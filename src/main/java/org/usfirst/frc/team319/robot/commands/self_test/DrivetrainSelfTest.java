@@ -5,63 +5,48 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.limelight;
+package org.usfirst.frc.team319.robot.commands.self_test;
 
 import org.usfirst.frc.team319.robot.Robot;
+import org.usfirst.frc.team319.utils.BobCircularBuffer;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class RotateToTarget extends PIDCommand {
+public class DrivetrainSelfTest extends Command {
+  private BobCircularBuffer[] leftAverages;
+  private BobCircularBuffer[] rightAverages;
 
-  public RotateToTarget(double kP, double kI, double kD) {
-    super(kP, kI, kD);
-  }
-
-  @Override
-  public void setSetpoint(double setpoint) {
-    super.setSetpoint(setpoint);
+  public DrivetrainSelfTest() {
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    leftAverages = new BobCircularBuffer[Robot.drivetrain.leftLead.getOutputCurrentArray().length];
+    rightAverages = new BobCircularBuffer[Robot.drivetrain.rightLead.getOutputCurrentArray().length];
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    double[] rightCurrents = Robot.drivetrain.rightLead.getOutputCurrentArray();
+    double[] leftCurrents = Robot.drivetrain.leftLead.getOutputCurrentArray();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if ((this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)) {
-      return true;
-    }
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // Robot.limelight.stopRobot();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
-
-  @Override
-  protected double returnPIDInput() {
-    System.out.println("Limelight X " + Robot.limelight.getX());
-    return Robot.limelight.getX();
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    // System.out.println("PID Output " + -output);
-    Robot.limelight.trackPIDR(-output);
   }
 }

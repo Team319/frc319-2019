@@ -21,6 +21,8 @@ import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorColl
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorCollectAtDistance;
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorPlace;
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorPlaceAtDistance;
+import org.usfirst.frc.team319.robot.commands.limelight.StartLimelightMode;
+import org.usfirst.frc.team319.robot.commands.limelight.StopLimelightMode;
 import org.usfirst.frc.team319.robot.commands.robot.CollectCargo;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCargoShipPose;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCollectPose;
@@ -54,10 +56,10 @@ public class OI {
 		driverController.leftBumper.whenPressed(new HatchCollectorCollect());
 		driverController.rightBumper.whenPressed(new HatchCollectorPlace());
 
-		driverController.aButton.whenPressed(new SetDriveMode(DriveMode.Limelight));
-		driverController.aButton.whenReleased(new SetDriveMode(DriveMode.Normal));
+		driverController.aButton.whenPressed(new StartLimelightMode());
+		driverController.aButton.whenReleased(new StopLimelightMode());
 
-		driverController.yButton.whenPressed(new SetDriveMode(DriveMode.Normal));
+		driverController.yButton.whenPressed(new StopLimelightMode());
 
 		driverController.xButton.whenPressed(new HatchCollectorCollectAtDistance());
 		driverController.bButton.whenPressed(new HatchCollectorPlaceAtDistance());

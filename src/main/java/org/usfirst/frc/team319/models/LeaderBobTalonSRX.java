@@ -6,6 +6,7 @@ import java.util.List;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.BaseMotorController;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
  * @author BigBa
@@ -68,6 +69,17 @@ public class LeaderBobTalonSRX extends BobTalonSRX {
 			outputCurrents.add(((BobTalonSRX) follower).getOutputCurrent());
 		}
 		return outputCurrents;
+	}
+
+	public double[] getOutputCurrentArray() {
+		int numMotors = 1 + followerList.size();
+		double[] currents = new double[numMotors];
+		currents[0] = this.getOutputCurrent();
+		for (int i = 1; i < numMotors; i++) {
+			currents[i] = ((TalonSRX) followerList.get(i - 1)).getOutputCurrent();
+		}
+
+		return currents;
 	}
 
 }

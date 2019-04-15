@@ -26,13 +26,12 @@ public class BobDrive extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		double rotateValue = 0;
-
-		Robot.limelight.setLedModeOn();
 
 		double rotateCap = 0.5;
 
@@ -42,22 +41,17 @@ public class BobDrive extends Command {
 
 		// if A button is held
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
-			Robot.limelight.setLedModeOn();
 			rotateValue = Robot.limelight.trackRotate();
-
+			Robot.limelight.execute();
 			double target = 0;
 			Robot.limelight.setRotationSetpoints(target);
-			Robot.limelight.execute();
 
 			if (rotateValue > rotateCap) {
 				rotateValue = rotateCap;
 			} else if (rotateValue < -rotateCap) {
 				rotateValue = -rotateCap;
-			} else {
-				rotateValue = 0;
-			} //
-				// rotateValue = Robot.limelight.getX() / (Robot.limelight.getFovX() / 2);
-
+			}
+			System.out.println("Rotate value" + rotateValue);
 		} else {
 			Robot.limelight.setLedModeOff(); // turns limelight LED off
 			rotateValue = Robot.oi.driverController.rightStick.getX();
