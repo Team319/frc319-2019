@@ -5,27 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatch_collector;
+package org.usfirst.frc.team319.robot.commands.limelight;
 
 import org.usfirst.frc.team319.models.DriveMode;
-import org.usfirst.frc.team319.robot.commands.limelight.TurnLedOn;
-import org.usfirst.frc.team319.robot.commands.limelight.WaitForLimelightDistance;
 import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class HatchCollectorCollectAtDistance extends CommandGroup {
+public class StopLimelightMode extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public HatchCollectorCollectAtDistance() {
-    addSequential(new SetDriveMode(DriveMode.Limelight));
-    addSequential(new TurnLedOn());
-    addSequential(new WaitCommand(0.5));
-    addSequential(new WaitForLimelightDistance(1.8));// in feet
-    addSequential(new HatchCollectorCollect());// will collect, and then rumble once collected
+  public StopLimelightMode() {
     addSequential(new SetDriveMode(DriveMode.Normal));
-
+    addSequential(new TurnLedOff());
   }
 }

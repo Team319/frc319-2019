@@ -1,12 +1,10 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
-import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.sensors.PigeonIMU;
 import com.team319.follower.FollowsArc;
 
 import org.usfirst.frc.team319.models.BobTalonSRX;
@@ -17,6 +15,7 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem implements FollowsArc {
 
@@ -35,7 +34,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12), new BobTalonSRX(13));
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollowerWithPigeon, new BobTalonSRX(5));
 
-	private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
+	// private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
 
 	public DriveMode mode = DriveMode.Normal;
 
@@ -57,17 +56,23 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	}
 
 	public void setupSensors() {
-		leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative);
-		leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
-
-		rightLead.configRemoteSensor0(leftLead.getDeviceID(), RemoteSensorSource.TalonSRX_SelectedSensor);
-		rightLead.configSensorSum(FeedbackDevice.RemoteSensor0, FeedbackDevice.CTRE_MagEncoder_Relative);
-		rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
-
-		rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(), RemoteSensorSource.GadgeteerPigeon_Yaw);
-		rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (3600.0 / 8192.0));
-
-		rightLead.configAuxPIDPolarity(false, 0);
+		/*
+		 * leftLead.configPrimaryFeedbackDevice(FeedbackDevice.CTRE_MagEncoder_Relative)
+		 * ; leftLead.setStatusFramePeriod(StatusFrame.Status_2_Feedback0, 5, 0);
+		 * 
+		 * rightLead.configRemoteSensor0(leftLead.getDeviceID(),
+		 * RemoteSensorSource.TalonSRX_SelectedSensor);
+		 * rightLead.configSensorSum(FeedbackDevice.RemoteSensor0,
+		 * FeedbackDevice.CTRE_MagEncoder_Relative);
+		 * rightLead.configPrimaryFeedbackDevice(FeedbackDevice.SensorSum, 0.5);
+		 * 
+		 * rightLead.configRemoteSensor1(rightFollowerWithPigeon.getDeviceID(),
+		 * RemoteSensorSource.GadgeteerPigeon_Yaw);
+		 * rightLead.configSecondaryFeedbackDevice(FeedbackDevice.RemoteSensor1, (3600.0
+		 * / 8192.0));
+		 * 
+		 * rightLead.configAuxPIDPolarity(false, 0);
+		 */
 	}
 
 	public void initDefaultCommand() {
@@ -131,17 +136,13 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		this.rightLead.setNeutralMode(neutralMode);
 	}
 
-	public double getAngle() {
-		double[] ypr = new double[3];
-		pigeon.getYawPitchRoll(ypr);
-		return ypr[0];
-	}
-
-	public void resetPigeon() {
-		this.pigeon.setYaw(0.0, 0);
-		// Yaw is rotation of robot during autos
-	}
-
+	/*
+	 * public double getAngle() { double[] ypr = new double[3];
+	 * pigeon.getYawPitchRoll(ypr); return ypr[0]; }
+	 * 
+	 * public void resetPigeon() { this.pigeon.setYaw(0.0, 0); // Yaw is rotation of
+	 * robot during autos }
+	 */
 	public double getRightDistance() {
 		return rightLead.getPrimarySensorPosition();
 	}
@@ -158,7 +159,17 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public void periodic() {
 		// SmartDashboard.putNumber("Velocity", this.getVelocity());
 		// SmartDashboard.putNumber("Distance Right", this.getRightDriveLeadDistance());
-		// SmartDashboard.putNumber("Distance Left", this.getLeftDriveLeadDistance());
+		/*
+		 * double[] leftCurrents = this.leftLead.getOutputCurrentArray();
+		 * SmartDashboard.putNumber("Left Lead Current: ", leftCurrents[0]);
+		 * SmartDashboard.putNumber("Left Follow 1 Current: ", leftCurrents[1]);
+		 * SmartDashboard.putNumber("Left Follow 2 Current: ", leftCurrents[2]);
+		 * 
+		 * double[] rightCurrents = this.rightLead.getOutputCurrentArray();
+		 * SmartDashboard.putNumber("right Lead Current: ", rightCurrents[0]);
+		 * SmartDashboard.putNumber("right Follow 1 Current: ", rightCurrents[1]);
+		 * SmartDashboard.putNumber("right Follow 2 Current: ", rightCurrents[2]);
+		 */
 		// SmartDashboard.putNumber("Angle", this.getAngle());
 	}
 

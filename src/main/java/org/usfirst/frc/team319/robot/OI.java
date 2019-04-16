@@ -9,6 +9,10 @@ package org.usfirst.frc.team319.robot;
 
 import org.usfirst.frc.team319.controllers.BobXboxController;
 import org.usfirst.frc.team319.models.DriveMode;
+import org.usfirst.frc.team319.robot.commands.StartDriverControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StartOperatorControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StopDriverControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StopOperatorControllerRumble;
 import org.usfirst.frc.team319.robot.commands.bba.BbaConfigSoftLimits;
 import org.usfirst.frc.team319.robot.commands.bba.ResetBbaPosition;
 import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
@@ -17,6 +21,8 @@ import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorColl
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorCollectAtDistance;
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorPlace;
 import org.usfirst.frc.team319.robot.commands.hatch_collector.HatchCollectorPlaceAtDistance;
+import org.usfirst.frc.team319.robot.commands.limelight.StartLimelightMode;
+import org.usfirst.frc.team319.robot.commands.limelight.StopLimelightMode;
 import org.usfirst.frc.team319.robot.commands.robot.CollectCargo;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCargoShipPose;
 import org.usfirst.frc.team319.robot.commands.robot.GoToCollectPose;
@@ -48,22 +54,18 @@ public class OI {
 		driverController.leftTriggerButton.whileHeld(new PassthroughSpit());
 
 		driverController.leftBumper.whenPressed(new HatchCollectorCollect());
-		// driverController.leftBumper.whenPressed(new HatchCollectorStagedCollect());
 		driverController.rightBumper.whenPressed(new HatchCollectorPlace());
-		// driverController.rightBumper.whenPressed(new HatchCollectorStagedScore());
 
-		driverController.aButton.whenPressed(new SetDriveMode(DriveMode.Limelight));
-		driverController.aButton.whenReleased(new SetDriveMode(DriveMode.Normal));
+		driverController.aButton.whenPressed(new StartLimelightMode());
+		driverController.aButton.whenReleased(new StopLimelightMode());
 
-		driverController.yButton.whenPressed(new SetDriveMode(DriveMode.Normal));
+		driverController.yButton.whenPressed(new StopLimelightMode());
 
 		driverController.xButton.whenPressed(new HatchCollectorCollectAtDistance());
-
 		driverController.bButton.whenPressed(new HatchCollectorPlaceAtDistance());
 
-		// driverController.leftBumper.whenPressed(new
-		// HatchCollectorLimelightCollect());
-		// driverController.rightBumper.whenPressed(new HatchCollectorLimelightPlace());
+		driverController.Dpad.Down.whenPressed(new StartDriverControllerRumble(1.0));
+		driverController.Dpad.Up.whenPressed(new StopDriverControllerRumble());
 
 		// ----Operator Controller---- \\
 
@@ -72,7 +74,6 @@ public class OI {
 		operatorController.yButton.whenPressed(new GoToHighCargoPose());
 		operatorController.xButton.whenPressed(new GoToCargoShipPose());
 
-		// operatorController.startButton.whenPressed(new StartClimbMode());
 		operatorController.startButton.whenPressed(new StartLowLockClimbMode());
 		operatorController.selectButton.whenPressed(new StartClimbLevelTwoLowLockMode());
 
@@ -85,6 +86,10 @@ public class OI {
 		operatorController.Dpad.Right.whenPressed(new StopCollectCargo());
 		operatorController.Dpad.Down.whenPressed(new BbaConfigSoftLimits(false));
 		operatorController.Dpad.Down.whenReleased(new ResetBbaPosition());
+
+		// operatorController.Dpad.Left.whenPressed(new
+		// StartOperatorControllerRumble(1.0));
+		// operatorController.Dpad.Up.whenPressed(new StopOperatorControllerRumble());
 
 		/*
 		 * operatorController.rightTriggerButton.whenPressed(new

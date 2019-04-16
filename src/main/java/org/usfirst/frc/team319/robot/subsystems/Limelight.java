@@ -8,6 +8,7 @@ import org.usfirst.frc.team319.utils.HelperFunctions;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Limelight extends Subsystem {
@@ -32,9 +33,9 @@ public class Limelight extends Subsystem {
    private double kDD = 0.3;
    private DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
 
-   private double kPR = 0.16;
+   private double kPR = 0.05;
    private double kIR = 0.0;
-   private double kDR = 0.05;
+   private double kDR = 0.0;
    private RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
 
    public Limelight() {
@@ -44,8 +45,12 @@ public class Limelight extends Subsystem {
    }
 
    public void execute() {
-      pidD_.start();
+      // pidD_.start();
       pidR_.start();
+   }
+
+   public void pause() {
+      pidR_.cancel();
    }
 
    public void setSetpoints(double drive_setpoint, double rotate_setpoint) {
@@ -96,6 +101,7 @@ public class Limelight extends Subsystem {
    public double getDistance() {
       double area = this.getArea();
       double distance = Math.pow((area / 17.854), (1 / -2.272));
+      // System.out.println("Area" + area);
       // System.out.println("Distance in feet:" + distance);
       return distance;
    }

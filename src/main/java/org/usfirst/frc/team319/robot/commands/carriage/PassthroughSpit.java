@@ -34,7 +34,7 @@ public class PassthroughSpit extends Command {
     double spitPower = -Robot.oi.driverController.triggers.getTwist();
 
     if (spitPower < 0) {
-      targetSpeed = -(spitPower * spitPower);
+      targetSpeed = -(spitPower * spitPower) / 2;
     } else {
       targetSpeed = spitPower * spitPower;
     }

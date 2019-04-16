@@ -12,6 +12,7 @@ package org.usfirst.frc.team319.robot.commands;
 
 import org.usfirst.frc.team319.robot.Robot;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -24,7 +25,7 @@ public class StopDriverControllerRumble extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.oi.driverController.setRumble(0, 0);
+		Robot.oi.driverController.fastRumble(0.0);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

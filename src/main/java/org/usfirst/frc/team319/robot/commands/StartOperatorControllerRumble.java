@@ -34,7 +34,7 @@ public class StartOperatorControllerRumble extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.oi.operatorController.setRumble(leftRumbleStrength, rightRumbleStrength);
+		Robot.oi.operatorController.fastRumble(leftRumbleStrength);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

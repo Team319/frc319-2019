@@ -5,21 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.limelight;
+package org.usfirst.frc.team319.robot.commands.elevator;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import org.usfirst.frc.team319.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.command.Command;
 
-public class RotateToTarget extends PIDCommand {
-
-  public RotateToTarget(double kP, double kI, double kD) {
-    super(kP, kI, kD);
-  }
-
-  @Override
-  public void setSetpoint(double setpoint) {
-    super.setSetpoint(setpoint);
+public class ElevatorBrakeMode extends Command {
+  public ElevatorBrakeMode() {
+    // Use requires() here to declare subsystem dependencies
+    requires(Robot.elevator);
   }
 
   // Called just before this Command runs the first time
@@ -30,38 +27,23 @@ public class RotateToTarget extends PIDCommand {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.elevator.elevatorLead.setNeutralMode(NeutralMode.Brake);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if ((this.getPosition() <= this.getSetpoint() + 0.1) && (this.getPosition() >= this.getSetpoint() - 0.1)) {
-      return true;
-    }
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    // Robot.limelight.stopRobot();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-  }
-
-  @Override
-  protected double returnPIDInput() {
-    System.out.println("Limelight X " + Robot.limelight.getX());
-    return Robot.limelight.getX();
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    // System.out.println("PID Output " + -output);
-    Robot.limelight.trackPIDR(-output);
   }
 }

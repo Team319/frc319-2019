@@ -5,23 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.hatch_collector;
+package org.usfirst.frc.team319.robot.commands.robot;
 
-import org.usfirst.frc.team319.robot.commands.robot.DriverControllerTimedRumble;
+import org.usfirst.frc.team319.robot.commands.StartDriverControllerRumble;
+import org.usfirst.frc.team319.robot.commands.StopDriverControllerRumble;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class HatchCollectorPlace extends CommandGroup {
-  /*
+public class DriverControllerTimedRumble extends CommandGroup {
+  /**
    * Add your docs here.
    */
-  public HatchCollectorPlace() {
-    addSequential(new HatchCollectorExtend());
-    addSequential(new WaitCommand(0.2));// 0.5
-    addSequential(new HatchCollectorClose());
-    addSequential(new WaitCommand(0.2));// 0.5
-    addSequential(new HatchCollectorRetract());
-    addSequential(new DriverControllerTimedRumble(1.0, 0.5));
+  public DriverControllerTimedRumble(double strength, double time) {
+    addSequential(new StartDriverControllerRumble(strength));
+    addSequential(new WaitCommand(time));
+    addSequential(new StopDriverControllerRumble());
   }
 }
