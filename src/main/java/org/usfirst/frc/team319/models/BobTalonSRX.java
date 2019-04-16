@@ -2,13 +2,15 @@ package org.usfirst.frc.team319.models;
 
 import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.ParamEnum;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.SensorTerm;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-public class BobTalonSRX extends TalonSRX {
+public class BobTalonSRX extends TalonSRX implements IBobSmartMotorController{
 
 	private int defaultTimeoutMs = 0;
 	private int defaultPidIndex = 0;
@@ -303,5 +305,45 @@ public class BobTalonSRX extends TalonSRX {
 
 	public ErrorCode configMaxIntegralAccumulator(int slotIdx, double iaccum) {
 		return super.configMaxIntegralAccumulator(slotIdx, iaccum, defaultTimeoutMs);
+	}
+
+	@Override
+	public void setPercentOutput(double percentOutput) {
+		super.set(ControlMode.PercentOutput, percentOutput);
+	}
+
+	@Override
+	public double getPosition() {
+		return this.getPrimarySensorPosition();
+	}
+
+	@Override
+	public double getVelocity() {
+		return this.getPrimarySensorVelocity();
+	}
+
+	@Override
+	public void resetToFactoryDefaults() {
+		super.configFactoryDefault();
+	}
+
+	@Override
+	public void follow(IBobSmartMotorController leader) {
+		super.follow((TalonSRX) leader);
+	}
+
+	@Override
+	public void setPosition(double position) {
+		super.setSelectedSensorPosition((int) position);
+	}
+
+	@Override
+	public double getOutputVoltage() {
+		return super.getMotorOutputVoltage();
+	}
+
+	@Override
+	public void setBrakeMode(boolean brakeModeEnabled) {
+		super.setNeutralMode(brakeModeEnabled ? NeutralMode.Brake : NeutralMode.Coast);
 	}
 }
