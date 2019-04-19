@@ -17,8 +17,11 @@ public class Drivetrain extends Subsystem {
 	public CANSparkMax leftLead = new CANSparkMax(11, MotorType.kBrushless);
 	public CANSparkMax rightLead = new CANSparkMax(3, MotorType.kBrushless);
 
-	public CANSparkMax leftFollow = new CANSparkMax(12, MotorType.kBrushless);
-	public CANSparkMax rightFollow = new CANSparkMax(4, MotorType.kBrushless);
+	public CANSparkMax leftFollow1 = new CANSparkMax(12, MotorType.kBrushless);
+	public CANSparkMax leftFollow2 = new CANSparkMax(13, MotorType.kBrushless);
+
+	public CANSparkMax rightFollow1 = new CANSparkMax(4, MotorType.kBrushless);
+	public CANSparkMax rightFollow2 = new CANSparkMax(5, MotorType.kBrushless);
 
 	public DriveMode mode = DriveMode.Normal;
 
@@ -32,8 +35,10 @@ public class Drivetrain extends Subsystem {
 	}
 
 	private void setupFollowers() {
-		leftFollow.follow(leftLead);
-		rightFollow.follow(rightLead);
+		leftFollow1.follow(leftLead);
+		leftFollow2.follow(leftLead);
+		rightFollow1.follow(rightLead);
+		rightFollow2.follow(rightLead);
 
 	}
 
