@@ -22,10 +22,10 @@ public class HatchCollectorCollectAtDistance extends CommandGroup {
    */
   public HatchCollectorCollectAtDistance() {
     addSequential(new SetDriveMode(DriveMode.Limelight));
-    addSequential(new TurnLedOn());
-    addSequential(new WaitCommand(0.5));
-    addSequential(new WaitForLimelightDistance(3.0));// 1.8 in feet
     addSequential(new HatchCollectorExtend());
+    addParallel(new TurnLedOn());
+    addSequential(new WaitCommand(0.5));
+    // addSequential(new WaitForLimelightDistance(3.0));// 1.8 in feet
     addSequential(new WaitForLimelightDistance(1.7));
     addSequential(new HatchCollectorOpen());
     addSequential(new WaitCommand(0.2));// 0.5

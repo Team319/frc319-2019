@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class HatchCollectorExtend extends Command {
   public HatchCollectorExtend() {
     requires(Robot.pneumatics);
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+
   }
 
   // Called just before this Command runs the first time

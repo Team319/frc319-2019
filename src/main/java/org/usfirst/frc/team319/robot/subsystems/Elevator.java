@@ -83,8 +83,8 @@ public class Elevator extends PositionControlledSubsystem {
       elevatorDownGains);
 
   public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
-  public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
-  public BobTalonSRX elevatorFollow3 = new BobTalonSRX(14);
+  public BobTalonSRX elevatorFollow2 = new BobTalonSRX(5);
+  public BobTalonSRX elevatorFollow3 = new BobTalonSRX(11);
   public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(15, elevatorFollow1, elevatorFollow2, elevatorFollow3);
 
   public Elevator() {
