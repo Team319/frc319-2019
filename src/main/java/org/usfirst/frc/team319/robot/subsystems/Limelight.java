@@ -33,7 +33,7 @@ public class Limelight extends Subsystem {
    private double kDD = 0.3;
    private DriveToTargetWithDistance pidD_ = new DriveToTargetWithDistance(kPD, kID, kDD);
 
-   private double kPR = 0.05;//0.022 for neos
+   private double kPR = 0.05;
    private double kIR = 0.0;
    private double kDR = 0.0;
    private RotateToTarget pidR_ = new RotateToTarget(kPR, kIR, kDR);
