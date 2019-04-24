@@ -7,7 +7,9 @@
 
 package org.usfirst.frc.team319.robot.commands.hatch_collector;
 
+import org.usfirst.frc.team319.models.DriveMode;
 import org.usfirst.frc.team319.robot.commands.robot.DriverControllerTimedRumble;
+import org.usfirst.frc.team319.robot.commands.robot.SetDriveMode;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -17,6 +19,7 @@ public class HatchCollectorPlace extends CommandGroup {
    * Add your docs here.
    */
   public HatchCollectorPlace() {
+    addSequential(new SetDriveMode(DriveMode.Normal));
     addSequential(new HatchCollectorExtend());
     addSequential(new WaitCommand(0.2));// 0.5
     addSequential(new HatchCollectorClose());
