@@ -48,6 +48,7 @@ public class Elevator extends PositionControlledSubsystem {
 
   // ---- Travel Limits Positions ---- //
   private int maxVerticalLimit = 37400;
+  private int lotsOfClearancePosition = 30000;
   private int bbaClearancePosition = 6200;
   private int minVerticalLimit = cargoCollectPosition;
 
@@ -227,6 +228,10 @@ public class Elevator extends PositionControlledSubsystem {
     return this.maxVerticalLimit;
   }
 
+  public int getLotsOfClearancePosition() {
+    return lotsOfClearancePosition;
+  }
+
   public int getLockPosition() {
     return lockPosition;
   }
@@ -282,7 +287,9 @@ public class Elevator extends PositionControlledSubsystem {
 
   public boolean hasClearance(int newTargetPosition) {
     if (newTargetPosition < this.homePosition) {
-      return Robot.bbarm.getCurrentPosition() < Robot.bbarm.getElevatorClearencePosition();
+      int elevatorPos = getCurrentPosition();
+      boolean plentyOfClearance = elevatorPos >= getLotsOfClearancePosition();
+      return plentyOfClearance || Robot.bbarm.getCurrentPosition() < Robot.bbarm.getElevatorClearencePosition();
     }
     return true;
   }

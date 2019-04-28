@@ -5,15 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.carriage;
-
-import org.usfirst.frc.team319.robot.Robot;
+package org.usfirst.frc.team319.robot.commands.bba;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class PlatypusFaceRetract extends Command {
-  public PlatypusFaceRetract() {
-    requires(Robot.pneumatics);
+public class BbaCollectOperatorAdjust extends Command {
+  public BbaCollectOperatorAdjust() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
   }
 
   // Called just before this Command runs the first time
@@ -24,13 +23,12 @@ public class PlatypusFaceRetract extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    // Robot.pneumatics.PlatypusFaceRetract();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return false;
   }
 
   // Called once after isFinished returns true

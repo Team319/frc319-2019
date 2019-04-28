@@ -9,7 +9,6 @@ package org.usfirst.frc.team319.robot.commands.robot;
 
 import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
 import org.usfirst.frc.team319.robot.commands.carriage.PassthroughSetSpeed;
-import org.usfirst.frc.team319.robot.commands.carriage.PlatypusFaceRetract;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -19,8 +18,7 @@ public class GoToSafePose extends CommandGroup {
    */
   public GoToSafePose() {
     addParallel(new PassthroughSetSpeed(0.0));
-    addParallel(new CollectorSetSpeed(0.0));
-    addSequential(new PlatypusFaceRetract());
+    addSequential(new CollectorSetSpeed(0.0));
     addSequential(new GoToHomePose());
   }
 }

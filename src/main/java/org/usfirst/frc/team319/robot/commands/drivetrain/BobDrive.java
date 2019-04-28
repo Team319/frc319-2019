@@ -35,7 +35,7 @@ public class BobDrive extends Command {
 
 		double rotateCap = 0.5;
 
-		System.out.println("Drivetrain Mode" + Robot.drivetrain.mode);
+		// System.out.println("Drivetrain Mode" + Robot.drivetrain.mode);
 
 		if (Robot.drivetrain.mode == DriveMode.Limelight) {
 			rotateValue = Robot.limelight.trackRotate();
@@ -48,7 +48,7 @@ public class BobDrive extends Command {
 			} else if (rotateValue < -rotateCap) {
 				rotateValue = -rotateCap;
 			}
-			System.out.println("Rotate value" + rotateValue);
+			// System.out.println("Rotate value" + rotateValue);
 		} else {
 			Robot.limelight.setLedModeOff(); // turns limelight LED off
 			rotateValue = Robot.oi.driverController.rightStick.getX();

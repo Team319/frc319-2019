@@ -26,7 +26,7 @@ public class HatchCollectorCollectAtDistance extends CommandGroup {
     addSequential(new WaitCommand(0.5));
     addSequential(new HatchCollectorExtend());
     // addSequential(new WaitForLimelightDistance(3.0));// 1.8 in feet
-    addSequential(new WaitForLimelightDistance(1.7));
+    addSequential(new WaitForLimelightDistance(1.75));
     addSequential(new HatchCollectorOpen());
     addSequential(new WaitCommand(0.2));// 0.5
     addSequential(new HatchCollectorRetract());

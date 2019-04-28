@@ -14,7 +14,7 @@ public class ElevatorSafelyGoToCargoCollectPosition extends CommandGroup {
    * Add your docs here.
    */
   public ElevatorSafelyGoToCargoCollectPosition() {
-    addSequential(new ElevatorGoToSafePosition(true));
+    addSequential(new ElevatorGoToSafePosition(false));
     addSequential(new ElevatorWaitForClearance());
     addSequential(new ElevatorGoToCargoCollectPosition());
   }

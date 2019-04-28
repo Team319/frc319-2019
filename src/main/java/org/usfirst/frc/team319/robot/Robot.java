@@ -17,6 +17,8 @@ import org.usfirst.frc.team319.robot.subsystems.Elevator;
 import org.usfirst.frc.team319.robot.subsystems.Limelight;
 import org.usfirst.frc.team319.robot.subsystems.Pneumatics;
 
+import edu.wpi.cscore.CameraServerJNI;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -54,6 +56,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Normal Mode", new SetRobotMode(RobotMode.Normal));
 		SmartDashboard.putData("EXIT CLIMB MODE", new RevertClimbMode());
 		SmartDashboard.putNumber("LimeightX", limelight.circularBufferX());
+
+		// CameraServer.getInstance().startAutomaticCapture();
 	}
 
 	@Override

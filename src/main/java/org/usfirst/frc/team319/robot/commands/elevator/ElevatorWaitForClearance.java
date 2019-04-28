@@ -30,7 +30,9 @@ public class ElevatorWaitForClearance extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.bbarm.getCurrentPosition() < Robot.bbarm.getElevatorClearencePosition();
+    int elevatorPos = Robot.elevator.getCurrentPosition();
+    boolean plentyOfClearance = elevatorPos >= Robot.elevator.getLotsOfClearancePosition();
+    return plentyOfClearance || Robot.bbarm.getCurrentPosition() < Robot.bbarm.getElevatorClearencePosition();
   }
 
   // Called once after isFinished returns true

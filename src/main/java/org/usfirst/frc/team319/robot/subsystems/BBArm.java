@@ -38,7 +38,7 @@ public class BBArm extends PositionControlledSubsystem {
   private int levelThreeHab = -4408;
   private int levelTwoHab = -5000;
   private int hatchFloorPosition = -8500;
-  private int cargoCollectPosition = -4200;// 6200
+  private int cargoCollectPosition = -4300;// -4200
   private int floorPosition = -5700;
   private int liftRobotPosition = -5900;
   private int bbaClimbStartPosition = -3000;
