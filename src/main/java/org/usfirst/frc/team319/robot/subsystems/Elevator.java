@@ -48,6 +48,7 @@ public class Elevator extends PositionControlledSubsystem {
 
   // ---- Travel Limits Positions ---- //
   private int maxVerticalLimit = 37400;
+  private int lotsOfClearancePosition = 30000;
   private int bbaClearancePosition = 6200;
   private int minVerticalLimit = cargoCollectPosition;
 
@@ -83,8 +84,8 @@ public class Elevator extends PositionControlledSubsystem {
       elevatorDownGains);
 
   public BobTalonSRX elevatorFollow1 = new BobTalonSRX(1);
-  public BobTalonSRX elevatorFollow2 = new BobTalonSRX(2);
-  public BobTalonSRX elevatorFollow3 = new BobTalonSRX(14);
+  public BobTalonSRX elevatorFollow2 = new BobTalonSRX(5);
+  public BobTalonSRX elevatorFollow3 = new BobTalonSRX(11);
   public LeaderBobTalonSRX elevatorLead = new LeaderBobTalonSRX(15, elevatorFollow1, elevatorFollow2, elevatorFollow3);
 
   public Elevator() {
@@ -227,6 +228,10 @@ public class Elevator extends PositionControlledSubsystem {
     return this.maxVerticalLimit;
   }
 
+  public int getLotsOfClearancePosition() {
+    return lotsOfClearancePosition;
+  }
+
   public int getLockPosition() {
     return lockPosition;
   }
@@ -282,7 +287,9 @@ public class Elevator extends PositionControlledSubsystem {
 
   public boolean hasClearance(int newTargetPosition) {
     if (newTargetPosition < this.homePosition) {
-      return Robot.bbarm.getCurrentPosition() < Robot.bbarm.getElevatorClearencePosition();
+      int elevatorPos = getCurrentPosition();
+      boolean plentyOfClearance = elevatorPos >= getLotsOfClearancePosition();
+      return plentyOfClearance || Robot.bbarm.getCurrentPosition() < Robot.bbarm.getElevatorClearencePosition();
     }
     return true;
   }

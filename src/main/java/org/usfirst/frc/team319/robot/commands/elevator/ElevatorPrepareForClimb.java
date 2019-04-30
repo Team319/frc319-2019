@@ -5,20 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.robot;
-
-import org.usfirst.frc.team319.robot.commands.carriage.CollectorSetSpeed;
+package org.usfirst.frc.team319.robot.commands.elevator;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
-public class SpitCargo extends CommandGroup {
+public class ElevatorPrepareForClimb extends CommandGroup {
   /**
    * Add your docs here.
    */
-  public SpitCargo() {
-    addSequential(new CollectorSetSpeed(1.0));
-    addSequential(new WaitCommand(2.0));
-    addSequential(new CollectorSetSpeed(0.0));
+  public ElevatorPrepareForClimb() {
+    addSequential(new ElevatorGoToLowLockPosition());
+    addSequential(new ElevatorLockCarriage());
+    addSequential(new WaitCommand(0.3));
+    addSequential(new ElevatorGoToLockPosition());
   }
 }

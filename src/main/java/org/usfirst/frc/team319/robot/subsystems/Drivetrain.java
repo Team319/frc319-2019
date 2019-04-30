@@ -1,7 +1,5 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import java.util.ArrayList;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -15,7 +13,6 @@ import org.usfirst.frc.team319.models.SRXGains;
 import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drivetrain extends Subsystem implements FollowsArc {
 
@@ -31,8 +28,8 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 
 	private BobTalonSRX rightFollowerWithPigeon = new BobTalonSRX(4);
 
-	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(11, new BobTalonSRX(12), new BobTalonSRX(13));
-	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollowerWithPigeon, new BobTalonSRX(5));
+	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(14, new BobTalonSRX(12), new BobTalonSRX(13));
+	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollowerWithPigeon, new BobTalonSRX(2));
 
 	// private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
 

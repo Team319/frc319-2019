@@ -17,7 +17,7 @@ public class CollectorSetSpeed extends Command {
 
   public CollectorSetSpeed(double speed) {
     // Use requires() here to declare subsystem dependencies
-    requires(Robot.bbarm);
+    // requires(Robot.bbarm);
     this.targetSpeed = speed;
   }
 

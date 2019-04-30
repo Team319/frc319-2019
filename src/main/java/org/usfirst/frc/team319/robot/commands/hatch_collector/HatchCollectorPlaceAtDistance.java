@@ -24,8 +24,9 @@ public class HatchCollectorPlaceAtDistance extends CommandGroup {
     addSequential(new SetDriveMode(DriveMode.Limelight));
     addSequential(new TurnLedOn());
     addSequential(new WaitCommand(0.5));
-    addSequential(new WaitForLimelightDistance(1.8));// in feet
+    addSequential(new WaitForLimelightDistance(2.0));// in feet
     addSequential(new HatchCollectorExtend());
+    addSequential(new WaitCommand(0.5));
     addSequential(new SetDriveMode(DriveMode.Normal));
     addSequential(new DriverControllerTimedRumble(1.0, 0.5));
 

@@ -8,8 +8,8 @@ import org.usfirst.frc.team319.utils.HelperFunctions;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Limelight extends Subsystem {
 
@@ -101,6 +101,7 @@ public class Limelight extends Subsystem {
    public double getDistance() {
       double area = this.getArea();
       double distance = Math.pow((area / 17.854), (1 / -2.272));
+      SmartDashboard.putNumber("Limelight Distance", distance);
       // System.out.println("Area" + area);
       // System.out.println("Distance in feet:" + distance);
       return distance;

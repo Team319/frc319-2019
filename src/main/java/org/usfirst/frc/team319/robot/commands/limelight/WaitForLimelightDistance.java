@@ -10,6 +10,7 @@ package org.usfirst.frc.team319.robot.commands.limelight;
 import org.usfirst.frc.team319.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class WaitForLimelightDistance extends Command {
 
@@ -27,7 +28,8 @@ public class WaitForLimelightDistance extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.limelight.setLedModeOn();
+    // System.out.println("Distance in feet " + Robot.limelight.getDistance());
+    // Robot.limelight.setLedModeOn();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,13 +41,13 @@ public class WaitForLimelightDistance extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.limelight.setLedModeOff();
+    // Robot.limelight.setLedModeOff();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.limelight.setLedModeOff();
+    // Robot.limelight.setLedModeOff();
   }
 }
