@@ -8,13 +8,11 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-/**
- *
- */
 public class Pneumatics extends Subsystem {
 
 	private Compressor compressor = new Compressor(0);
 
+	// sets the solenoid ids
 	private DoubleSolenoid hatchCollectorSolenoid = new DoubleSolenoid(2, 3);
 	private DoubleSolenoid fingerSolenoid = new DoubleSolenoid(4, 5);
 	private DoubleSolenoid carriageAndElevatorLockSolenoid = new DoubleSolenoid(6, 7);

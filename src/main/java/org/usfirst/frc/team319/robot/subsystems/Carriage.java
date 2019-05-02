@@ -10,8 +10,6 @@ package org.usfirst.frc.team319.robot.subsystems;
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-//import com.ctre.phoenix.CANifier;
-//import com.ctre.phoenix.CANifier.GeneralPin;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
@@ -22,13 +20,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * Add your docs here.
- */
-
 public class Carriage extends Subsystem {
 
+  // Sets the digital beam break sensor
   private DigitalInput digitalCargoSensor = new DigitalInput(0);
+
+  // incorporates canifier
   public CANifier canifier = new CANifier(0);
 
   public boolean manualCollectFinished = false;
@@ -37,9 +34,9 @@ public class Carriage extends Subsystem {
   public boolean isCollecting = false;
 
   private boolean isCarriageLockSolenoidExtended = true;
-  // private boolean isPlatypusFaceSolenoidExtended = false;
   private final double safePosition = 0.0;
 
+  // sets talon IDs
   private BobTalonSRX passthroughFollow = new BobTalonSRX(8);
   public LeaderBobTalonSRX passThroughLead = new LeaderBobTalonSRX(7, passthroughFollow);
 
@@ -62,18 +59,6 @@ public class Carriage extends Subsystem {
   public void initDefaultCommand() {
   }
 
-  /*
-   * public boolean IsPlatypusFaceSolenoidExtended() { return
-   * IsPlatypusFaceSolenoidExtended(); }
-   * 
-   * public void setIsPlatypusFaceExtended(boolean IsPlatypusFaceSolenoidExtended)
-   * { this.isPlatypusFaceSolenoidExtended = IsPlatypusFaceSolenoidExtended; }
-   * 
-   * 
-   * 
-   * public boolean isPlatypusFaceSolenoidExtended() { return
-   * isPlatypusFaceSolenoidExtended; }
-   */
   public boolean isCarriageLockSolenoidExtended() {
     return isCarriageLockSolenoidExtended;
   }

@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -23,22 +16,18 @@ import org.usfirst.frc.team319.robot.commands.bba.JoystickBBA;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * Add your docs here.
- */
+//This class controls our "Big Beefy Arm" subsystem.
 public class BBArm extends PositionControlledSubsystem {
 
   public BobTalonSRX bbaFollow = new BobTalonSRX(6);
   public BobTalonSRX bbaLead = new LeaderBobTalonSRX(10, bbaFollow);
   public LeaderBobTalonSRX collectorTalon = new LeaderBobTalonSRX(9);
 
-  // towards floor = negative
-
   private int homePosition = 0;
-  private int levelThreeHab = -4408;
+  private int levelThreeHab = -4408;// negative towards floor
   private int levelTwoHab = -5000;
   private int hatchFloorPosition = -8500;
-  private int cargoCollectPosition = -4300;// -4200
+  private int cargoCollectPosition = -4300;
   private int floorPosition = -5700;
   private int liftRobotPosition = -5900;
   private int bbaClimbStartPosition = -3000;
@@ -54,7 +43,7 @@ public class BBArm extends PositionControlledSubsystem {
   private int climbAcceleration = 1600;
   private int normalAcceleration = 1600;
 
-  private int climbVelocity = 600;// 600 is max
+  private int climbVelocity = 600;
   private int normalVelocity = 600;
 
   private final static int onTargetThreshold = 200;
@@ -82,21 +71,14 @@ public class BBArm extends PositionControlledSubsystem {
     configMotionParameters();
 
     this.bbaLead.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
-    // this.bbaFollow.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative);
 
     this.bbaLead.setInverted(false);
     this.bbaFollow.setInverted(true);
     this.bbaLead.setSensorPhase(false);
-    /*
-     * this.bbaFollow.setInverted(true); this.bbaFollow.setSensorPhase(false);
-     */
+
     this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10);
     this.bbaLead.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10);
-    /*
-     * this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0,
-     * 10); this.bbaFollow.setStatusFramePeriod(StatusFrameEnhanced.
-     * Status_10_MotionMagic, 10);
-     */
+
     this.bbaLead.setNeutralMode(NeutralMode.Brake);
     this.bbaFollow.setNeutralMode(NeutralMode.Brake);
 
@@ -118,7 +100,7 @@ public class BBArm extends PositionControlledSubsystem {
   }
 
   public void configSoftLimits(boolean softLimitsEnabled) {
-    // ------------Lead Limits------------//
+    // ------------Lead Motor Soft Limits------------//
     this.bbaLead.configForwardSoftLimitThreshold(upPositionLimit);
     this.bbaLead.configReverseSoftLimitThreshold(downPositionLimit);
 
@@ -126,10 +108,12 @@ public class BBArm extends PositionControlledSubsystem {
     this.bbaLead.configReverseSoftLimitEnable(softLimitsEnabled);
   }
 
+  // this method resets the encoder to 0, helpful to reset it if necessary
   public void resetPosition() {
     this.bbaLead.setSelectedSensorPosition(0);
   }
 
+  // Checks to make sure the elevator is out of the way before moving the bba
   public boolean hasClearance(int newTargetPosition) {
     if (newTargetPosition > this.elevatorClearencePosition) {
       return Robot.elevator.getCurrentPosition() > Robot.elevator.getBbaClearancePosition();
@@ -137,7 +121,8 @@ public class BBArm extends PositionControlledSubsystem {
     return true;
   }
 
-  //
+  // this method checks to make sure the bba is going into a position that is
+  // allowed/realistic (BBA not allowed to eat itself)
   public boolean isValidPosition(int position) {
     boolean withinBounds = false;
     if (Robot.mode == RobotMode.Climb && getCurrentPosition() <= cargoCollectPosition) {
@@ -148,18 +133,18 @@ public class BBArm extends PositionControlledSubsystem {
     return withinBounds && this.hasClearance(position);
   }
 
+  // this method allows us to choose which PID values to use
   public void manageMotion(double targetPosition) {
     double currentPosition = getCurrentPosition();
     if (currentPosition < targetPosition) {
       bbaLead.selectMotionParameters(UpMotionParameters);
-      // bbaFollow.selectMotionParameters(UpMotionParameters);
     } else {
       bbaLead.selectMotionParameters(DownMotionParameters);
-      // bbaFollow.selectMotionParameters(DownMotionParameters);
 
     }
   }
 
+  // uses setpoints to control the arm.
   public void motionMagicControl() {
     this.manageMotion(targetPosition);
     this.bbaLead.set(ControlMode.MotionMagic, targetPosition);
@@ -182,6 +167,7 @@ public class BBArm extends PositionControlledSubsystem {
     this.collectorTalon.set(ControlMode.PercentOutput, -signal);
   }
 
+  // adds a certain value to the position we want to go to.
   public void incrementTargetPosition(int increment) {
     int currentTargetPosition = this.targetPosition;
     int newTargetPosition = currentTargetPosition + increment;
@@ -190,12 +176,14 @@ public class BBArm extends PositionControlledSubsystem {
     }
   }
 
+  // ignores the valid position soft limits
   public void forceIncrementTargetPosition(int increment) {
     int currentTargetPosition = this.targetPosition;
     int newTargetPosition = currentTargetPosition + increment;
     this.targetPosition = newTargetPosition;
   }
 
+  // the below methods return the values outlined above lines 22-47
   public double getLevelThreeHab() {
     return levelThreeHab;
   }
@@ -228,6 +216,7 @@ public class BBArm extends PositionControlledSubsystem {
     return elevatorCatchPosition;
   }
 
+  // sets the position based on an encoder
   @Override
   public boolean setTargetPosition(int targetPosition) {
     if (isValidPosition(targetPosition)) {
@@ -260,10 +249,7 @@ public class BBArm extends PositionControlledSubsystem {
     return this.bbaLead.getSelectedSensorVelocity();
   }
 
-  /*
-   * public double getFollowCurrentVelocity() { return
-   * this.bbaFollow.getSelectedSensorVelocity(); }
-   */
+  // checks to see if the BBA is in the correct position
   @Override
   public boolean isInPosition(int targetPosition) {
     int currentPosition = this.getCurrentPosition();

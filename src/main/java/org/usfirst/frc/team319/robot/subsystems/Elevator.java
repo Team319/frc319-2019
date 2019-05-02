@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package org.usfirst.frc.team319.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -36,15 +29,14 @@ public class Elevator extends PositionControlledSubsystem {
   private int hatchCollectPosition = 0;
   private int hatchHighPosition = 33300;
   private int hatchMiddlePosition = 17000;
-  private int hatchLowPosition = 0; // this value is correct
+  private int hatchLowPosition = 0;
 
   // ---- Cargo Positions ---- //
   private int cargoCollectPosition = -5000;
   private int cargoHighPosition = 35000;
   private int cargoMiddlePosition = 17000;
-  private int cargoLowPosition = 0; // this value is correct
+  private int cargoLowPosition = 0;
   private int cargoCargoShipPosition = 6500;
-  // cargoShipCargoPosition should be around the same as middleHatchPosition
 
   // ---- Travel Limits Positions ---- //
   private int maxVerticalLimit = 37400;
@@ -55,7 +47,7 @@ public class Elevator extends PositionControlledSubsystem {
   private int climbLimit = 0;// 1300, 0 for low locks
   private int climbUpperLimit = 15000;// 16330, 15000 for low lock position
 
-  private int lockPosition = 18800;// 18800
+  private int lockPosition = 18800;
   private int LowlockPosition = 15200;
   private int climbPosition = 13000 - 2000;// 13000, - 2000 offset for low locks
   private int touchFloorPosition = 15000;
@@ -74,9 +66,9 @@ public class Elevator extends PositionControlledSubsystem {
   private final SRXGains elevatorDownGains = new SRXGains(ELEVATOR_DOWN, 0.5, 0.004, 24.0, .2046, 500);
 
   private MotionParameters upMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
-      elevatorUpGains);// 10000, 4500
+      elevatorUpGains);
   private MotionParameters downMotionParameters = new MotionParameters(normalAcceleration, normalVelocity,
-      elevatorDownGains);// 10000, 4500
+      elevatorDownGains);
 
   private MotionParameters climbUpMotionParameters = new MotionParameters(climbAcceleration, climbVelocity,
       elevatorUpGains);
@@ -94,7 +86,7 @@ public class Elevator extends PositionControlledSubsystem {
 
     elevatorLead.setNeutralMode(NeutralMode.Coast);
 
-    this.elevatorLead.configClosedloopRamp(0.125);// .125
+    this.elevatorLead.configClosedloopRamp(0.125);
 
     this.elevatorLead.configVoltageCompSaturation(11.5);
     this.elevatorLead.enableVoltageCompensation(true);
@@ -301,12 +293,6 @@ public class Elevator extends PositionControlledSubsystem {
 
     SmartDashboard.putNumber("Elevator Lead Current", this.elevatorLead.getOutputCurrent());
     SmartDashboard.putNumber("Elevator Lead Voltage", this.elevatorLead.getMotorOutputVoltage());
-    // SmartDashboard.putNumber("Elevator Follow 1 Current",
-    // this.elevatorFollow1.getOutputCurrent());
-    // SmartDashboard.putNumber("Elevator Follow 2 Current",
-    // this.elevatorFollow2.getOutputCurrent());
-    // SmartDashboard.putNumber("Elevator Follow 3 Current",
-    // this.elevatorFollow3.getOutputCurrent());
 
   }
 
