@@ -3,15 +3,21 @@ package org.usfirst.frc.team319.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.PigeonIMU;
 import com.team319.follower.FollowsArc;
 
+import org.usfirst.frc.team319.lib.control.Lookahead;
+import org.usfirst.frc.team319.lib.control.Path;
+import org.usfirst.frc.team319.lib.control.PathFollower;
 import org.usfirst.frc.team319.models.BobTalonSRX;
 import org.usfirst.frc.team319.models.DriveMode;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.models.LeaderBobTalonSRX;
 import org.usfirst.frc.team319.models.SRXGains;
+import org.usfirst.frc.team319.robot.Constants;
 import org.usfirst.frc.team319.robot.commands.drivetrain.BobDrive;
 
+import edu.wpi.first.wpilibj.RobotState;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Drivetrain extends Subsystem implements FollowsArc {
@@ -31,9 +37,13 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 	public LeaderBobTalonSRX leftLead = new LeaderBobTalonSRX(14, new BobTalonSRX(12), new BobTalonSRX(13));
 	public LeaderBobTalonSRX rightLead = new LeaderBobTalonSRX(3, rightFollowerWithPigeon, new BobTalonSRX(2));
 
-	// private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
+	private PigeonIMU pigeon = new PigeonIMU(rightFollowerWithPigeon);
 
 	public DriveMode mode = DriveMode.Normal;
+
+	// Controllers
+	private PathFollower mPathFollower;
+	private Path mCurrentPath = null;
 
 	public Drivetrain() {
 		leftLead.configFactoryDefault();
@@ -91,6 +101,31 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		this.drive(controlMode, driveSignal.getLeft(), driveSignal.getRight());
 	}
 
+	/**
+	 * Configures the drivebase to drive a path. Used for autonomous driving
+	 *
+	 * @see Path
+	 */
+	public synchronized void setWantDrivePath(Path path, boolean reversed) {
+		if (mCurrentPath != path || mode != DriveMode.PathFollowing) {
+			this.setPositionToZero();
+			mPathFollower = new PathFollower(path, reversed, new PathFollower.Parameters(
+					new Lookahead(Constants.Drivetrain.kMinLookAhead, Constants.Drivetrain.kMaxLookAhead,
+							Constants.Drivetrain.kMinLookAheadSpeed, Constants.Drivetrain.kMaxLookAheadSpeed),
+					Constants.Drivetrain.kInertiaSteeringGain, Constants.Drivetrain.kPathFollowingProfileKp,
+					Constants.Drivetrain.kPathFollowingProfileKi, Constants.Drivetrain.kPathFollowingProfileKv,
+					Constants.Drivetrain.kPathFollowingProfileKffv, Constants.Drivetrain.kPathFollowingProfileKffa,
+					Constants.Drivetrain.kPathFollowingProfileKs, Constants.Drivetrain.kPathFollowingMaxVel,
+					Constants.Drivetrain.kPathFollowingMaxAccel, Constants.Drivetrain.kPathFollowingGoalPosTolerance,
+					Constants.Drivetrain.kPathFollowingGoalVelTolerance,
+					Constants.Drivetrain.kPathStopSteeringDistance));
+			mode = DriveMode.PathFollowing;
+			mCurrentPath = path;
+		} else {
+			this.drive(ControlMode.Velocity, new DriveSignal(0, 0));
+		}
+	}
+
 	public double getLeftDriveLeadDistance() {
 		return this.leftLead.getSelectedSensorPosition();
 	}
@@ -107,7 +142,7 @@ public class Drivetrain extends Subsystem implements FollowsArc {
 		return this.rightLead.getSelectedSensorVelocity();
 	}
 
-	public void setDrivetrainPositionToZero() {
+	public void setPositionToZero() {
 		this.leftLead.setSelectedSensorPosition(0);
 		this.rightLead.setSelectedSensorPosition(0);
 	}

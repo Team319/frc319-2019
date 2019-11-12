@@ -51,7 +51,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		oi = new OI();
 		limelight.setStreamType();// sets secondary as the main camera feed.
-		Robot.drivetrain.setDrivetrainPositionToZero();
+		Robot.drivetrain.leftLead.setSelectedSensorPosition(0);
+		Robot.drivetrain.rightLead.setSelectedSensorPosition(0);
 		SmartDashboard.putData("Climb Mode", new SetRobotMode(RobotMode.Climb));
 		SmartDashboard.putData("Normal Mode", new SetRobotMode(RobotMode.Normal));
 		SmartDashboard.putData("EXIT CLIMB MODE", new RevertClimbMode());

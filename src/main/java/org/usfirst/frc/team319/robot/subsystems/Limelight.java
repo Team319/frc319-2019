@@ -1,15 +1,15 @@
 package org.usfirst.frc.team319.robot.subsystems;
 
-import org.usfirst.frc.team319.robot.commands.limelight.DriveToTargetWithDistance;
-import org.usfirst.frc.team319.robot.commands.limelight.RotateToTarget;
-import org.usfirst.frc.team319.utils.BobCircularBuffer;
-import org.usfirst.frc.team319.utils.HelperFunctions;
-
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team319.lib.utils.BobCircularBuffer;
+import org.usfirst.frc.team319.lib.utils.Util;
+import org.usfirst.frc.team319.robot.commands.limelight.DriveToTargetWithDistance;
+import org.usfirst.frc.team319.robot.commands.limelight.RotateToTarget;
+
 
 public class Limelight extends Subsystem {
 
@@ -67,7 +67,7 @@ public class Limelight extends Subsystem {
    }
 
    public double circularBufferX() {
-      return HelperFunctions.mean(limelightbuffer.toArray());
+      return Util.mean(limelightbuffer.toArray());
    }
 
    public double getXProportional() {
@@ -138,7 +138,7 @@ public class Limelight extends Subsystem {
    }
 
    public double getDistanceBasedOnArea() {
-      return HelperFunctions.mean(limelightbuffer.toArray());
+      return Util.mean(limelightbuffer.toArray());
 
    }
 

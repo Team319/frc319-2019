@@ -1,13 +1,13 @@
 package org.usfirst.frc.team319.robot.commands.autotune;
 
-import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.utils.HelperFunctions;
-import org.usfirst.frc.team319.utils.BobCircularBuffer;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team319.lib.utils.BobCircularBuffer;
+import org.usfirst.frc.team319.lib.utils.Util;
+import org.usfirst.frc.team319.models.BobTalonSRX;
+
+
 
 /**
  *
@@ -71,7 +71,7 @@ public class AutoTuneVelocityCalculateP extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		double avgError = HelperFunctions.mean(cBuff.toArray());
+		double avgError = Util.mean(cBuff.toArray());
 		double kP = 0.1 * 1023 / avgError;
 		_talon.config_kP(paramterSlot, kP);
 		System.out.println("Average Error = " + avgError);

@@ -5,32 +5,43 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team319.robot.commands.self_test;
+package org.usfirst.frc.team319.robot.commands.drivetrain;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import org.usfirst.frc.team319.lib.control.Path;
+import org.usfirst.frc.team319.lib.control.PathContainer;
+import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.lib.utils.BobCircularBuffer;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class DrivetrainSelfTest extends Command {
-  private BobCircularBuffer[] leftAverages;
-  private BobCircularBuffer[] rightAverages;
+public class DrivePath extends Command {
 
-  public DrivetrainSelfTest() {
+  private PathContainer pathContainer;
+  private Path path;
+  private boolean stopWhenDone;
+
+  public DrivePath(PathContainer p, boolean stopWhenDone) {
+    this.pathContainer = p;
+    this.path = pathContainer.buildPath();
+    this.stopWhenDone = stopWhenDone;
+    requires(Robot.drivetrain);
+  }
+
+  public DrivePath(PathContainer p) {
+    this(p, false);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    leftAverages = new BobCircularBuffer[Robot.drivetrain.leftLead.getOutputCurrentArray().length];
-    rightAverages = new BobCircularBuffer[Robot.drivetrain.rightLead.getOutputCurrentArray().length];
+    Robot.drivetrain.setWantDrivePath(this.path, this.pathContainer.isReversed());
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    double[] rightCurrents = Robot.drivetrain.rightLead.getOutputCurrentArray();
-    double[] leftCurrents = Robot.drivetrain.leftLead.getOutputCurrentArray();
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -42,6 +53,9 @@ public class DrivetrainSelfTest extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    if (stopWhenDone) {
+      Robot.drivetrain.drive(ControlMode.Velocity, new DriveSignal(0, 0));
+    }
   }
 
   // Called when another command which requires one or more of the same

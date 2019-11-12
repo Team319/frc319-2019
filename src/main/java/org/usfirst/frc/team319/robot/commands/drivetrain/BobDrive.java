@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import org.usfirst.frc.team319.models.DriveMode;
 import org.usfirst.frc.team319.models.DriveSignal;
 import org.usfirst.frc.team319.robot.Robot;
-import org.usfirst.frc.team319.utils.BobDriveHelper;
+import org.usfirst.frc.team319.lib.utils.BobDriveHelper;
 
 import edu.wpi.first.wpilibj.command.Command;
 

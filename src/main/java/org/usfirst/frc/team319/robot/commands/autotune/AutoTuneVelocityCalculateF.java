@@ -1,13 +1,13 @@
 package org.usfirst.frc.team319.robot.commands.autotune;
 
-import org.usfirst.frc.team319.models.BobTalonSRX;
-import org.usfirst.frc.team319.utils.HelperFunctions;
-import org.usfirst.frc.team319.utils.BobCircularBuffer;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.usfirst.frc.team319.lib.utils.BobCircularBuffer;
+import org.usfirst.frc.team319.lib.utils.Util;
+import org.usfirst.frc.team319.models.BobTalonSRX;
+
+
 
 /**
  *
@@ -65,7 +65,7 @@ public class AutoTuneVelocityCalculateF extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-		double kF = 1023 / HelperFunctions.mean(cBuff.toArray());
+		double kF = 1023 / Util.mean(cBuff.toArray());
 		_talon.config_kF(paramterSlot, kF);
 		System.out.println("Calculated F gain = " + kF);
 		System.out.println("Finished calculating F gain.  Switching to speed mode.");

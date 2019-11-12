@@ -11,5 +11,5 @@ package org.usfirst.frc.team319.models;
  * Add your docs here.
  */
 public enum DriveMode {
-    Normal, Limelight,
+    Normal, Limelight, PathFollowing
 }
